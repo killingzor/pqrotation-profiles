@@ -25,7 +25,8 @@ end
 
 local myTable = {
 	"Ultraxion",
-	"Raider's Training Dummy"
+	"Raider's Training Dummy",
+	"Twilight Assault Drake"
 }
 
 function PQR_Fire(unit)
