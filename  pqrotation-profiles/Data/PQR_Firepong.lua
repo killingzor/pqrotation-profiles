@@ -25,7 +25,6 @@ end
 
 local myTable = {
 	"Ultraxion",
-	"Raider's Training Dummy",
 	"Twilight Assault Drake",
 	"Ragnaros"
 }
