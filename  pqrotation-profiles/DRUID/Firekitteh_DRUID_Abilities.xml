@@ -50,8 +50,8 @@ if hasCatMangle ~= nil or hasBearMangle ~= nil or hasTrauma ~= nil or hasHemorrh
 		end
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>-- Variables
-local PQR_FireBleedDebuff = PQR_BleedDebuff(&amp;quot;target&amp;quot;)
-local PQR_FirePlayerBleedDebuff = PQR_PlayerBleedDebuff(&amp;quot;target&amp;quot;)
+local PQR_FireBleedDebuff = PQR_FireBleedDebuff(&amp;quot;target&amp;quot;)
+local PQR_FirePlayerBleedDebuff = PQR_FirePlayerBleedDebuff(&amp;quot;target&amp;quot;)
 local energyRegen = GetPowerRegen()
 local MangleCost = select(4,GetSpellInfo(33876))
 local target = UnitName(&amp;quot;Target&amp;quot;)
