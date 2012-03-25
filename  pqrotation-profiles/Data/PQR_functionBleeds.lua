@@ -22,3 +22,16 @@ function PQR_PlayerBleedDebuff(unit)
 	end
 	return false
 end
+
+local myTable = {
+	"Ultraxion"
+}
+
+function PQR_Fire(unit)
+	for i=1,#myTable do
+		if UnitName(unit) == myTable[i] then
+			return true
+		end
+	end
+	return false
+end
