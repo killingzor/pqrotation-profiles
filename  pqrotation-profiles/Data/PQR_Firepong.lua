@@ -7,14 +7,14 @@ local Bleeds = {
 	50271, -- Hunter Pet: Tendon Rip
 	57386, -- Hunter Pet: Stampede
 }
-function PQR_BleedDebuff(unit)
+function PQR_FireBleedDebuff(unit)
 	for i=1,#Bleeds do
 		if UnitDebuffID(unit,Bleeds[i]) then return true end
 	end
 	return false
 end
 
-function PQR_PlayerBleedDebuff(unit)
+function PQR_FirePlayerBleedDebuff(unit)
 	for i=1,#Bleeds do
 		if UnitDebuffID(unit,Bleeds[i],"player") then
 			return true 
@@ -29,7 +29,7 @@ local myTable = {
 	"Twilight Assault Drake"
 }
 
-function PQR_Fire(unit)
+function PQR_FireTarget(unit)
 	for i=1,#myTable do
 		if UnitName("Target") == myTable[i] then
 			return true
