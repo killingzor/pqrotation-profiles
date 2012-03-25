@@ -38,7 +38,7 @@ local Fire = PQR_Fire(&amp;quot;Target&amp;quot;)
 
 -- Just check for all buffs, we have no casting time on Shred so no need for a timer check
 if hasCatMangle ~= nil or hasBearMangle ~= nil or hasTrauma ~= nil or hasHemorrhage ~= nil then
-	if PQR_NotBehindTarget() or Fire == false then
+	if PQR_NotBehindTarget() or Fire == true then
 		return false
 	else
 		if CP == 5 then
@@ -83,7 +83,7 @@ else
 	end
 end
 
-if PQR_NotBehindTarget() or Fire == false and fbCP &amp;lt; 5 then
+if PQR_NotBehindTarget() or Fire == true and fbCP &amp;lt; 5 then
 	return true
 end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local FF, _, _, _, _, _, FFtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 91565)
 local FFstart, FFduration, FFenabled = GetSpellCooldown(16857)

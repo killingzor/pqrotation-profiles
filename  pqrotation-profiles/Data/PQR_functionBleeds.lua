@@ -24,12 +24,13 @@ function PQR_PlayerBleedDebuff(unit)
 end
 
 local myTable = {
-	"Ultraxion"
+	"Ultraxion",
+	"Raider's Training Dummy"
 }
 
 function PQR_Fire(unit)
 	for i=1,#myTable do
-		if UnitName(unit) == myTable[i] then
+		if UnitName("Target") == myTable[i] then
 			return true
 		end
 	end
