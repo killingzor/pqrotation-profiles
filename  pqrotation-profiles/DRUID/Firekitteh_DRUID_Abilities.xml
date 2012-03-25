@@ -207,22 +207,4 @@ else
 	if fbenergy &amp;gt; 35 and fbCP &amp;lt; 5 then
 		return true
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>test</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local myTable = {
-	&amp;quot;Twilight Assault Drake&amp;quot;,
-	&amp;quot;Twilight Assassin&amp;quot;,
-	&amp;quot;Raider&amp;apos;s Training Dummy&amp;quot;,
-	&amp;quot;Arm Tentacle&amp;quot;,
-	&amp;quot;Wing Tentacle&amp;quot;,
-	&amp;quot;Mutated Corruption&amp;quot;,
-	&amp;quot;Mana Void&amp;quot;,
-	&amp;quot;Elementium Bolt&amp;quot;,
-	&amp;quot;Burning Tendons&amp;quot;,
-	&amp;quot;Warmaster Blackhorn&amp;quot;,
-	&amp;quot;Goriona&amp;quot;
-}
-for i=1,#myTable do
-	local target = UnitName(&amp;quot;Target&amp;quot;)
-	if target == myTable[i] then
-		print(&amp;quot;fuz ro dah&amp;quot;)
-	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Mouseover</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
