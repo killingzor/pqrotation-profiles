@@ -200,5 +200,83 @@ if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;qu
     if PQR_LoadLua(&amp;quot;PQR_Firepong.lua&amp;quot;) == false then
         PQR_WriteToChat(&amp;quot;You are missing PQR_Firepong.lua. Rotation has been stopped.&amp;quot;, &amp;quot;Error&amp;quot;)
         PQR_StopRotation()
+        return true
     end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Race Checks
+local Troll = IsSpellKnown(26297)
+local Orc = IsSpellKnown(20572)
+--Cooldowns
+local tCD = GetSpellCooldown(26297)
+local oCD = GetSpellCooldown(20572)
+--Buffs
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334))
+
+if Troll == true then
+	if BS == nil then
+		return false
+	else
+		if tCD == 0 and (PQR_FireBoss == true) then
+			CastSpellByName(tostring(GetSpellInfo(26297)))
+		end
+	end
+end
+
+if Orc == true then
+	if BS == nil then
+		return false
+	else
+		if oCD == 0 and (PQR_FireBoss == true) then
+			CastSpellByName(tostring(GetSpellInfo(26297)))
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Potion Counts
+local tvPot = GetItemCount(58145) --Potion of the Tol&amp;apos;Vir
+local vPot = GetItemCount(58091) --Volcanic Potion
+local gbPot = GetItemCount(58146) --Golemblood Potion
+local ePot = GetItemCount(58090) --Earthen Potion
+--Potion timers
+local tvCD = GetItemCooldown(58145) --Potion of the Tol&amp;apos;Vir Timer
+local vCD = GetItemCooldown(58091) --Volcanic Potion Timer
+local gbCD = GetItemCooldown(58146) --Golemblood Potion timer
+local eCD = GetItemCooldown(58090) --Earthen Potion Timer
+--Buffs
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Druid Buff
+
+if tvPot == nil then
+	return false
+else
+	if tvPot ~= nil and tvCD == 0 and (PQR_FireBoss == true) then
+		if BS == nil then
+			return false
+		else
+			UseItemByName(58145)
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Profession Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Profession Cooldown&amp;apos;s/Known Spells
+local herbKnown = IsSpellKnown(74497)
+local herbCD = GetSpellCooldown(74497) --Herbalism Spell - Lifebloom
+--local enginCD = GetItemCooldown(itemID) --Engineering Gloves, replace itemID with gloves ID, found on WoWHead
+--Buffs
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Buff
+
+if herbKnown == true then
+	if herbCD == 0 and (PQR_FireBoss == true) then
+		if BS == nil then
+			return false
+		else
+			CastSpellByID(74497)
+		end
+	end
+end
+
+--if enginCD == 0 then
+--	if (BS or sLust or mLust) == true then
+--		UseItemByName(itemID)
+--	end
+--end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>

@@ -23,15 +23,29 @@ function PQR_FirePlayerBleedDebuff(unit)
 	return false
 end
 
-local myTable = {
+local mangle = {
 	"Ultraxion",
 	"Twilight Assault Drake",
-	"Ragnaros"
+	"Ragnaros"	
 }
 
 function PQR_FireTarget(unit)
-	for i=1,#myTable do
-		if UnitName("Target") == myTable[i] then
+	for i=1,#mangle do
+		if UnitName("Target") == mangle[i] then
+			return true
+		end
+	end
+	return false
+end
+
+local boss = {
+	31146 --"Raider's Training Dummy"
+}
+
+function PQR_FireBoss(unit)
+	for i=1,#boss do
+		local mobid = tonumber(UnitGUID("Target"):sub(-13, -9), 16)
+		if mobid == boss[i] then
 			return true
 		end
 	end
