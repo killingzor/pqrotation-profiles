@@ -41,7 +41,8 @@ end
 local boss = {
 	31146, --"Raider's Training Dummy"
 	47120, --Argaloth
-	52409, --Ragnaros
+--	52409, --Ragnaros
+--	55294, --Ultraxion
 	52363, --Occu'thar
 	55869, --Alizabal
 	44600, --Halfus Wyrmbreaker
@@ -74,8 +75,8 @@ local boss = {
 	53691, --Shannox
 	53494, --Baleroc
 	52571, --Majordomo Staghelm
-	46753, --Al'Akir
-	55294 --Ultraxion
+	46753 --Al'Akir
+
 }
 
 function PQR_FireBoss(unit)
