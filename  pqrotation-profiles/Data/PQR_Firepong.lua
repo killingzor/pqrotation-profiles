@@ -41,7 +41,7 @@ end
 local boss = {
 	31146, --"Raider's Training Dummy"
 	47120, --Argaloth
-	52409, --"Ragnaros"
+	52409, --Ragnaros
 	52363, --Occu'thar
 	55869, --Alizabal
 	44600, --Halfus Wyrmbreaker
@@ -81,8 +81,11 @@ local boss = {
 function PQR_FireBoss(unit)
 	for i=1,#boss do
 		local bossid = tonumber(UnitGUID("Target"):sub(-13, -9), 16)
-		if bossid == boss[i] then
-			return true
+		local hasTarget = UnitExists("Target")
+		if hasTarget == 1 then
+			if bossid == boss[i] then
+				return true
+			end
 		end
 	end
 	return false
