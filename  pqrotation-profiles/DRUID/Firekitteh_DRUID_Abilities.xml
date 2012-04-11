@@ -88,7 +88,7 @@ else
 	end
 end
 
-if PQR_NotBehindTarget() or Fire == true and fbCP == 5 and rake ~= nil then
+if PQR_NotBehindTarget() or Fire == true and fbCP ~= 5 and rake ~= nil then
 	return true
 end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>local FF, _, _, _, _, _, FFtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 91565)
 local FFstart, FFduration, FFenabled = GetSpellCooldown(16857)
@@ -210,7 +210,7 @@ if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;qu
   PQR_RotationStarted = false
   if PQR_LoadLua ~= nil then
     if PQR_LoadLua(&amp;quot;PQR_Firepong.lua&amp;quot;) == false then 
-       PQR_WriteToChat(&amp;quot;Put the file PQR_Kickmydog_Data.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
+       PQR_WriteToChat(&amp;quot;Put the file PQR_Firepong.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
        PQR_RotationStop()
         return true
      end

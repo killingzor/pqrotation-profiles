@@ -5,18 +5,20 @@ local Bleeds = {
 	35290, -- Hunter Pet: Gore
 	46857, -- Warrior, Trauma
 	50271, -- Hunter Pet: Tendon Rip
-	57386, -- Hunter Pet: Stampede
+	57386 -- Hunter Pet: Stampede
 }
 function PQR_FireBleedDebuff(unit)
 	for i=1,#Bleeds do
-		if UnitDebuffID(unit,Bleeds[i]) then return true end
+		if UnitDebuffID(unit, Bleeds[i]) then
+			return true
+		end
 	end
 	return false
 end
 
 function PQR_FirePlayerBleedDebuff(unit)
 	for i=1,#Bleeds do
-		if UnitDebuffID(unit,Bleeds[i],"player") then
+		if UnitDebuffID(unit, Bleeds[i],"Player") then
 			return true 
 		end
 	end
@@ -24,15 +26,19 @@ function PQR_FirePlayerBleedDebuff(unit)
 end
 
 local mangle = {
-	"Ultraxion",
-	"Twilight Assault Drake",
-	"Ragnaros"	
+	31146, --"Raider's Training Dummy"
+	52409, --Ragnaros
+	55294 --Ultraxion
 }
 
 function PQR_FireTarget(unit)
 	for i=1,#mangle do
-		if UnitName("Target") == mangle[i] then
-			return true
+		local targetid = tonumber(UnitGUID("Target"):sub(-13, -9), 16)
+		local mangleTarget = UnitExists("Target")
+		if mangleTarget == 1 then
+			if targetid == mangle[i] then
+				return true
+			end
 		end
 	end
 	return false
@@ -41,8 +47,8 @@ end
 local boss = {
 	31146, --"Raider's Training Dummy"
 	47120, --Argaloth
---	52409, --Ragnaros
---	55294, --Ultraxion
+	52409, --Ragnaros
+	55294, --Ultraxion
 	52363, --Occu'thar
 	55869, --Alizabal
 	44600, --Halfus Wyrmbreaker
