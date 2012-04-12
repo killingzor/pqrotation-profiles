@@ -274,10 +274,10 @@ else
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Profession Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
 local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+local itemCD = PQR_ItemCD()
 --Profession Cooldown&amp;apos;s/Known Spells
 local herbKnown = IsSpellKnown(74497)
 local herbCD = GetSpellCooldown(74497) --Herbalism Spell - Lifebloom
---local enginCD = GetItemCooldown(itemID) --Engineering Gloves, replace itemID with gloves ID, found on WoWHead
 --Buffs
 local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Buff
 
@@ -293,8 +293,11 @@ if herbKnown == true then
 	end
 end
 
---if enginCD == 0 then
---	if (BS or sLust or mLust) == true then
---		UseItemByName(itemID)
---	end
---end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
+local slot = {10,13,14}
+
+if itemCD == true and BS ~= nil then
+	for i=1,#slot do
+		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
+		UseItemByName(item)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
