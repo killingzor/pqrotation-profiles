@@ -98,3 +98,20 @@ function PQR_FireBoss(unit)
 	return false
 end
 
+local slot = {
+	10, --Hands
+	13, --Trinket 1
+	14 --Trinket 2
+}
+
+function PQR_ItemCD()
+	for i=1,#slot do
+		local item = GetInventoryItemID("Player", slot[i])
+		local cd = GetItemCooldown(item)
+		local use = GetItemSpell(item)
+		if cd == 0 and use ~= nil then
+			return true
+		end
+	end
+	return false
+end
