@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Lava Burst</Name><Default>false</Default><SpellID>51505</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lightning Bolt</Name><Default>false</Default><SpellID>403</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions></Actions><Lua>local UL = UnitBuffID(&amp;quot;Player&amp;quot;, 73683)
+
+if UL ~= nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Earth Shock</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local FS = UnitDebuffID(&amp;quot;Target&amp;quot;, 8050, &amp;quot;Player&amp;quot;)
+local CD = GetSpellCooldown(8042)
+local count = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 324))
+
+--if FS ~= nil and CD == 0 then
+--	return true
+--end
+
+if count == 9 then
+	CastSpellByID(8042)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Searing Totem</Name><Default>false</Default><SpellID>3599</SpellID><Actions></Actions><Lua>local srTimer, SearingTotem = GetTotemInfo(1)
+
+if SearingTotem ~= &amp;quot;Searing Totem&amp;quot;
+or IsControlKeyDown()
+and SearingTotem ~= &amp;quot;Fire Elemental Totem&amp;quot; then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Offensive Spells --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if UnitAffectingCombat(&amp;quot;Player&amp;quot;) == nil
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Lightning Shield</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local lShield = UnitBuffID(&amp;quot;Player&amp;quot;, 324)
+
+if lShield == nil then
+	CastSpellByID(324)
+end
+
+local hwv, hwd  = GetWeaponEnchantInfo()
+
+if hwv ~= 1 then
+	CastSpellByID(8024)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Chain Lightning</Name><Default>false</Default><SpellID>421</SpellID><Actions></Actions><Lua>local IsDown = IsLeftControlKeyDown()
+local eCD = GetSpellCooldown(61882)
+local Target = UnitExists(&amp;quot;Target&amp;quot;)
+
+if IsDown and Target == 1 then
+	if eCD ~= 0 then
+		return true
+	end
+end</Lua><RecastDelay>50</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Thunderstorm</Name><Default>false</Default><SpellID>51490</SpellID><Actions></Actions><Lua>local mana = 100 * UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;)
+
+if mana &amp;lt; 70 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Frost Shock</Name><Default>false</Default><SpellID>8056</SpellID><Actions></Actions><Lua>if GetNumGroupMembers() &amp;lt; 1 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Earthquake</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local IsDown = IsLeftControlKeyDown()
+local eCD = GetSpellCooldown(61882)
+
+if IsDown and eCD == 0 then
+	CastSpellByID(61882)
+	if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></SHAMAN>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Options><ProfileVersion></ProfileVersion><AbilityURL></AbilityURL><RotationURL></RotationURL><LuaURL></LuaURL></Options><Rotation><RotationName>Single Target</RotationName><RotationDefault>false</RotationDefault><RotationList>Lightning Shield|Thunderstorm|-- Offensive Spells --|Frost Shock|Chain Lightning|Earthquake|Unleash Elements|Flame Shock|Searing Totem|Lava Burst|Lightning Bolt|Earth Shock</RotationList><RequireCombat>false</RequireCombat><RotationNotes>README:
+
+-Hold Left Control for Chain Lightning/Earthquake (AoE).
+-Will cast Frost Strike when you are out questing to slow mobs down (Make sure to select the Level 30 Talent to add Freeze to Frost Shock)
+-When in group, it will not cast frost shoke, but instead will castFire Shock/Earth Shock.
+-Will Thunderstorm when mana is at 80% to gain mana back. Helps to have this glyphed for Minor and Major.
+-Keeps up Lightning shield when needed.
+-Keeps up Flametongue Enchant on weapon.</RotationNotes></Rotation></SHAMAN>
