@@ -26,15 +26,14 @@ function PQR_FirePlayerBleedDebuff(unit)
 end
 
 local mangle = {
-	31146, --"Raider's Training Dummy"
 	52409, --Ragnaros
 	55294 --Ultraxion
 }
 
 function PQR_FireTarget(unit)
 	for i=1,#mangle do
-		local targetid = tonumber(UnitGUID("Target"):sub(-13, -9), 16)
-		local mangleTarget = UnitExists("Target")
+		local targetid = tonumber(UnitGUID(unit):sub(-13, -9), 16)
+		local mangleTarget = UnitExists(unit)
 		if mangleTarget == 1 then
 			if targetid == mangle[i] then
 				return true
@@ -87,8 +86,8 @@ local boss = {
 
 function PQR_FireBoss(unit)
 	for i=1,#boss do
-		local bossid = tonumber(UnitGUID("Target"):sub(-13, -9), 16)
-		local hasTarget = UnitExists("Target")
+		local bossid = tonumber(UnitGUID(unit):sub(-13, -9), 16)
+		local hasTarget = UnitExists(unit)
 		if hasTarget == 1 then
 			if bossid == boss[i] then
 				return true
