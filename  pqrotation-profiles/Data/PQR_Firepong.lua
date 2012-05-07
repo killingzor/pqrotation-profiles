@@ -34,7 +34,7 @@ function PQR_FireTarget(unit)
 	for i=1,#mangle do
 		local targetid = tonumber(UnitGUID(unit):sub(-13, -9), 16)
 		local mangleTarget = UnitExists(unit)
-		if mangleTarget == 1 then
+		if mangleTarget ~= 0 or nil then
 			if targetid == mangle[i] then
 				return true
 			end
@@ -88,7 +88,7 @@ function PQR_FireBoss(unit)
 	for i=1,#boss do
 		local bossid = tonumber(UnitGUID(unit):sub(-13, -9), 16)
 		local hasTarget = UnitExists(unit)
-		if hasTarget == 1 then
+		if hasTarget ~= 0 or nil then
 			if bossid == boss[i] then
 				return true
 			end
