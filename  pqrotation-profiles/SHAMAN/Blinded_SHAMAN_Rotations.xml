@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Options><ProfileVersion></ProfileVersion><AbilityURL></AbilityURL><RotationURL></RotationURL><LuaURL></LuaURL></Options><Rotation><RotationName>Raid Ready - Enhance</RotationName><RotationDefault>false</RotationDefault><RotationList>-- Load LUA --|-- Load --|Lightning_Shield|Weapon Enchants|Healing Rain|-- Combat --|Fire Elemental Totem|Call of Spirits|-- Profession Buffs --|-- Potions --|-- Racials --|Greater Healing Wave|Chain Lightning|Lightning_Bold_MW5|Searing_Totem|Stormstrike|Lavalash|Wind Shear|Unleash Elements|Flame Shock|Earth_Shock|Spirit_Wolves|Fire Nova|Lava Burst</RotationList><RequireCombat>false</RequireCombat><RotationNotes>Build:
+http://www.wowhead.com/talent#hhr0hZffG0s0hRGo:RkaobrmM0
+
+Log:
+-- Heal Mode Start --
+-Press Right Alt to Switch On/Off Heal Mode
+--Heal Mode Activated: Will use Greater Healing Wave When at 5 Maelstrom Stacks instead of Lightning Bolt when Health is Below 40%
+--Heal Mode Deactivated: Will USe Lightning Bolt as Normal.
+
+-While Heal Mode is Activated, it will do the above stated. Also, if the player has the Deep Corruption Debuff from H Yor&amp;apos;Sahj, it will instead skip Greater Healing Wave and instead cast Lightning Bolt/CHain Lightning Respectively/
+
+-PURELY BETA! HAVE NOT HAD A CHANCE TO TEST AS MY SHAMAN HAS ALREADY DONE H DS10 THIS WEEK. NEED FEEDBACK
+-- Heal Mode End --
+
+-- AoE Mode Start --
+-Press Right Control To Toggle AoE Mode
+--AoE Mode Activated: Uses Chain Lightning instead of Lightning Bolt as well as uses Fire Nova ( No Magma Totem Coded in Yet)
+--AoE Mode Disabled: Uses Lightning Bolt and Does Not Use Chain Lightning/Fire Nova.
+-- AoE Mode End --
+
+-- Toggle Controls --
+-Hold Left Control to use Healing Rain
+-Hold Left Shift To use Fire Elemental Totem
+
+</RotationNotes></Rotation></SHAMAN>

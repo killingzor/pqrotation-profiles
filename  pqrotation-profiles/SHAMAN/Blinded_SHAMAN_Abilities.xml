@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Call of Spirits</Name><Default>false</Default><SpellID>66844</SpellID><Actions></Actions><Lua>if GetTotemTimeLeft(2) &amp;lt; 20 or GetTotemTimeLeft(3) &amp;lt; 20 or GetTotemTimeLeft(4) &amp;lt; 20 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lightning_Shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>LS = UnitBuffID(&amp;quot;player&amp;quot;, 324);
+
+if LS == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Player</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Profession Buffs --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+--local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+local itemCD = PQR_ItemCD(&amp;quot;Player&amp;quot;)
+--Tables
+local slot = {10,13,14}
+--Buffs
+local BL = UnitBuffID(&amp;quot;player&amp;quot;, 2825)
+--Misc
+
+if itemCD == true and BL ~= nil then
+	for i=1,#slot do
+		local item = GetInventoryItemID(&amp;quot;Player&amp;quot;, slot[i])
+		UseItemByName(item)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Searing_Totem</Name><Default>false</Default><SpellID>3599</SpellID><Actions></Actions><Lua>--Version 1 of Searing Totem
+local _, SearingTotem = GetTotemInfo(1)
+local stTimer = GetTotemTimeLeft(1)
+
+--Version 1
+if stTimer &amp;lt; 6 or stTimer == nil and SearingTotem ~= &amp;quot;Fire Elemental Totem&amp;quot; or IsLeftAltKeyDown() then
+	return true
+end
+--Version 1 End
+
+--Version 2 of Searing Totem
+--local _, SearingTotem = GetTotemInfo(1)
+
+--if SearingTotem ~= &amp;quot;Searing Totem&amp;quot;
+--or IsAltKeyDown()
+--and SearingTotem ~= &amp;quot;Fire Elemental Totem&amp;quot; then
+--	return true
+--end
+--Version 2 End</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Stormstrike</Name><Default>false</Default><SpellID>17364</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lavalash</Name><Default>false</Default><SpellID>60103</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lightning_Bold_MW5</Name><Default>false</Default><SpellID>403</SpellID><Actions></Actions><Lua>local ccount = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 53817))
+local SS = GetSpellCooldown(17364)
+local UL = GetSpellCooldown(73680)
+local FS = GetSpellCooldown(8050)
+local LL = GetSpellCooldown(60103)
+local hasPet = HasPetSpells(&amp;quot;Player&amp;quot;)
+
+if ccount ~= nil then
+	if ccount &amp;gt;= 4 and hasPet ~= nil then
+		return true
+	elseif ccount == 5 and hasPet == nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Unleash Elements</Name><Default>false</Default><SpellID>73680</SpellID><Actions></Actions><Lua>return true</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Flame Shock</Name><Default>false</Default><SpellID>8050</SpellID><Actions></Actions><Lua>local fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER&amp;quot;)
+local UL = UnitBuffID(&amp;quot;Player&amp;quot;, 73683)
+
+if UL ~= nil then
+	return true
+elseif fsDebuff == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Earth_Shock</Name><Default>false</Default><SpellID>8042</SpellID><Actions></Actions><Lua>local ES = UnitDebuffID(&amp;quot;Target&amp;quot;,8042)
+local fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050, &amp;quot;PLAYER&amp;quot;)
+local UL = UnitBuffID(&amp;quot;Player&amp;quot;, 73683)
+
+if ES == nil and fsDebuff ~= nil and UL == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Spirit_Wolves</Name><Default>false</Default><SpellID>51533</SpellID><Actions></Actions><Lua>local target = UnitHealthMax(&amp;quot;Target&amp;quot;)
+local player = UnitHealthMax(&amp;quot;Player&amp;quot;)*40
+
+if target &amp;gt; player then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Wind Shear</Name><Default>false</Default><SpellID>57994</SpellID><Actions></Actions><Lua>local WindShear = GetSpellCooldown(57994)
+
+if WindShear == 0 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Chain Lightning</Name><Default>false</Default><SpellID>421</SpellID><Actions></Actions><Lua>local count = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 53817))
+
+if count ~= nil and setAoE then
+	if count &amp;gt;= 4 and hasPet ~= nil then
+		return true
+	elseif count == 5 and hasPet == nil then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lava Burst</Name><Default>false</Default><SpellID>51505</SpellID><Actions></Actions><Lua>local SS = GetSpellCooldown(17364)
+local UL = GetSpellCooldown(73680)
+local FS = GetSpellCooldown(8050)
+local LL = GetSpellCooldown(60103)
+local hasPet = HasPetSpells(&amp;quot;Player&amp;quot;)
+
+if (SS and UL and FS and LL) ~= 0 and hasPet == nil then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Weapon Enchants</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hwv, hwd  = GetWeaponEnchantInfo()
+
+if hwv ~= 1 then
+	CastSpellByID(8232)
+--	CastSpellByName(GetSpellinfo(8232))
+	return true
+end
+
+local _,_,_,nwv,nwd,_ = GetWeaponEnchantInfo()
+
+if nwv ~= 1 then
+	CastSpellByID(8024)
+--	CastSpellByName(GetSpellInfo(8024))
+	return true
+end</Lua><RecastDelay>750</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Load --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+	PQR_RotationStarted = false
+	PQR_AddToSpellDelayList(0, 0, 1) --All Spell&amp;apos;s Without ID&amp;apos;s
+	PQR_AddToSpellDelayList(8024, 0, 1) --Flametongue Enchant
+	PQR_AddToSpellDelayList(8232, 0, 1) --Windfury Enchant
+	PQR_AddToSpellDelayList(77472, 0, .75) --Greatere Healing Wave
+	PQR_AddToSpellDelayList(60103, 0, .3) --Lava Lash
+	PQR_AddToSpellDelayList(1535, 0, .3) --Fire Nova
+end
+
+if not rightkeydown then rightkeydown = 0 end
+
+if IsRightControlKeyDown() and GetTime() - rightkeydown &amp;gt; 0.3  then
+  rightkeydown = GetTime()
+  if setAoE  then 
+    setAoE  = false print(&amp;quot;Rotation mode: \124cFFDBFA2ASingle target&amp;quot;)
+  else 
+    setAoE  = true print(&amp;quot;Rotation mode: \124cFFFA652AArea of Effect&amp;quot;)
+  end
+end
+
+if IsRightAltKeyDown() and GetTime() - rightkeydown &amp;gt; 0.3  then
+  rightkeydown = GetTime()
+  if setHeal  then 
+    setHeal  = false print(&amp;quot;Rotation mode: \124cFFDBFA2AHeal Mode Deactivated&amp;quot;)
+  else 
+    setHeal  = true print(&amp;quot;Rotation mode: \124cFFFA652AHeal Mode Activated&amp;quot;)
+  end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Fire Nova</Name><Default>false</Default><SpellID>1535</SpellID><Actions></Actions><Lua>fsDebuff = UnitDebuffID(&amp;quot;target&amp;quot;, 8050)
+
+if fsDebuff ~= nil and setAoE then
+	return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Healing Rain</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(73920)
+local Spell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;player&amp;quot;)
+
+--if lcd == 0 and IsLeftControlKeyDown() and GetCurrentKeyBoardFocus() == nil and Spell ~=&amp;quot;Healing Rain&amp;quot; and mana &amp;gt; 10131 then
+if lcd == 0 and IsLeftControlKeyDown() == 1 and Spell ~=&amp;quot;Healing Rain&amp;quot; and mana &amp;gt; 10131 then
+  CastSpellByName(tostring(GetSpellInfo(73920)))
+  if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
+  return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Fire Elemental Totem</Name><Default>false</Default><SpellID>2894</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() == 1 then
+	CastSpellByName(tostring(GetSpellInfo(2894)))
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Greater Healing Wave</Name><Default>false</Default><SpellID>77472</SpellID><Actions></Actions><Lua>--Function Calls
+local PQR_FireCorruption = PQR_FireCorruption(&amp;quot;player&amp;quot;)
+--Buffs
+local count = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 53817))
+--Player Checks
+local pHealth = UnitHealth(&amp;quot;Player&amp;quot;) / UnitHealthMax(&amp;quot;Player&amp;quot;) * 100
+
+if (PQR_FireCorruption == false) and setHeal then
+--if setHeal then
+	if count ~= nil then
+		if pHealth &amp;lt;= 40 and count &amp;gt;= 4 then
+--			CastSpellByName(tostring(GetSpellInfo(77472)))
+			return true
+		end
+	end
+end</Lua><RecastDelay>1000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Combat --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsMounted() or UnitBuffID(&amp;quot;player&amp;quot;,87959) then
+	return true
+end
+
+if (UnitAffectingCombat(&amp;quot;player&amp;quot;) == nil and not IsRightShiftKeyDown()) then
+   return true 
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Racials --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+--local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Race Checks
+local Troll = IsSpellKnown(26297)
+local Orc = IsSpellKnown(20572)
+--Cooldowns
+local tCD = GetSpellCooldown(26297)
+local oCD = GetSpellCooldown(20572)
+--Buffs
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334))
+
+if Troll == true then
+	if BS == nil then
+		return false
+	else
+--		if tvCD == 0 and (PQR_FireBoss == true) then
+		if tCD == 0 then
+			CastSpellByName(tostring(GetSpellInfo(26297)))
+		end
+	end
+end
+
+if Orc == true then
+	if BS == nil then
+		return false
+	else
+--		if oCD == 0 and (PQR_FireBoss == true) then
+		if oCD == 0 then
+			CastSpellByName(tostring(GetSpellInfo(26297)))
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Potions --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+--local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Potion Counts
+local tvPot = GetItemCount(58145) --Potion of the Tol&amp;apos;Vir
+local vPot = GetItemCount(58091) --Volcanic Potion
+local gbPot = GetItemCount(58146) --Golemblood Potion
+local ePot = GetItemCount(58090) --Earthen Potion
+--Potion timers
+local tvCD = GetItemCooldown(58145) --Potion of the Tol&amp;apos;Vir Timer
+local vCD = GetItemCooldown(58091) --Volcanic Potion Timer
+local gbCD = GetItemCooldown(58146) --Golemblood Potion timer
+local eCD = GetItemCooldown(58090) --Earthen Potion Timer
+--Buffs
+local BL = UnitBuffID(&amp;quot;player&amp;quot;, 2825)
+--Misc
+local areaID = GetCurrentMapAreaID()
+
+if tvPot == nil then
+	return false
+else
+--	if tvPot ~= nil and tvCD == 0 and (PQR_FireBoss == true) then
+	if tvPot ~= nil and tvCD == 0 then
+		if BL == nil then
+			return false
+		else
+			if BL ~= nil and areaID == 824 then
+				UseItemByName(58145)
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Load LUA --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+  PQR_RotationStarted = false
+  if PQR_LoadLua ~= nil then
+    if PQR_LoadLua(&amp;quot;PQR_FireEnhance.lua&amp;quot;) == false then 
+       PQR_WriteToChat(&amp;quot;Put the file PQR_FireEnhance.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
+       PQR_RotationStop()
+        return true
+     end
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></SHAMAN>
