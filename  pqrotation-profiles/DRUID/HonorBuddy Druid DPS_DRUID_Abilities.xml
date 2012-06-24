@@ -48,15 +48,15 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
 local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 local catForm = UnitBuffID(&amp;quot;Player&amp;quot;, 768)
 
-if hasTarget ~= nil then
+if hasTarget then
 	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
 	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 	
 	if Hostile and not isDead and not catForm then
 		CastSpellByName(tostring(GetSpellInfo(768)))
+	elseif inCombat and not catForm then
+		CastSpellByName(tostring(GetSpellInfo(768)))
 	end
-elseif hasTarget and inCombat and not catForm then
-	CastSpellByName(tostring(GetSpellInfo(768)))
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Feral Charge</Name><Default>false</Default><SpellID>49376</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 
 if hasTarget == nil then
