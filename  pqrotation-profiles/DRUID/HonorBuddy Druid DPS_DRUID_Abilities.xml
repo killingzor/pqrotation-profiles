@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" ?><DRUID><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget == nil then
+	return false
+else
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if Hostile and not isDead then
+		local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+		local enemyLevel = UnitLevel(&amp;quot;Target&amp;quot;)
+		local facing = PQR_UnitFacing(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+		if facing == true or PQR_NotBehindTarget() then
+			local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+			if CP &amp;lt; 5 then
+				return true
+			else
+				return false
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>5221</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget == nil then
+	return false
+else
+		local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+		local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+		if Hostile and not isDead then
+			local facing = PQR_UnitFacing(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+			if facing == false  or not PQR_NotBehindTarget() then
+				local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+				if CP &amp;lt; 5 then
+					return true
+				else
+					return false
+				end
+			end
+		end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rejuvination</Name><Default>false</Default><SpellID>774</SpellID><Actions></Actions><Lua>local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+local playerHP = 100 * UnitHealth(&amp;quot;Player&amp;quot;) / UnitHealthMax(&amp;quot;Player&amp;quot;)
+local level = UnitLevel(&amp;quot;Player&amp;quot;)
+local hasRejuv = UnitBuffID(&amp;quot;Player&amp;quot;, 774)
+
+if inCombat ~= nil and not IsMounted() and level &amp;lt; 85 and playerHP &amp;lt; 90 and not hasRejuv then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Cat Form</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+local catForm = UnitBuffID(&amp;quot;Player&amp;quot;, 768)
+
+if hasTarget ~= nil then
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if Hostile and not isDead and not catForm then
+		CastSpellByName(tostring(GetSpellInfo(768)))
+	end
+elseif hasTarget and inCombat and not catForm then
+	CastSpellByName(tostring(GetSpellInfo(768)))
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Feral Charge</Name><Default>false</Default><SpellID>49376</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget == nil then
+	return false
+else
+	local chargeCD = GetSpellCooldown(49376)
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+	local inRange = IsSpellInRange(tostring(GetSpellInfo(49376)), &amp;quot;Target&amp;quot;)
+	if not inCombat and inRange and chargeCD == 0 and Hostile and not isDead then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Prowl</Name><Default>false</Default><SpellID>5215</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget == nil then
+	return false
+else
+	local prowlCD = GetSpellCooldown(5215)
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+	if inCombat == nil and prowlCD == 0 and Hostile and not isDead then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>1079</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget == nil then
+	return false
+else
+		local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+		local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+		local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+		local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+		if playerLevel &amp;lt; 85 then
+			local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+			local enemyLevel = UnitLevel(&amp;quot;Target&amp;quot;)
+			if Hostile and CP &amp;gt; 3 then
+				return true
+			end
+		elseif playerLevel == 85 then
+			local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+			local ripCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+			local riphealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+			if rip ~= nil then
+				if riphealth &amp;gt; 60 then
+					if ripCP == 5 then
+						if riptimer - GetTime() &amp;lt;4 then
+							return true
+						end
+					end
+				end
+			else
+				if ripCP == 5 then
+					return true
+				end
+			end
+		end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Rotation Switcher --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+
+if playerLevel &amp;lt; 85 then
+	PQR_SwapRotation(&amp;quot;Leveling Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rake</Name><Default>false</Default><SpellID>1822</SpellID><Actions></Actions><Lua>local isKnown = IsSpellKnown(1822)
+local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local prowlBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 5215)
+
+if hasTarget and isKnown and not prowlBuff then
+	local rake, _, _, _, _, _, raketimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
+
+
+	if rake ~= nil then
+		if raketimer - GetTime() &amp;lt; 4 then
+			return true
+		end
+	else
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local stamp = UnitBuffID(&amp;quot;Player&amp;quot;, 81022)
+
+if stamp ~= nil then
+	local soundState = GetCVar(&amp;quot;Sound_EnableSFX&amp;quot;)
+	CastSpellByName(tostring(GetSpellInfo(6785)))
+	SetCVar(&amp;quot;Sound_EnableSFX&amp;quot;, soundState)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Pounce</Name><Default>false</Default><SpellID>9005</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isKnown = IsSpellKnown(9005)
+
+if hasTarget and isKnown then
+	local hasProwl = UnitBuffID(&amp;quot;Player&amp;quot;, 5215)
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if hasProwl and Hostile and not isDead then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mark of the Wild</Name><Default>false</Default><SpellID>1126</SpellID><Actions></Actions><Lua>local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+local isKnown = IsSpellKnown(1126)
+local hasMotW = UnitBuffID(&amp;quot;Player&amp;quot;, 79061)
+
+if not hasMotW and not inCombat and isKnown then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Maim</Name><Default>false</Default><SpellID>22570</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget then
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if Hostile and not isDead then
+		local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+		if CP == 5 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Insta Healing</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local regrowthKnown = IsSpellKnown(8936)
+local knownHT = IsSpellKnown(5185)
+local playerHP = 100 * UnitHealth(&amp;quot;Player&amp;quot;) / UnitHealthMax(&amp;quot;Player&amp;quot;)
+
+if regrowthKnown and not knownHT then
+	local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 69369)
+	
+	if psBuff ~= nil and playerHP &amp;lt; 60 then
+		CastSpellByName(tostring(GetSpellInfo(8936)))
+	elseif psBuff == nil and playerHP &amp;lt; 40 then
+		CastSpellByName(tostring(GetSpellInfo(8936)))
+	end
+elseif knownHT then
+	local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 69369)
+	
+	if psBuff ~= nil and playerHP &amp;lt; 60 then
+		CastSpellByName(tostring(GetSpellInfo(5185)))
+	elseif psBuff == nil and playerHP &amp;lt; 40 then
+		CastSpellByName(tostring(GetSpellInfo(5185)))
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Dash</Name><Default>false</Default><SpellID>1850</SpellID><Actions></Actions><Lua>local knownDash = IsSpellKnown(1850)
+local hastarget = UnitExists(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownDash then
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if Hostile and not isDead then
+		local chargeCD = GetSpellCooldown(49376)
+		local chargeRange = IsSpellInRange(49376)
+		local mangleRange = IsSpellInRange(33876)
+		
+		if chargeCD ~= 0 and not mangleRange and chargeRange then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>52610</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownSR = IsSpellKnown(52610)
+
+if hasTarget and knownSR then
+	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+	
+	if Hostile and not isDead then
+		local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+		
+		if playerLevel &amp;lt; 85 then
+			local playerHP = UnitHealthMax(&amp;quot;Player&amp;quot;)
+			local targetHP = UnitHealthMax(&amp;quot;Target&amp;quot;)
+			
+			if targetHP &amp;lt; playerHP*1.2 then
+				local SRbuff = select(4, UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+				local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+				
+				if not SRbuff and CP ~= 0 then
+					return true
+				end
+			elseif targetHP &amp;gt; playerHP*1.5 then
+				local SRbuff = select(4, UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+				local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+				
+				if not SRbuff and CP &amp;gt; 2 then
+					return true
+				end
+			elseif targetHP &amp;gt; playerHP*2.5 then
+				local SRbuff = select(4, UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+				local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+				
+				if not SRbuff and CP &amp;gt; 3 then
+					return true
+				end
+			elseif targetHP &amp;gt; playerHP*4 then
+				local SRbuff = select(4, UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+				local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+				local srTimer = select(7,UnitBuffID(&amp;quot;player&amp;quot;, 52610))
+				local Rip = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+				
+				if not SRbuff and Rip ~= nil then
+					return true
+				elseif srTimer - GetTime() &amp;lt; 4 and CP &amp;gt; 3 then
+					return true
+				elseif srTimer - GetTime() &amp;lt; 2 and CP &amp;lt; 3 then
+					return true  
+				end
+			end
+		elseif playerLevel == 85 then
+			local SRbuff = select(4, UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+			local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+			local srTimer = select(7,UnitBuffID(&amp;quot;player&amp;quot;, 52610))
+			local Rip = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+			
+			if not SRBuff and Rip ~= nil then
+				return true
+			elseif srTimer - GetTime() &amp;lt; 4 and CP &amp;gt; 3 then
+				return true
+			elseif srTimer - GetTime() &amp;lt; 2 and CP &amp;lt; 3 then
+				return true  
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Tiger&amp;apos;s Fury</Name><Default>false</Default><SpellID>5217</SpellID><Actions></Actions><Lua>--Functions
+--Buffs
+local _,_,_,TF = UnitBuffID(&amp;quot;player&amp;quot;, 5217)
+local stamp = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Stampede&amp;quot;)
+--Cooldowns
+local TFstart, TFduration = GetSpellCooldown(5217)
+local TFcooldown = (TFstart + TFduration - GetTime())
+--Energy Checks
+local tfEnergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+
+--if TF ~= nil then
+--	return false
+--else
+--	if TFcooldown &amp;gt; 0 then
+--		return false
+--	else
+--		if stamp ~= nil then
+--			return false
+--		else
+--			if tfEnergy &amp;lt; 45 then
+--				return true
+--			end
+--		end
+--	end
+--end
+
+local BSstart, BSduration = GetSpellCooldown(50334)
+local BScooldown = (BSstart + BSduration - GetTime())
+
+if BScooldown &amp;lt; 5 then
+	if BSstart ~= 0 then
+		return false
+	end
+end
+
+if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
+	return true
+end
+
+if BSstart == 0 and tfEnergy &amp;lt;= 45 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
+local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Buffs
+local _,_,_,TF = UnitBuffID(&amp;quot;player&amp;quot;, 5217)
+local _, _, _, BS = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
+local BSstart, BSduration = GetSpellCooldown(50334)
+--Cooldowns
+local BScooldown = (BSstart + BSduration - GetTime())
+--Energy/Health/Level Checks
+local bsEnergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+local bsHealth = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
+local levelcheck = UnitLevel(&amp;quot;target&amp;quot;)
+
+if TF == nil then
+	return false
+else
+--		if BScooldown &amp;gt; 0 and (PQR_FireBoss == true) then
+		if BScooldown &amp;gt; 0 then
+			return false
+		else
+			-- if bsHealth &amp;lt; 96 then
+				CastSpellByName(tostring(GetSpellInfo(50334)))
+			-- end
+		end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Load Lua --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+  PQR_RotationStarted = false
+  if PQR_LoadLua ~= nil then
+    if PQR_LoadLua(&amp;quot;PQR_Firepong.lua&amp;quot;) == false then 
+       PQR_WriteToChat(&amp;quot;Put the file PQR_Firepong.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
+       PQR_RotationStop()
+        return true
+     end
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownFF = IsSpellKnown(16857)
+local prowlBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 5215)
+
+if hasTarget and knownFF and not prowlBuff then
+	local FF, _, _, _, _, _, FFtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 91565)
+	local FFstart, FFduration, FFenabled = GetSpellCooldown(16857)
+	local FFcooldown = (FFstart + FFduration - GetTime())
+
+
+	if FF == nil then
+		if FFcooldown &amp;gt; 0 then
+			return false
+		else
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
