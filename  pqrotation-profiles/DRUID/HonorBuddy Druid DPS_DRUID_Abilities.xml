@@ -118,7 +118,12 @@ else
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Rotation Switcher --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
 
 if playerLevel &amp;lt; 85 then
-	PQR_SwapRotation(&amp;quot;Leveling Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
+	local talentTree = GetPrimaryTalentTree()
+	local knownPul = IsSpellKnown(80313)
+	
+	if talentTree == 2 and not knownPul then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
+	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rake</Name><Default>false</Default><SpellID>1822</SpellID><Actions></Actions><Lua>local isKnown = IsSpellKnown(1822)
 local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 local prowlBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 5215)
@@ -178,6 +183,8 @@ if regrowthKnown and not knownHT then
 	
 	if psBuff ~= nil and playerHP &amp;lt; 60 then
 		CastSpellByName(tostring(GetSpellInfo(8936)))
+	elseif psBuff ~= nil then
+		CastSpellByName(tostring(GetSpellInfo(8936)))
 	elseif psBuff == nil and playerHP &amp;lt; 40 then
 		CastSpellByName(tostring(GetSpellInfo(8936)))
 	end
@@ -185,6 +192,8 @@ elseif knownHT then
 	local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 69369)
 	
 	if psBuff ~= nil and playerHP &amp;lt; 60 then
+		CastSpellByName(tostring(GetSpellInfo(5185)))
+	elseif psBuff ~= nil then
 		CastSpellByName(tostring(GetSpellInfo(5185)))
 	elseif psBuff == nil and playerHP &amp;lt; 40 then
 		CastSpellByName(tostring(GetSpellInfo(5185)))
