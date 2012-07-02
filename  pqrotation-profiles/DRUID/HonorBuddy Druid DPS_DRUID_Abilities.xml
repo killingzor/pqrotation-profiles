@@ -121,8 +121,27 @@ if playerLevel &amp;lt; 85 then
 	local talentTree = GetPrimaryTalentTree()
 	local knownPul = IsSpellKnown(80313)
 	
-	if talentTree == 2 and not knownPul then
+	if talentTree == 1 then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Balance DPS (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 2 and not knownPul then
 		PQR_SwapRotation(&amp;quot;Leveling Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 2 and knownPul then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Feral Tank (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 3 then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Healing (HonorBuddy Druid DPS)&amp;quot;)
+	end
+elseif playerLevel == 85 then
+	local talentTree = GetPrimaryTalentTree()
+	local knownPul = IsSpellKnown(80313)
+	
+	if talentTree == 1 then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Balance DPS (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 2 and not knownPul then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 2 and knownPul then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Feral Tank (HonorBuddy Druid DPS)&amp;quot;)
+	elseif talentTree == 3 then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Healing (HonorBuddy Druid DPS)&amp;quot;)
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Rake</Name><Default>false</Default><SpellID>1822</SpellID><Actions></Actions><Lua>local isKnown = IsSpellKnown(1822)
 local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
@@ -162,7 +181,7 @@ local hasMotW = UnitBuffID(&amp;quot;Player&amp;quot;, 79061)
 
 if not hasMotW and not inCombat and isKnown then
 	return true
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Maim</Name><Default>false</Default><SpellID>22570</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Maim</Name><Default>false</Default><SpellID>22570</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 
 if hasTarget then
 	local Hostile = UnitIsEnemy(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
@@ -370,4 +389,71 @@ if hasTarget and knownFF and not prowlBuff then
 			return true
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Moonfire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>PQR_ResetMovementTime = 0.25
+local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and not isDead then
+	local mf = UnitDebuffID(&amp;quot;Target&amp;quot;, 8921)
+	local mf2 = UnitDebuffID(&amp;quot;Mouseover&amp;quot;, 8921)
+	local solar = UnitBuffID(&amp;quot;player&amp;quot;, 48517)
+	local MFfocus, _, _, _, _, _, mfiretimer = UnitDebuffID(&amp;quot;Focus&amp;quot;, 8921)
+	local MO = UnitExists(&amp;quot;Mouseover&amp;quot;)
+	local isTalented = select(5,GetTalentInfo(1,16))
+	
+	if not isTalented then
+		if mf == nil then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
+		elseif MFfocus == nil then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Focus&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Focus&amp;quot;)
+		elseif MO then
+			if mf2 == nil then
+				CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Mouseover&amp;quot;)
+				CastSpellByID(8921, &amp;quot;Mouseover&amp;quot;)
+			end
+		elseif PQR_IsMoving(.25) then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
+		end
+	elseif isTalented then
+		if mf == nil and solar == nil then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
+		elseif MFfocus == nil and solar == nil then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Focus&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Focus&amp;quot;)
+		elseif MO then
+			if mf2 == nil and solar == nil then
+				CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Mouseover&amp;quot;)
+				CastSpellByID(8921, &amp;quot;Mouseover&amp;quot;)
+			end
+		elseif PQR_IsMoving(.25) then
+			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
+			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Wrath/StarFire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and not isDead then
+	local direction = GetEclipseDirection()
+	
+	if direction == &amp;quot;moon&amp;quot; or direction == &amp;quot;none&amp;quot; then
+		CastSpellByName(tostring(GetSpellInfo(5176)))
+	elseif direction == &amp;quot;sun&amp;quot; then
+		CastSpellByName(tostring(GetSpellInfo(2912)))
+	end
+end</Lua><RecastDelay>750</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Load --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+	PQR_RotationStarted = false
+	PQR_AddToSpellDelayList(0, 0, .75) --All Spell&amp;apos;s Without ID&amp;apos;s
+	PQR_AddToSpellDelayList(2912, 0, 3) --Starfire
+	PQR_AddToSpellDelayList(5176, 0, .75) --Wrath
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Starsurge</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local starKnown = IsSpellKnown(78674)
+
+if hasTarget and not isDead and starKnown then
+	CastSpellByName(tostring(GetSpellInfo(78674)))
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
