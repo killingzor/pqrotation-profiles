@@ -117,7 +117,9 @@ else
 		end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Rotation Switcher --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
 
-if playerLevel &amp;lt; 85 then
+if playerLevel &amp;lt; 10 then
+	PQR_SwapRotation(&amp;quot;Starter Leveling (HonorBuddy Druid DPS)&amp;quot;)
+elseif playerLevel &amp;lt; 85 and playerLevel &amp;gt; 10 then
 	local talentTree = GetPrimaryTalentTree()
 	local knownPul = IsSpellKnown(80313)
 	
@@ -331,13 +333,9 @@ if BScooldown &amp;lt; 5 then
 	if BSstart ~= 0 then
 		return false
 	end
-end
-
-if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
+elseif BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
 	return true
-end
-
-if BSstart == 0 and tfEnergy &amp;lt;= 45 then
+elseif BSstart == 0 and tfEnergy &amp;lt;= 45 then
 	return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
 local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
@@ -389,7 +387,7 @@ if hasTarget and knownFF and not prowlBuff then
 			return true
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Moonfire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>PQR_ResetMovementTime = 0.25
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Moonfire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local PQR_ResetMovementTime = 0.25
 local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 
@@ -439,11 +437,16 @@ local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 
 if hasTarget and not isDead then
 	local direction = GetEclipseDirection()
+	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
 	
-	if direction == &amp;quot;moon&amp;quot; or direction == &amp;quot;none&amp;quot; then
+	if playerLevel &amp;lt;= 10 then
 		CastSpellByName(tostring(GetSpellInfo(5176)))
-	elseif direction == &amp;quot;sun&amp;quot; then
-		CastSpellByName(tostring(GetSpellInfo(2912)))
+	elseif playerLevel &amp;gt; 10 then
+		if direction == &amp;quot;moon&amp;quot; or direction == &amp;quot;none&amp;quot; then
+			CastSpellByName(tostring(GetSpellInfo(5176)))
+		elseif direction == &amp;quot;sun&amp;quot; then
+			CastSpellByName(tostring(GetSpellInfo(2912)))
+		end
 	end
 end</Lua><RecastDelay>750</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Load --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
 	PQR_RotationStarted = false
@@ -456,4 +459,39 @@ local starKnown = IsSpellKnown(78674)
 
 if hasTarget and not isDead and starKnown then
 	CastSpellByName(tostring(GetSpellInfo(78674)))
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ferocious Bite</Name><Default>false</Default><SpellID>22568</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local fbKnown = IsSpellKnown(22568)
+
+if hasTarget and not isDead and fbKnown then
+	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+	local fbCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+	
+	if playerLevel &amp;lt;= 30 then
+		if fbCP &amp;gt;= 3 then
+			return true
+		end
+	elseif playerLevel &amp;gt; 30 and playerLevel &amp;lt; 85 then
+		if fbCP &amp;gt;= 4 then
+			return true
+		end
+	elseif playerLevel == 85 then
+		local fbrip, _, _, _, _, _, fbtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+		local fbhealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+		local fbenergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+
+		if fbhealth &amp;lt;=60 then
+			if fbrip ~= nil then
+				if fbCP == 5 then
+					return true
+				end
+			end
+		else
+			if fbrip ~= nil then
+				if fbtimer - GetTime() &amp;gt; 8 and fbenergy &amp;gt;= 60 and fbCP == 5 then
+					return true
+				end
+			end
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
