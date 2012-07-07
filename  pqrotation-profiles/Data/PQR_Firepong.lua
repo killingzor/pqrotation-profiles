@@ -114,3 +114,23 @@ function PQR_ItemCD()
 	end
 	return false
 end
+
+--num = Number to round
+--idp = HOw much places to round to. Negative number not recommended.
+function round(num, idp)
+  local mult = 10^(idp or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
+
+--Var1 = Target
+--Var2 = Player
+--Var3 = Round Number. Leave blank for 0
+function PQR_UnitFlying(var1, var2, var3)
+	local targetHeight = select(3, PQR_UnitInfo(var1)) or 0
+	local playerHeight = select(3, PQR_UnitInfo(var2))
+	
+	if UnitExists(var1) and not UnitIsDead(var1) then
+		local height = round(targetHeight - playerHeight,var3)
+		return height
+	end
+end
