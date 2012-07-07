@@ -117,7 +117,6 @@ elseif playerLevel &amp;lt; 85 and playerLevel &amp;gt; 10 then
 		PQR_SwapRotation(&amp;quot;Leveling Mode - Balance DPS (HonorBuddy Druid DPS)&amp;quot;)
 	elseif talentTree == 2 and not knownPul then
 		PQR_SwapRotation(&amp;quot;Leveling Mode - Feral DPS (HonorBuddy Druid DPS)&amp;quot;)
---		PQR_SwapRotation(&amp;quot;Starter Leveling (HonorBuddy Druid DPS)&amp;quot;)
 	elseif talentTree == 2 and knownPul then
 		PQR_SwapRotation(&amp;quot;Leveling Mode - Feral Tank (HonorBuddy Druid DPS)&amp;quot;)
 	elseif talentTree == 3 then
@@ -382,10 +381,8 @@ if hasTarget and not isDead then
 	local MFfocus, _, _, _, _, _, mfiretimer = UnitDebuffID(&amp;quot;Focus&amp;quot;, 8921)
 	local MO = UnitExists(&amp;quot;Mouseover&amp;quot;)
 	local isTalented = select(5,GetTalentInfo(1,16))
-	local talentTree = GetPrimaryTalentTree()
-	local PQR_UnitFlying = PQR_UnitFlying(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;,3)
 	
-	if not isTalented and talentTree == 1 then
+	if not isTalented then
 		if mf == nil then
 			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
 			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
@@ -417,9 +414,6 @@ if hasTarget and not isDead then
 			CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
 			CastSpellByID(8921, &amp;quot;Target&amp;quot;)
 		end
-	elseif (talentTree == (2 or 3)) and PQR_UnitFlying &amp;gt; 4 and not inCombat then
-		CastSpellByName(tostring(GetSpellInfo(8921)),&amp;quot;Target&amp;quot;)
-		CastSpellByID(8921, &amp;quot;Target&amp;quot;)
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Wrath/StarFire</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
@@ -489,9 +483,9 @@ local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;qu
 
 if hasTarget and not isDead and Hostile then
 	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
-	local PQR_UnitFlying = PQR_UnitFlying(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;,3)
+	local PQR_UnitFlying = PQR_UnitFlying(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;,3)*10
 	
-	if not inCombat and PQR_UnitFlying &amp;gt; 5 then
+	if not inCombat and PQR_UnitFlying &amp;gt; 60 then
 		CastSpellByName(tostring(GetSpellInfo(8921)))
 --		print(PQR_UnitFlying)
 	end
