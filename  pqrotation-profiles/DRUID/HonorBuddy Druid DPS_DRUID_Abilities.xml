@@ -491,7 +491,7 @@ if hasTarget and not isDead and Hostile then
 	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 	local PQR_UnitFlying = PQR_UnitFlying(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;,3)
 	
-	if not inCombat and PQR_UnitFlying &amp;gt; 4.3 then
+	if not inCombat and PQR_UnitFlying &amp;gt; 5 then
 		CastSpellByName(tostring(GetSpellInfo(8921)))
 --		print(PQR_UnitFlying)
 	end
