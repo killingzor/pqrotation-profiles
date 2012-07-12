@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8" ?><HUNTER><Ability><Name>-- Load --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+	PQR_RotationStarted = false
+	PQR_AddToSpellDelayList(0, 0, .75) --All Spell&amp;apos;s Without ID&amp;apos;s
+	PQR_AddToSpellDelayList(53301, 0, 1) --Explosive Shot
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Load LUA --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+  PQR_RotationStarted = false
+  if PQR_LoadLua ~= nil then
+    if PQR_LoadLua(&amp;quot;PQR_Firepong.lua&amp;quot;) == false then 
+       PQR_WriteToChat(&amp;quot;Put the file PQR_Firepong.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
+       PQR_RotationStop()
+        return true
+     end
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Rotation Switcher --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+
+if playerLevel &amp;lt; 10 then
+	PQR_SwapRotation(&amp;quot;Starter Leveling (HonorBuddy Hunter DPS)&amp;quot;)
+elseif playerLevel &amp;lt; 85 and playerLevel &amp;gt; 10 then
+	local talentTree = GetPrimaryTalentTree()
+	
+	if talentTree == 1 then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Beast Mastery (HonorBuddy Hunter DPS)&amp;quot;)
+	elseif talentTree == 2 then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Marksmanship (HonorBuddy Hunter DPS)&amp;quot;)
+	elseif talentTree == 3 then
+		PQR_SwapRotation(&amp;quot;Leveling Mode - Survival (HonorBuddy Hunter DPS)&amp;quot;)
+	end
+elseif playerLevel == 85 then
+	local talentTree = GetPrimaryTalentTree()
+	
+	if talentTree == 1 then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Beast Mastery (HonorBuddy Hunter DPS)&amp;quot;)
+	elseif talentTree == 2 then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Marksmanship (HonorBuddy Hunter DPS)&amp;quot;)
+	elseif talentTree == 3 then
+		PQR_SwapRotation(&amp;quot;Raid Mode - Survival (HonorBuddy Hunter DPS)&amp;quot;)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Misdirection</Name><Default>false</Default><SpellID>34477</SpellID><Actions></Actions><Lua>--local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+--local knownMD = IsSpellKnown(34477)
+--local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local mdBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 34477)
+local petActive = UnitIsDead(&amp;quot;Pet&amp;quot;)
+	
+if not mdBuff and not IsMounted() and not petActive then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Pet</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Hunter&amp;apos;s Mark</Name><Default>false</Default><SpellID>1130</SpellID><Actions></Actions><Lua>local hastarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownMark = IsSpellKnown(1130)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hastarget and knownMark and not isDead and not IsMounted() then
+	local hasMark = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;, 1130, &amp;quot;Player&amp;quot;))
+	
+	if hasMark then
+		return false
+	else
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Aspect Switching --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local knownFox = IsSpellKnown(82661)
+local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+
+if hasTarget and Hostile and knownFox then
+	local foxBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 82661)
+	local hawkBuff = UnitBuffID(&amp;quot;Player&amp;quot;, 13165)
+	
+	if PQR_IsMoving(.75) and not foxBuff then
+		CastSpellByName(tostring(GetSpellInfo(82661)))
+	elseif not PQR_IsMoving(.5) and not hawkBuff then
+		CastSpellByName(tostring(GetSpellInfo(13165)))
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Cobra Shot</Name><Default>false</Default><SpellID>77767</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownCS = IsSpellKnown(77767)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownCS and Hostile and not isDead then
+	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+	local Focus = UnitPower(&amp;quot;Player&amp;quot;)
+	
+	if Focus &amp;lt; 44 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Arcane Shot</Name><Default>false</Default><SpellID>3044</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownAS = IsSpellKnown(3044)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownAS and Hostile and not isDead then
+	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+	local Focus = UnitPower(&amp;quot;Player&amp;quot;)
+	
+	if Focus &amp;lt;= 100 and Focus &amp;gt; 70 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Explosive Shot</Name><Default>false</Default><SpellID>53301</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownES = IsSpellKnown(53301)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownES and Hostile and not isDead then
+--	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+	local esBuff = select(7,UnitDebuffID(&amp;quot;Target&amp;quot;, 53301))
+	local Focus = UnitPower(&amp;quot;Player&amp;quot;)
+	local esCD = GetSpellCooldown(53301)
+	local esProc = UnitBuffID(&amp;quot;Player&amp;quot;,56453)
+	
+	if not esBuff and Focus &amp;gt;= 44 then
+		return true
+	elseif not esBuff and esProc then
+		return true
+	end
+end</Lua><RecastDelay>1000</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Black Arrow</Name><Default>false</Default><SpellID>3674</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownBA = IsSpellKnown(3674)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownBA and Hostile and not isDead then
+	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
+	local Focus = UnitPower(&amp;quot;Player&amp;quot;)
+	
+	if Focus &amp;gt; 50 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Serpent Sting</Name><Default>false</Default><SpellID>1978</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownSS = IsSpellKnown(1978)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownSS and Hostile and not isDead then
+	local ssDebuff = select(7,UnitDebuffID(&amp;quot;Target&amp;quot;,1978,&amp;quot;Player&amp;quot;))
+	local Focus = UnitPower(&amp;quot;Player&amp;quot;)
+	
+	if not ssDebuff and Focus &amp;gt; 55 then
+		return true
+	elseif ssDebuff then
+		if ssDebuff - GetTime() &amp;lt; 5 and Focus &amp;gt; 55 then
+			return true
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Pet Abilities --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Spell Checks
+local petActive = HasPetSpells()
+local ClawEnabled = select(7,GetPetActionInfo(4))
+local DashEnabled = select(7,GetPetActionInfo(5))
+local ProwlEnabled = select(7,GetPetActionInfo(6))
+local RoarEnabled = select(7,GetPetActionInfo(7))
+--Target Checks
+local petTarget = UnitIsEnemy(&amp;quot;Target&amp;quot;,&amp;quot;Pet&amp;quot;)
+local pTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isEnemy = UnitIsEnemy(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;)
+--Combat Checks
+local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+local inCombatPet = UnitAffectingCombat(&amp;quot;Pet&amp;quot;)
+--Buff Checks
+local Prowl = UnitBuffID(&amp;quot;Pet&amp;quot;, 24450)
+--Tables
+local agiBuff = {
+	57330, --Horn of Winter
+	93435, --Roar of Courage
+	6673 --Battle Shout
+}
+--End Tables
+--Stance Dance
+----Combat Locals
+local Attack = select(5,GetPetActionInfo(1))
+----Stance Locals
+local Assist = select(5,GetPetActionInfo(8))
+local Defensive = select(5,GetPetActionInfo(9))
+local Passive = select(5,GetPetActionInfo(10))
+----End Stance Locals
+----Passive if not in Combat
+if inCombat == 1 then
+	if Assist == nil then
+		PetAssistMode()
+	end
+elseif (inCombat and inCombatPet) == nil then
+	if Passive == nil then
+		PetPassiveMode()
+	end
+end
+--End Stance Dance/Attack &amp; Follow
+--Pet Target Switcher
+if petTarget == 1 then
+	if petTarget ~= isEnemy then
+		PetAttack(&amp;quot;Target&amp;quot;)
+	end
+end
+
+if pTarget == nil then
+	if Attack == 1 then
+		PetFollow()
+	end
+end
+--End Pet Target Switcher
+
+--Functions
+function AgiBuff(unit)
+	for i=1,#agiBuff do
+		local Buff = UnitBuffID(unit, agiBuff[i])
+		if Buff ~= nil then
+			return true
+		end
+	end
+	return false
+end
+--End Functions
+
+--Function Calls
+----Function Locals
+local AgiBuff = AgiBuff(&amp;quot;Player&amp;quot;)
+----Function Locals End
+if AgiBuff == false and petActive ~= nil then
+	CastPetAction(7)
+end
+--Function Calls End
+
+--Toggle Claw on if inCombat.
+if (inCombat or inCombatPet) == 1 and ClawEnabled == nil and petActive ~= nil then
+	TogglePetAutocast(4)
+end
+
+--Toggle Spells off if not in combat.
+----Claw
+if ClawEnabled ~= nil and (inCombat or inCombatPet) == nil and petActive ~= nil then
+	TogglePetAutocast(4)
+end
+----Dash
+if DashEnabled ~= nil and (inCombat or inCombatPet) == nil and petActive ~= nil then
+	TogglePetAutocast(5)
+end
+----Prowl
+if ProwlEnabled ~= nil and (inCombat or inCombatPet) == nil and petActive ~= nil then
+	TogglePetAutocast(6)
+end
+----Roar of Courage
+if RoarEnabled ~= nil and (inCombat or inCombatPet) == nil and petActive ~= nil then
+	TogglePetAutocast(7)
+end
+--End Toggle Spells
+
+--Dash if in combat.
+if (pTarget and isEnemy and inCombat or inCombatPet) == 1 and petActive ~= nil then
+	CastPetAction(5, &amp;quot;Target&amp;quot;)
+end
+
+--Prowl if not in combat.
+if Prowl ~= nil then
+	return false
+elseif inCombatPet == nil then
+	CastPetAction(6, &amp;quot;Pet&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Kill Shot</Name><Default>false</Default><SpellID>53351</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local knownKS = IsSpellKnown(53351)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and knownKS and Hostile and not isDead then
+	local targetHP = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;)
+	
+	if targetHP &amp;lt;= 20 then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Mend Pet/Feed Pat --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local petHP = 100 * UnitHealth(&amp;quot;Pet&amp;quot;) / UnitHealthMax(&amp;quot;Pet&amp;quot;)
+local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;) or UnitAffectingCombat(&amp;quot;Pet&amp;quot;)
+local hasTarget = UnitExists(&amp;quot;Targer&amp;quot;)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isPetDead = UnitIsDead(&amp;quot;Pet&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local isInstance, instanceType = IsInInstance()
+local hasPet = UnitIsDead(&amp;quot;Pet&amp;quot;) 
+
+if hasTarget and Hostile and not isPetDead and not isDead and not isInstance and not hasPet then
+	local knownMend = IsSpellKnown(136)
+	local knownFeed = IsSpellKnown(6991)
+	local hasMend = select(4,UnitBuffID(&amp;quot;Pet&amp;quot;, 136))
+	
+	if petHP &amp;lt; 90 and knownMend and not hasMend and inCombat then
+		CastSpellByName(tostring(GetSpellInfo(136)))
+	end
+elseif not inCombat and not isPetDead and not isInstance then
+	if petHP &amp;lt; 90 and petHP &amp;gt; 50 and knownMend and not hasMend and not inCombat and not hasPet then
+		CastSpellByName(tostring(GetSpellInfo(136)))
+	elseif petHP &amp;lt; 50 then
+		CastSpellByName(tostring(GetSpellInfo(6991)))
+		if SpellIsTargeting() then
+			SpellTargetItem(58262)
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></HUNTER>
