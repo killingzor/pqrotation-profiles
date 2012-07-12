@@ -61,13 +61,6 @@ namespace Singular.ClassSpecific.Hunter
                                    !StyxWoW.Me.HasAnyAura("Bloodlust", "Heroism", "Time Warp", "The Beast Within")))),
 
                 // Rotation
-                Spell.Buff("Serpent Sting", true),
-                Spell.Cast("Kill Shot"),
-                Spell.Cast("Explosive Shot"),
-                Spell.Cast("Black Arrow"),
-                Spell.Cast("Arcane Shot", ret => StyxWoW.Me.FocusPercent > 40),
-                Spell.Cast("Cobra Shot"),
-                Spell.Cast("Steady Shot", ret => !SpellManager.HasSpell("Cobra Shot")),
 
                 Movement.CreateMoveToTargetBehavior(true, 35f)
                 );
@@ -191,13 +184,7 @@ namespace Singular.ClassSpecific.Hunter
                     ),
 
                 // Rotation
-                Spell.Buff("Serpent Sting", true),
-                Spell.Cast("Kill Shot"),
-                Spell.Cast("Explosive Shot"),
-                Spell.Cast("Black Arrow"),
-                Spell.Cast("Arcane Shot", ret => StyxWoW.Me.FocusPercent > 40),
-                Spell.Cast("Cobra Shot"),
-                Spell.Cast("Steady Shot", ret => !SpellManager.HasSpell("Cobra Shot")),
+
                 Movement.CreateMoveToTargetBehavior(true, 35f)
                 );
         }
