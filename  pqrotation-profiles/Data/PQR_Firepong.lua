@@ -126,7 +126,7 @@ end
 --Var2 = Player
 --Var3 = Round Number. Leave blank for 0
 function PQR_UnitFlying(var1, var2, var3)
-	local targetHeight = select(3, PQR_UnitInfo(var1)) or 0
+	local targetHeight = select(3, PQR_UnitInfo(var1))
 	local playerHeight = select(3, PQR_UnitInfo(var2))
 	
 	if UnitExists(var1) and not UnitIsDead(var1) then
