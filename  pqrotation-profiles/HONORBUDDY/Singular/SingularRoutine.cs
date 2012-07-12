@@ -52,7 +52,7 @@ namespace Singular
 
         public static SingularRoutine Instance { get; private set; }
 
-        public override string Name { get { return "Singular v2 $Revision: 605 $"; } }
+        public override string Name { get { return "Singular Reloaded v1 $Revision: 1 $"; } }
 
         public override WoWClass Class { get { return StyxWoW.Me.Class; } }
 
