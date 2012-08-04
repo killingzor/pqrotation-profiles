@@ -129,4 +129,19 @@ if hasTarget and not isDead and Enemy then
 	if rage &amp;gt;= 20 then
 		return true
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>--  IsFlying/Pull  --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local Hostile = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+
+if hasTarget and not isDead and Hostile then
+	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+	local PQR_UnitFlying = PQR_UnitFlying(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;,3)
+	
+	if not inCombat and PQR_UnitFlying &amp;gt; 5 then
+		if IsEquippedItemType(&amp;quot;Guns&amp;quot;) or IsEquippedItemType(&amp;quot;Bows&amp;quot;) then
+			CastSpellByName(tostring(GetSpellInfo(3018)))
+		elseif IsEquippedItemType(&amp;quot;Thrown&amp;quot;) then
+			CastSpellByName(tostring(GetSpellInfo(2764)))
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></WARRIOR>
