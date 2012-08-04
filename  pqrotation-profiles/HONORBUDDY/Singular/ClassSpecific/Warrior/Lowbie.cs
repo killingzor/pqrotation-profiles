@@ -28,20 +28,6 @@ namespace Singular.ClassSpecific.Warrior
                 // Auto Attack
                 Common.CreateAutoAttack(false),
                 Helpers.Common.CreateInterruptSpellCast(ret => StyxWoW.Me.CurrentTarget),
-                // Heal
-                Spell.Cast("Victory Rush"),
-                //rend
-                Spell.Buff("Rend"),
-                // AOE
-                new Decorator(
-                    ret => Clusters.GetClusterCount(StyxWoW.Me, Unit.NearbyUnfriendlyUnits, ClusterType.Radius, 6f) >= 2,
-                    new PrioritySelector(
-                        Spell.Cast("Victory Rush", ret => StyxWoW.Me.HealthPercent < 80),
-                        Spell.Cast("Thunder Clap"),
-                        Spell.Cast("Strike"))),
-                // DPS
-                Spell.Cast("Strike"),
-                Spell.Cast("Thunder Clap", ret => StyxWoW.Me.RagePercent > 50),
                 //move to melee
                 Movement.CreateMoveToTargetBehavior(true, 5f)
                 );
@@ -63,12 +49,6 @@ namespace Singular.ClassSpecific.Warrior
                 Movement.CreateFaceTargetBehavior(),
                 // Auto Attack
                 Common.CreateAutoAttack(false),
-                // charge
-                Spell.Cast("Charge", ret => StyxWoW.Me.CurrentTarget.Distance > 10 && StyxWoW.Me.CurrentTarget.Distance < 25),
-                Spell.Cast("Throw", ret => StyxWoW.Me.CurrentTarget.IsFlying && Item.RangedIsType(WoWItemWeaponClass.Thrown)), Spell.Cast(
-                    "Shoot",
-                    ret =>
-                    StyxWoW.Me.CurrentTarget.IsFlying && (Item.RangedIsType(WoWItemWeaponClass.Bow) || Item.RangedIsType(WoWItemWeaponClass.Gun))),
                 // move to melee
                 Movement.CreateMoveToTargetBehavior(true, 5f)
                 );
