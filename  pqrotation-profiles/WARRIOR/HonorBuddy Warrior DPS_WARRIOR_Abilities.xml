@@ -54,9 +54,10 @@ local chKnown = IsSpellKnown(100)
 local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 
 if hasTarget and not isDead and Enemy and chKnown then
-	local range = IsSpellInRange(tostring(GetSpellInfo(100)))
+	local inRange = IsSpellInRange(tostring(GetSpellInfo(100)),&amp;quot;Target&amp;quot;)
 	
-	if range then
+	if inRange then
+		CastShapeshiftForm(1)
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Victory Rush</Name><Default>false</Default><SpellID>34428</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
@@ -79,6 +80,7 @@ if hasTarget and not isDead and Enemy and rendKnown then
 	local rend = UnitDebuffID(&amp;quot;Target&amp;quot;, 94009)
 	
 	if not rend then
+		CastShapeshiftForm(1)
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Thunder Clap</Name><Default>false</Default><SpellID>6343</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
@@ -89,8 +91,14 @@ local tcKnown = IsSpellKnown(6343)
 if hasTarget and not isDead and Enemy and tcKnown then
 	local tcBuff = UnitDebuffID(&amp;quot;Target&amp;quot;, 6343)
 	local rage = UnitPower(&amp;quot;Player&amp;quot;)
+	local inRange = IsSpellInRange(tostring(GetSpellInfo(88163)),&amp;quot;Target&amp;quot;)
+	local spec = GetPrimaryTalentTree()
 	
-	if not tcBuff and rage &amp;gt; 50 then
+	if spec == (1 or 2) then
+		if not tcBuff and rage &amp;gt; 50 and inRange then
+			return true
+		end
+	elseif spec == 3 and rage &amp;gt; 20 then
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Heroic Strike</Name><Default>false</Default><SpellID>78</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
@@ -116,6 +124,7 @@ if hasTarget and not isDead and Enemy then
 	local playerLevel = UnitLevel(&amp;quot;Player&amp;quot;)
 	
 	if rage &amp;gt;= 20 then
+		CastShapeshiftForm(1)
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Bloodthirst</Name><Default>false</Default><SpellID>23881</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
@@ -156,4 +165,50 @@ if hasTarget and not isDead and Enemy and exKnown then
 	if targetHP &amp;lt;= 20 and rage &amp;gt;= 25 then
 		return true
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Overpower</Name><Default>false</Default><SpellID>7384</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local opKnown = IsSpellKnown(7384)
+
+if hasTarget and not isDead and Enemy and opKnown then
+	local opCD = GetSpellCooldown(7384)
+	
+	if opCD then
+		return true
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Heroic Throw</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local htKnown = IsSpellKnown(57755)
+
+if hasTarget and not isDead and Enemy and htKnown then
+	local inInstance = IsInInstance()
+	local spec = GetPrimaryTalentTree()
+	local inRange = IsSpellInRange(tostring(GetSpellInfo(57755)))
+	local chargeCD,chargedur = GetSpellCooldown(100)
+	local chargeTime = chargeCD + chargedur - GetTime()
+	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+	local threat = UnitThreatSituation(&amp;quot;Player&amp;quot;,UnitName(PQR_CustomTarget))
+
+	if spec == (1 or 2) then
+		if not inInstance and chargeTime &amp;lt; 12 and inRange and not inCombat then
+ 			CastSpellByName(tostring(GetSpellInfo(57755)),PQR_CustomTarget)
+ 		end
+ 	elseif spec == 3 and threat == (0 or 1 or 2) then
+ 		CastSpellByName(tostring(GetSpellInfo(57755)),PQR_CustomTarget)
+ 	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Taunt</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local tKnown = IsSpellKnown(7384)
+local inInstance = IsInInstance()
+
+if hasTarget and not isDead and Enemy and tKnown and not inInstance then
+	local threat = UnitThreatSituation(&amp;quot;Player&amp;quot;,UnitName(PQR_CustomTarget))
+--	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+	
+	if threat == (0 or 1 or 2) then
+		CastShapeshiftForm(2)
+		CastSpellByName(tostring(GetSpellInfo(355)),PQR_CustomTarget)
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
