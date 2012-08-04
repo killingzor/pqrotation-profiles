@@ -211,4 +211,8 @@ if hasTarget and not isDead and Enemy and tKnown and not inInstance then
 		CastShapeshiftForm(2)
 		CastSpellByName(tostring(GetSpellInfo(355)),PQR_CustomTarget)
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Battle Shout</Name><Default>false</Default><SpellID>6673</SpellID><Actions></Actions><Lua>local bsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,6673)
+
+if not bsBuff and not IsMounted() then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
