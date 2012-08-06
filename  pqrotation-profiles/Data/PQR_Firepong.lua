@@ -134,3 +134,17 @@ function PQR_UnitFlying(var1, var2, var3)
 		return height
 	end
 end
+
+--Var1 = Target
+--Var2 = Player
+function PQR_UnitDistance(var1, var2)
+	if UnitExists(var1) and not UnitIsDead(var1) then
+		local x1 , y1 = select(1,PQR_UnitInfo(var1)), select(2,PQR_UnitInfo(var1))
+		local x2 , y2 = select(1,PQR_UnitInfo(var2)), select(2,PQR_UnitInfo(var2))
+		local w = 100000
+		local h = 100000
+		local distance = sqrt(min(x1 - x2, w - (x1 - x2))^2 + min(y1 - y2, h - (y1-y2))^2)
+		
+		return distance
+	end
+end
