@@ -238,4 +238,38 @@ local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 
 if not hasTarget and not inCombat and index ~= 1 then
 	CastShapeshiftForm(1)
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></WARRIOR>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Learn Talents --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasPoints = GetUnspentTalentPoints()
+local spec = GetPrimaryTalentTree()
+local isKnown = IsSpellKnown(46924)
+
+if spec == 1 then
+	if isKnown and hasPoints &amp;gt; 0 then
+		AddPreviewTalentPoints(2,2,1)
+		AddPreviewTalentPoints(2,3,1)
+		AddPreviewTalentPoints(2,4,1)
+		AddPreviewTalentPoints(3,1,1)
+		LearnPreviewTalents()
+	elseif hasPoints &amp;gt; 0 then
+		AddPreviewTalentPoints(1,1,1)
+		AddPreviewTalentPoints(1,3,1)
+		AddPreviewTalentPoints(1,4,1)
+		AddPreviewTalentPoints(1,6,1)
+		AddPreviewTalentPoints(1,8,1)
+		AddPreviewTalentPoints(1,10,1)
+		AddPreviewTalentPoints(1,12,1)
+		AddPreviewTalentPoints(1,13,1)
+		AddPreviewTalentPoints(1,14,1)
+		AddPreviewTalentPoints(1,16,1)
+		AddPreviewTalentPoints(1,15,1)
+		AddPreviewTalentPoints(1,17,1)
+		AddPreviewTalentPoints(1,18,1)
+		AddPreviewTalentPoints(1,9,1)
+		AddPreviewTalentPoints(1,2,1)
+		AddPreviewTalentPoints(1,20,1)
+		LearnPreviewTalents()
+	end
+elseif spec == 2 then
+	return false
+elseif spec == 3 then
+	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
