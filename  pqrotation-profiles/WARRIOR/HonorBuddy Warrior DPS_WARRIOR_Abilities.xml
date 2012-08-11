@@ -56,7 +56,7 @@ local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 if hasTarget and not isDead and Enemy and chKnown then
 	local PQR_UnitDistance = PQR_UnitDistance(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
 	
-	if PQR_UnitDistance &amp;gt; 5 and PQR_UnitDistance &amp;lt;= 25 then
+	if PQR_UnitDistance &amp;gt; 8 and PQR_UnitDistance &amp;lt; 25 then
 		CastShapeshiftForm(1)
 		return true
 	end
@@ -92,7 +92,7 @@ local tcKnown = IsSpellKnown(6343)
 if hasTarget and not isDead and Enemy and tcKnown then
 	local tcBuff = UnitDebuffID(&amp;quot;Target&amp;quot;, 6343)
 	local rage = UnitPower(&amp;quot;Player&amp;quot;)
-	local inRange = IsSpellInRange(tostring(GetSpellInfo(88163)),&amp;quot;Target&amp;quot;)
+	local inRange = IsSpellInRange(tostring(GetSpellInfo(88163)))
 	local spec = GetPrimaryTalentTree()
 	
 	if spec == (1 or 2) then
@@ -176,7 +176,7 @@ local opKnown = IsSpellKnown(7384)
 
 if hasTarget and not isDead and Enemy and opKnown then
 	local opCD = GetSpellCooldown(7384)
-	
+		
 	if opCD then
 		CastShapeshiftForm(1)
 		return true
@@ -189,14 +189,14 @@ local htKnown = IsSpellKnown(57755)
 if hasTarget and not isDead and Enemy and htKnown then
 	local inInstance = IsInInstance()
 	local spec = GetPrimaryTalentTree()
-	local inRange = IsSpellInRange(tostring(GetSpellInfo(57755)))
+	local PQR_UnitDistance = PQR_UnitDistance(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
 	local chargeCD,chargedur = GetSpellCooldown(100)
 	local chargeTime = chargeCD + chargedur - GetTime()
 	local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 	local threat = UnitThreatSituation(&amp;quot;Player&amp;quot;,UnitName(PQR_CustomTarget))
 
 	if spec == (1 or 2) then
-		if not inInstance and chargeTime &amp;lt; 12 and chargeTime &amp;gt; 0 and inRange and not inCombat then
+		if not inInstance and chargeTime &amp;lt; 12 and chargeTime &amp;gt; 0 and PQR_UnitDistance &amp;lt; 30 and not inCombat then
  			CastSpellByName(tostring(GetSpellInfo(57755)),PQR_CustomTarget)
  		end
  	elseif spec == 3 and threat == (0 or 1 or 2) then
@@ -228,15 +228,18 @@ local sKnown = IsSpellKnown(57755)
 if hasTarget and not isDead and Enemy and sKnown then
 	local rage = UnitPower(&amp;quot;Player&amp;quot;)
 	
-	if rage &amp;gt; 30 then
+	if rage &amp;gt; 55 then
 		CastShapeshiftForm(3)
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Default Battle Stance --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 local index = GetShapeshiftForm()
 local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local opBuff = UnitBuffID(&amp;quot;Player&amp;quot;,60503)
 
-if not hasTarget and not inCombat and index ~= 1 then
+if opBuff then
+	CastShapeshiftForm(1)
+elseif not hasTarget and not inCombat and index ~= 1 then
 	CastShapeshiftForm(1)
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Learn Talents --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasPoints = GetUnspentTalentPoints()
 local spec = GetPrimaryTalentTree()
@@ -293,4 +296,15 @@ elseif spec == 2 then
 	return false
 elseif spec == 3 then
 	return false
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Berserker Rage</Name><Default>false</Default><SpellID>18499</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local brKnown = IsSpellKnown(18499)
+
+if hasTarget and not isDead and Enemy and brKnown then
+	local PQR_UnitDistance = PQR_UnitDistance(&amp;quot;Target&amp;quot;, &amp;quot;Player&amp;quot;)
+	
+	if PQR_UnitDistance &amp;lt; 4 then
+		return true
+	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></WARRIOR>
