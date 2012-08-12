@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Call of Spirits</Name><Default>false</Default><SpellID>66844</SpellID><Actions></Actions><Lua>if GetTotemTimeLeft(2) &amp;lt; 20 or GetTotemTimeLeft(3) &amp;lt; 20 or GetTotemTimeLeft(4) &amp;lt; 20 then
+<?xml version="1.0" encoding="utf-8" ?><SHAMAN><Ability><Name>Call of Spirits</Name><Default>false</Default><SpellID>66842</SpellID><Actions></Actions><Lua>if GetTotemTimeLeft(2) &amp;lt; 20 or GetTotemTimeLeft(3) &amp;lt; 20 or GetTotemTimeLeft(4) &amp;lt; 20 then
 	return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Lightning_Shield</Name><Default>false</Default><SpellID>324</SpellID><Actions></Actions><Lua>LS = UnitBuffID(&amp;quot;player&amp;quot;, 324);
 
@@ -63,7 +63,7 @@ local UL = UnitBuffID(&amp;quot;Player&amp;quot;, 73683)
 if ES == nil and fsDebuff ~= nil and UL == nil then
 	return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Spirit_Wolves</Name><Default>false</Default><SpellID>51533</SpellID><Actions></Actions><Lua>local target = UnitHealthMax(&amp;quot;Target&amp;quot;)
-local player = UnitHealthMax(&amp;quot;Player&amp;quot;)*40
+local player = UnitHealthMax(&amp;quot;Player&amp;quot;)*50
 
 if target &amp;gt; player then
 	return true
@@ -136,9 +136,8 @@ if fsDebuff ~= nil and setAoE then
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Healing Rain</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local _,lcd =  GetSpellCooldown(73920)
 local Spell, _, _, _, _, endTime = UnitCastingInfo(&amp;quot;player&amp;quot;)
 
---if lcd == 0 and IsLeftControlKeyDown() and GetCurrentKeyBoardFocus() == nil and Spell ~=&amp;quot;Healing Rain&amp;quot; and mana &amp;gt; 10131 then
-if lcd == 0 and IsLeftControlKeyDown() == 1 and Spell ~=&amp;quot;Healing Rain&amp;quot; and mana &amp;gt; 10131 then
-  CastSpellByName(tostring(GetSpellInfo(73920)))
+if lcd == 0 and IsLeftControlKeyDown()  and GetCurrentKeyBoardFocus() == nil then
+  SilentCast(73920)
   if SpellIsTargeting() then CameraOrSelectOrMoveStart() CameraOrSelectOrMoveStop() end  
   return true
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Fire Elemental Totem</Name><Default>false</Default><SpellID>2894</SpellID><Actions></Actions><Lua>if IsLeftShiftKeyDown() == 1 then
