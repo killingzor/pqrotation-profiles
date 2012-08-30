@@ -14,6 +14,27 @@ function PQR_FireMangle(var1,var2,var3,var4)
 	end
 end
 
+local glyph = {
+	1, --Minor Glyph (Top Right)
+	2, --Major Glyph (Top)
+	3, --Minor Glyph (Top Left)
+	4, --Major Glyph (Bottom Left)
+	5, --Minor Glyph (Bottom)
+	6 --Major Glyph (Bottom Right)
+}
+
+function HasGlyph(var1)
+	for i=1,#glyph do
+		local GlyphSlot = select(4,GetGlyphSocketInfo(glyph[i]))
+		
+		if GlyphSlot == var1 then
+			return true
+		end
+	end
+	return false
+end
+
+
 local mangle = {
 	52409, --Ragnaros
 	55294 --Ultraxion
