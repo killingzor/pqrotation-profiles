@@ -27,78 +27,35 @@ else
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>5221</SpellID><Actions></Actions><Lua>-- Check for the debuffs.
-local hasCatMangle = UnitDebuffID(&amp;quot;target&amp;quot;, 33876)
-local hasBearMangle = UnitDebuffID(&amp;quot;target&amp;quot;, 33878)
-local hasTrauma = UnitDebuffID(&amp;quot;target&amp;quot;, 46857)
-local hasHemorrhage = UnitDebuffID(&amp;quot;target&amp;quot;, 16511)
 local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
 local target = UnitName(&amp;quot;Target&amp;quot;)
-local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
+--local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
 local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
+local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
 
 
 -- Just check for all buffs, we have no casting time on Shred so no need for a timer check
-if hasCatMangle ~= nil or hasBearMangle ~= nil or hasTrauma ~= nil or hasHemorrhage ~= nil then
-	if PQR_NotBehindTarget() or Fire == true then
-		return false
-	else
-		if CP == 5 then
-			return false
-		else
-			if rake ~= nil then
-				return true
-			end
-		end
-	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>-- Variables
-local PQR_FireBleedDebuff = PQR_FireBleedDebuff(&amp;quot;target&amp;quot;)
-local PQR_FirePlayerBleedDebuff = PQR_FirePlayerBleedDebuff(&amp;quot;target&amp;quot;)
-local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
-local target = UnitName(&amp;quot;Target&amp;quot;)
---Energy Checks
-local energyRegen = GetPowerRegen()
-local MangleCost = select(4,GetSpellInfo(33876))
---Buffs/Debuffs
-local fbCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
-local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
-local Mangle = UnitDebuffID(&amp;quot;Target&amp;quot;, 33876)
-
-if MangleCost ~= 0 then
-	local MangleRefresh = ((MangleCost/energyRegen)+2)
-else
-	MangleRefresh = 3
-end
-
-if(PQR_BleedDebuff == true and PQR_PlayerBleedDebuff == false) then
+if PQR_NotBehindTarget() then
 	return false
-end
-
-if(PQR_PlayerBleedDebuff == true) then
-        local CatManTimer = select(7, UnitBuffID( &amp;quot;target&amp;quot;, 33876))
-        local BearManTimer = select(7, UnitBuffID( &amp;quot;target&amp;quot;, 33878))
-	if (CatManTimer ~= nil and (CatManTimer - GetTime() &amp;lt; MangleRefresh)) then
-		 return true 
-	end
-	if (BearManTimer ~= nil and (BearManTimer - GetTime() &amp;lt; MangleRefresh)) then 
-		return true 
-	end
-else
-	if (PQR_FireBleedDebuff == false) then
-		return true
-	end
-end
-
-if PQR_NotBehindTarget() or Fire == true and fbCP ~= 5 and rake ~= nil then
-	return true
-end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>16857</SpellID><Actions></Actions><Lua>local FF, _, _, _, _, _, FFtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 91565)
-local FFstart, FFduration, FFenabled = GetSpellCooldown(16857)
-local FFcooldown = (FFstart + FFduration - GetTime())
-
-
-if FF == nil then
-	if FFcooldown &amp;gt; 0 then
+elseif CP == 5 then
 		return false
-	else
+elseif rake ~= nil and not Incarnation then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>33876</SpellID><Actions></Actions><Lua>--Buffs/Debuffs
+local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
+
+
+if PQR_NotBehindTarget() and fbCP == 5 and rake ~= nil then
+	return true
+end</Lua><RecastDelay>500</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>770</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and Enemy and not isDead then
+	local waBuff = UnitDebuffID(&amp;quot;Target&amp;quot;,113746,&amp;quot;Player&amp;quot;)
+	
+	if not waBuff then
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>52610</SpellID><Actions></Actions><Lua>local srTimer = select(7,UnitBuffID(&amp;quot;player&amp;quot;, 52610))
@@ -124,22 +81,21 @@ if fbhealth &amp;lt;=60 then
 	end
 else
 	if fbrip ~= nil then
-		if fbtimer - GetTime() &amp;gt; 8 and fbenergy &amp;gt;= 60 and fbCP == 5 then
+		if fbtimer - GetTime() &amp;gt; 8 and fbenergy &amp;gt;= 50 and fbCP == 5 then
 			return true
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
-local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
---Buffs
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Buffs
 local _,_,_,TF = UnitBuffID(&amp;quot;player&amp;quot;, 5217)
-local _, _, _, BS = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
-local BSstart, BSduration = GetSpellCooldown(50334)
+local _, _, _, BS = UnitBuffID(&amp;quot;player&amp;quot;, 106951)
+local BSstart, BSduration = GetSpellCooldown(106951)
 --Cooldowns
 local BScooldown = (BSstart + BSduration - GetTime())
 --Energy/Health/Level Checks
 local bsEnergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
 local bsHealth = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
 local levelcheck = UnitLevel(&amp;quot;target&amp;quot;)
+local spell = select(2,GetSpellBookItemInfo(tostring(GetSpellInfo(106951))))
 
 if TF == nil then
 	return false
@@ -149,52 +105,33 @@ else
 			return false
 		else
 			-- if bsHealth &amp;lt; 96 then
-				CastSpellByName(tostring(GetSpellInfo(50334)))
+			CastSpell(FindSpellBookSlotBySpellID(spell),&amp;quot;Player&amp;quot;)
 			-- end
 		end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>5217</SpellID><Actions>/use Ancient Petrified Seed</Actions><Lua>--Functions
---Buffs
-local _,_,_,TF = UnitBuffID(&amp;quot;player&amp;quot;, 5217)
-local stamp = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Stampede&amp;quot;)
---Cooldowns
-local TFstart, TFduration = GetSpellCooldown(5217)
-local TFcooldown = (TFstart + TFduration - GetTime())
---Energy Checks
-local tfEnergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>5217</SpellID><Actions></Actions><Lua>local tfEnergy = UnitPower(&amp;quot;player&amp;quot;)
+local BSstart, BSduration = GetSpellCooldown(106951)
+local BScooldown = (BSstart + BSduration - GetTime())
 
-
-if TF ~= nil then
-	return false
-else
-	if TFcooldown &amp;gt; 0 then
-		return false
-	else
-		if stamp ~= nil then
-			return false
-		else
-			if tfEnergy &amp;lt; 45 then
-				return true
-			end
-		end
-	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Swipe</Name><Default>false</Default><SpellID>62078</SpellID><Actions></Actions><Lua>local _,_,_,BS = UnitBuffID(&amp;quot;player&amp;quot;, 50334)
-local energy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
+	return true
+elseif BScooldown &amp;lt; 1 and tfEnergy &amp;lt;= 45 then
+	return true
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Swipe</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
+local energy = UnitPower(&amp;quot;player&amp;quot;)
 
 
 if BS ~= nil then
 	if energy &amp;gt;= 22 then
-		return true
+		CastSpellByName(tostring(GetSpellInfo(62078)))
 	end
 else
 	if energy &amp;gt;= 45 then
-		return true
+		CastSpellByName(tostring(GetSpellInfo(62078)))
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local stamp = UnitBuff(&amp;quot;player&amp;quot;, &amp;quot;Stampede&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
 
-if stamp ~= nil then
-	local soundState = GetCVar(&amp;quot;Sound_EnableSFX&amp;quot;)
+if Incarnation ~= nil then
 	CastSpellByName(tostring(GetSpellInfo(6785)))
-	SetCVar(&amp;quot;Sound_EnableSFX&amp;quot;, soundState)
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>--- special events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
 local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
 if fadingtime and fadingtime - GetTime() &amp;lt; 1.3 then RunMacroText(&amp;quot;/click ExtraActionButton1&amp;quot;) end 
@@ -215,24 +152,22 @@ if canontime and canontime - GetTime() &amp;lt; 1.15 then CancelUnitBuff(&amp;qu
         return true
      end
    end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
-local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
---Race Checks
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Race Checks
 local Troll = IsSpellKnown(26297)
 local Orc = IsSpellKnown(20572)
 --Cooldowns
 local tCD = GetSpellCooldown(26297)
 local oCD = GetSpellCooldown(20572)
 --Buffs
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334))
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
 
 if Troll == true then
 	if BS == nil then
 		return false
 	else
---		if tvCD == 0 and (PQR_FireBoss == true) then
 		if tCD == 0 then
 			CastSpellByName(tostring(GetSpellInfo(26297)))
+--			CastSpellByID(74497)
 		end
 	end
 end
@@ -241,14 +176,11 @@ if Orc == true then
 	if BS == nil then
 		return false
 	else
---		if oCD == 0 and (PQR_FireBoss == true) then
 		if oCD == 0 then
-			CastSpellByName(tostring(GetSpellInfo(26297)))
+			CastSpell(FindSpellBookSlotBySpellID(26297),&amp;quot;Player&amp;quot;)
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
-local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
---Potion Counts
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Potion Counts
 local tvPot = GetItemCount(58145) --Potion of the Tol&amp;apos;Vir
 local vPot = GetItemCount(58091) --Volcanic Potion
 local gbPot = GetItemCount(58146) --Golemblood Potion
@@ -264,7 +196,6 @@ local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Dru
 if tvPot == nil then
 	return false
 else
---	if tvPot ~= nil and tvCD == 0 and (PQR_FireBoss == true) then
 	if tvPot ~= nil and tvCD == 0 then
 		if BS == nil then
 			return false
@@ -272,23 +203,19 @@ else
 			UseItemByName(58145)
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Profession Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Functions
-local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
-local itemCD = PQR_ItemCD()
---Profession Cooldown&amp;apos;s/Known Spells
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Profession Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Profession Cooldown&amp;apos;s/Known Spells
 local herbKnown = IsSpellKnown(74497)
 local herbCD = GetSpellCooldown(74497) --Herbalism Spell - Lifebloom
+local itemCD = PQR_ItemCD()
 --Buffs
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Buff
+local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951)) --Berserk Buff
 
 if herbKnown == true then
 	if herbCD == 0 then
 		if BS == nil then
 			return false
 		else
---			if BS ~= nil and (PQR_FireBoss == true) then
-				CastSpellByID(74497)
---			end
+			CastSpell(FindSpellBookSlotBySpellID(74497),&amp;quot;Player&amp;quot;)
 		end
 	end
 end
@@ -300,4 +227,21 @@ if itemCD == true and BS ~= nil then
 		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
 		UseItemByName(item)
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Incarnation</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
+local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
+
+if hasTarget and Enemy and not isDead then
+	local inKnown = IsSpellKnown(106731)
+	local inStart,inDuration = GetSpellCooldown(106731)
+	local inCD = inStart + inDuration - GetTime()
+	
+	if inKnown and inCD &amp;lt; 1 then
+		local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
+		local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
+
+		if BS ~= nil and Incarnation == nil then
+			CastSpellByName(tostring(GetSpellInfo(106731)))
+		end
+	end
+end</Lua><RecastDelay>750</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability></DRUID>
