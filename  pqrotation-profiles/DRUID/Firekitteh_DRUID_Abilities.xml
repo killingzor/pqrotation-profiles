@@ -101,9 +101,9 @@ local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot
 local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 
 if hasTarget and Enemy and not isDead then
-	local waBuff = UnitDebuffID(&amp;quot;Target&amp;quot;,113746)
+	local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 	
-	if not waBuff then
+	if not waBuff or waBuff &amp;lt; 3 then
 		return true
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>52610</SpellID><Actions></Actions><Lua>local srTimer = select(7,UnitBuffID(&amp;quot;player&amp;quot;, 52610))
