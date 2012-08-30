@@ -188,12 +188,12 @@ local boss = {
 
 	--Maraudon
 	--13718, --The Nameless Prophet (Pre-instance)
-	13742, --Kolk <The First Khan>
-	13741, --Gelk <The Second Khan>
-	13740, --Magra <The Third Khan>
-	13739, --Maraudos <The Fourth Khan>
+	13742, --Kolk The First Khan
+	13741, --Gelk The Second Khan
+	13740, --Magra The Third Khan
+	13739, --Maraudos The Fourth Khan
 	12236, --Lord Vyletongue
-	13738, --Veng <The Fifth Khan>
+	13738, --Veng The Fifth Khan
 	13282, --Noxxion
 	12258, --Razorlash
 	12237, --Meshlok the Harvester
@@ -430,7 +430,7 @@ local boss = {
 	14020, --Chromaggus
 	11583, --Nefarian
 	12557, --Grethok the Controller
-	10162, --Lord Victor Nefarius <Lord of Blackrock> (Also found in Blackrock Spire)
+	10162, --Lord Victor Nefarius Lord of Blackrock (Also found in Blackrock Spire)
 
 	--Ruins of Ahn'Qiraj
 	15348, --Kurinnaxx
@@ -515,7 +515,7 @@ local boss = {
 	17770, --Hungarfen
 	18105, --Ghaz'an
 	17826, --Swamplord Musel'ek
-	17827, --Claw <Swamplord Musel'ek's Pet>
+	17827, --Claw Swamplord Musel'ek's Pet
 	17882, --The Black Stalker
 
 	--Auchindoun: Mana-Tombs
@@ -804,18 +804,18 @@ local boss = {
 	26861, --King Ymiron
 
 	--Trial of the Champion: Alliance
-	35617, --Deathstalker Visceri <Grand Champion of Undercity>
-	35569, --Eressea Dawnsinger <Grand Champion of Silvermoon>
-	35572, --Mokra the Skullcrusher <Grand Champion of Orgrimmar>
-	35571, --Runok Wildmane <Grand Champion of the Thunder Bluff>
-	35570, --Zul'tore <Grand Champion of Sen'jin>
+	35617, --Deathstalker Visceri Grand Champion of Undercity
+	35569, --Eressea Dawnsinger Grand Champion of Silvermoon
+	35572, --Mokra the Skullcrusher Grand Champion of Orgrimmar
+	35571, --Runok Wildmane Grand Champion of the Thunder Bluff
+	35570, --Zul'tore Grand Champion of Sen'jin
 
 	--Trial of the Champion: Horde
-	34702, --Ambrose Boltspark <Grand Champion of Gnomeregan>
-	34701, --Colosos <Grand Champion of the Exodar>
-	34705, --Marshal Jacob Alerius <Grand Champion of Stormwind>
-	34657, --Jaelyne Evensong <Grand Champion of Darnassus>
-	34703, --Lana Stouthammer <Grand Champion of Ironforge>
+	34702, --Ambrose Boltspark Grand Champion of Gnomeregan
+	34701, --Colosos Grand Champion of the Exodar
+	34705, --Marshal Jacob Alerius Grand Champion of Stormwind
+	34657, --Jaelyne Evensong Grand Champion of Darnassus
+	34703, --Lana Stouthammer Grand Champion of Ironforge
 
 	--Trial of the Champion: Neutral
 	34928, --Argent Confessor Paletress
@@ -829,7 +829,7 @@ local boss = {
 	--Pit of Saron
 	36494, --Forgemaster Garfrost
 	36477, --Krick
-	36476, --Ick <Krick's Minion>
+	36476, --Ick Krick's Minion
 	36658, --Scourgelord Tyrannus
 
 	--Halls of Reflection
@@ -902,38 +902,38 @@ local boss = {
 
 	34780, --Jaraxxus
 
-	34461, --Tyrius Duskblade <Death Knight>
-	34460, --Kavina Grovesong <Druid>
-	34469, --Melador Valestrider <Druid>
-	34467, --Alyssia Moonstalker <Hunter>
-	34468, --Noozle Whizzlestick <Mage>
-	34465, --Velanaa <Paladin>
-	34471, --Baelnor Lightbearer <Paladin>
-	34466, --Anthar Forgemender <Priest>
-	34473, --Brienna Nightfell <Priest>
-	34472, --Irieth Shadowstep <Rogue>
-	34470, --Saamul <Shaman>
-	34463, --Shaabad <Shaman>
-	34474, --Serissa Grimdabbler <Warlock>
-	34475, --Shocuul <Warrior>
+	34461, --Tyrius Duskblade Death Knight
+	34460, --Kavina Grovesong Druid
+	34469, --Melador Valestrider Druid
+	34467, --Alyssia Moonstalker Hunter
+	34468, --Noozle Whizzlestick Mage
+	34465, --Velanaa Paladin
+	34471, --Baelnor Lightbearer Paladin
+	34466, --Anthar Forgemender Priest
+	34473, --Brienna Nightfell Priest
+	34472, --Irieth Shadowstep Rogue
+	34470, --Saamul Shaman
+	34463, --Shaabad Shaman
+	34474, --Serissa Grimdabbler Warlock
+	34475, --Shocuul Warrior
 
-	34458, --Gorgrim Shadowcleave <Death Knight>
-	34451, --Birana Stormhoof <Druid>
-	34459, --Erin Misthoof <Druid>
-	34448, --Ruj'kah <Hunter>
-	34449, --Ginselle Blightslinger <Mage>
-	34445, --Liandra Suncaller <Paladin>
-	34456, --Malithas Brightblade <Paladin>
-	34447, --Caiphus the Stern <Priest>
-	34441, --Vivienne Blackwhisper <Priest>
-	34454, --Maz'dinah <Rogue>
-	34444, --Thrakgar	<Shaman>
-	34455, --Broln Stouthorn <Shaman>
-	34450, --Harkzog <Warlock>
-	34453, --Narrhok Steelbreaker <Warrior>
+	34458, --Gorgrim Shadowcleave Death Knight
+	34451, --Birana Stormhoof Druid
+	34459, --Erin Misthoof Druid
+	34448, --Ruj'kah Hunter
+	34449, --Ginselle Blightslinger Mage
+	34445, --Liandra Suncaller Paladin
+	34456, --Malithas Brightblade Paladin
+	34447, --Caiphus the Stern Priest
+	34441, --Vivienne Blackwhisper Priest
+	34454, --Maz'dinah Rogue
+	34444, --Thrakgar	Shaman
+	34455, --Broln Stouthorn Shaman
+	34450, --Harkzog Warlock
+	34453, --Narrhok Steelbreaker Warrior
 
-	35610, --Cat <Ruj'kah's Pet / Alyssia Moonstalker's Pet>
-	35465, --Zhaagrym <Harkzog's Minion / Serissa Grimdabbler's Minion>
+	35610, --Cat Ruj'kah's Pet / Alyssia Moonstalker's Pet
+	35465, --Zhaagrym Harkzog's Minion / Serissa Grimdabbler's Minion
 
 	34497, --Fjola Lightbane
 	34496, --Eydis Darkbane
@@ -963,7 +963,7 @@ local boss = {
 	36597, --The Lich King (Icecrown Citadel)
 	37217, --Precious
 	37025, --Stinki
-	36661, --Rimefang <Drake of Tyrannus>
+	36661, --Rimefang Drake of Tyrannus
 
 	--Ruby Sanctum (PTR 3.3.5)
 	39746, --Zarithrian
@@ -1058,10 +1058,10 @@ local boss = {
 	14461, --Baron Charr
 
 	--Silithus
-	15205, --Baron Kazum <Abyssal High Council>
-	15204, --High Marshal Whirlaxis <Abyssal High Council>
-	15305, --Lord Skwol <Abyssal High Council>
-	15203, --Prince Skaldrenox <Abyssal High Council>
+	15205, --Baron Kazum Abyssal High Council
+	15204, --High Marshal Whirlaxis Abyssal High Council
+	15305, --Lord Skwol Abyssal High Council
+	15203, --Prince Skaldrenox Abyssal High Council
 	14454, --The Windreaver
 
 	--Searing Gorge
@@ -1079,7 +1079,7 @@ local boss = {
 
 	--Nagrand
 	18398, --Brokentoe
-	18069, --Mogor <Hero of the Warmaul>, friendly
+	18069, --Mogor --Hero of the Warmaul, friendly
 	18399, --Murkblood Twin
 	18400, --Rokdar the Sundered Lord
 	18401, --Skra'gath

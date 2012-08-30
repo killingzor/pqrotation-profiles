@@ -5,11 +5,11 @@ if rake ~= nil then
 	if raketimer - GetTime() &amp;lt; 4 then
 		CastSpellByName(tostring(GetSpellInfo(1822)))
 	end
-else
+elseif rake == nil then
 	CastSpellByName(tostring(GetSpellInfo(1822)))
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
-local ripCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
-local riphealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local ripCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+local riphealth = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;)
 
 
 
@@ -29,38 +29,70 @@ else
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
 local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
 local Facing = PQR_FireMangle(&amp;quot;Player&amp;quot;,&amp;quot;Focus&amp;quot;,&amp;quot;FocusTarget&amp;quot;)
+local HasGlyph = HasGlyph(114234)
 -- Combo Points
-local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
 --local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
 --Buffs/Debuffs/Timers
 local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
 local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
 local inCD = GetSpellCooldown(102543)
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 local incarnKnown = IsSpellKnown(106731)
 
-
-if incarnKnown then
-	if Facing == true then
-		return false
-	elseif PQR_NotBehindTarget() or Fire then
-		return false
-	elseif CP == 5 then
-		return false
-	elseif BS and inCD == 0 then
-		return false
-	elseif rake ~= nil and not BS and not Incarnation then
-		CastSpellByName(tostring(GetSpellInfo(5221)))
+if not HasGlyph then
+	if incarnKnown then
+		if Facing == true then
+			return false
+		elseif PQR_NotBehindTarget() or Fire then
+			return false
+		elseif CP == 5 then
+			return false
+		elseif BS and inCD == 0 then
+			return false
+		elseif rake ~= nil and not BS and not Incarnation then
+			CastSpellByName(tostring(GetSpellInfo(5221)))
+		end
+	elseif not incarnKnown then
+		if Facing == true then
+			return false
+		elseif PQR_NotBehindTarget() or Fire then
+			return false
+		elseif CP == 5 then
+			return false
+		elseif rake ~= nil then
+			CastSpellByName(tostring(GetSpellInfo(5221)))
+		end
 	end
-elseif not incarnKnown then
-	if Facing == true then
-		return false
-	elseif PQR_NotBehindTarget() or Fire then
-		return false
-	elseif CP == 5 then
-		return false
-	elseif rake ~= nil then
-		CastSpellByName(tostring(GetSpellInfo(5221)))
+elseif HasGlyph then
+	local tfBuff = UnitBuffID(&amp;quot;Player&amp;quot;,5217)
+
+	if incarnKnown then
+		if rake ~= nil and tfBuff and not Incarnation and not BS then
+			CastSpellByName(tostring(GetSpellInfo(114236)))
+		elseif Facing == true then
+			return false
+		elseif PQR_NotBehindTarget() or Fire then
+			return false
+		elseif CP == 5 then
+			return false
+		elseif BS and inCD == 0 then
+			return false
+		elseif rake ~= nil and not BS and not Incarnation then
+			CastSpellByName(tostring(GetSpellInfo(5221)))
+		end
+	elseif not incarnKnown then
+		if rake ~= nil and tfBuff or BS then
+			CastSpellByName(tostring(GetSpellInfo(114236)))
+		elseif Facing == true then
+			return false
+		elseif PQR_NotBehindTarget() or Fire then
+			return false
+		elseif CP == 5 then
+			return false
+		elseif rake ~= nil then
+			CastSpellByName(tostring(GetSpellInfo(5221)))
+		end
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Variables
 local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
@@ -69,8 +101,9 @@ local Facing = PQR_FireMangle(&amp;quot;Player&amp;quot;,&amp;quot;Focus&amp;quo
 local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
 local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
 local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 local incarnKnown = IsSpellKnown(106731)
+local tfBuff = UnitBuffID(&amp;quot;Player&amp;quot;,5217)
 --Misc
 
 --if Facing == true then
@@ -82,17 +115,17 @@ if incarnKnown then
 		return false
 	elseif not BS and Incarnation then
 		return false
-	elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not BS and not Incarnation then
+	elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and not BS and not Incarnation then
 		CastSpellByName(tostring(GetSpellInfo(33876)))
 --	elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not Incarnation then
 --		CastSpellByName(tostring(GetSpellInfo(33876)))
-	elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 then
+	elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 and not tfBuff then
 		CastSpellByName(tostring(GetSpellInfo(33876)))
 	end
 elseif not incarnKnown then
-	if Facing == true and fbCP &amp;lt; 5 and rake ~= nil then
+	if Facing == true and fbCP &amp;lt; 5 and rake ~= nil and not tfBuff then
 		CastSpellByName(tostring(GetSpellInfo(33876)))
-	elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil then
+	elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff then
 		CastSpellByName(tostring(GetSpellInfo(33876)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Faerie Fire (Feral)</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Misc
@@ -106,19 +139,35 @@ if hasTarget and Enemy and not isDead then
 	if not waBuff or waBuff &amp;lt; 3 then
 		CastSpellByName(tostring(GetSpellInfo(770)))
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local srTimer = select(7,UnitBuffID(&amp;quot;player&amp;quot;, 52610))
-local CP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Savage Roar</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
+local HasGlyph = HasGlyph(127540)
+--Misc
+local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
 
-if not srTimer then
-	CastSpellByName(tostring(GetSpellInfo(52610)))
-elseif srTimer - GetTime() &amp;lt; 4 and CP &amp;gt; 3 then
-	CastSpellByName(tostring(GetSpellInfo(52610)))
-elseif srTimer - GetTime() &amp;lt; 2 and CP &amp;lt; 3 then
-	CastSpellByName(tostring(GetSpellInfo(52610)))
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ferocious Bite</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fbrip, _, _, _, _, _, fbtimer = UnitDebuffID(&amp;quot;target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
-local fbCP = GetComboPoints(&amp;quot;player&amp;quot;, &amp;quot;target&amp;quot;)
-local fbhealth = 100 * UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;)
-local fbenergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
+if not HasGlyph then
+	local srTimer = select(7,UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
+
+	if not srTimer then
+		CastSpellByName(tostring(GetSpellInfo(52610)))
+	elseif srTimer - GetTime() &amp;lt; 4 and CP &amp;gt; 3 then
+		CastSpellByName(tostring(GetSpellInfo(52610)))
+	elseif srTimer - GetTime() &amp;lt; 2 and CP &amp;lt; 3 then
+		CastSpellByName(tostring(GetSpellInfo(52610)))
+	end
+elseif HasGlyph then
+	local srTimer = select(7,UnitBuffID(&amp;quot;Player&amp;quot;, 127538))
+
+	if not srTimer then
+		CastSpellByName(tostring(GetSpellInfo(127538)))
+	elseif srTimer - GetTime() &amp;lt; 4 and CP &amp;gt; 3 then
+		CastSpellByName(tostring(GetSpellInfo(127538)))
+	elseif srTimer - GetTime() &amp;lt; 2 and CP &amp;lt; 3 then
+		CastSpellByName(tostring(GetSpellInfo(127538)))
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ferocious Bite</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fbrip, _, _, _, _, _, fbtimer = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
+local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+local fbhealth = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;)
+local fbenergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;Player&amp;quot;) * 100
 
 
 if fbhealth &amp;lt;=60 then
@@ -140,9 +189,9 @@ local BSstart, BSduration = GetSpellCooldown(106951)
 --Cooldowns
 local BScooldown = (BSstart + BSduration - GetTime())
 --Energy/Health/Level Checks
-local bsEnergy = UnitPower(&amp;quot;player&amp;quot;) / UnitPowerMax(&amp;quot;player&amp;quot;) * 100
-local bsHealth = UnitHealth(&amp;quot;target&amp;quot;) / UnitHealthMax(&amp;quot;target&amp;quot;) * 100
-local levelcheck = UnitLevel(&amp;quot;target&amp;quot;)
+local bsEnergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;Player&amp;quot;) * 100
+local bsHealth = UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;) * 100
+local levelcheck = UnitLevel(&amp;quot;Target&amp;quot;)
 local spell = select(2,GetSpellBookItemInfo(tostring(GetSpellInfo(106951))))
 
 if TF == nil then
@@ -156,7 +205,7 @@ else
 			CastSpellByName(tostring(GetSpellInfo(106951)))
 			-- end
 		end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local tfEnergy = UnitPower(&amp;quot;player&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local tfEnergy = UnitPower(&amp;quot;Player&amp;quot;)
 local BSstart, BSduration = GetSpellCooldown(106951)
 local BScooldown = (BSstart + BSduration - GetTime())
 
@@ -165,7 +214,7 @@ if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
 elseif BScooldown &amp;lt; 1 and tfEnergy &amp;lt;= 45 then
 	CastSpellByName(tostring(GetSpellInfo(5217)))
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Swipe</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
-local energy = UnitPower(&amp;quot;player&amp;quot;)
+local energy = UnitPower(&amp;quot;Player&amp;quot;)
 
 
 if BS ~= nil then
@@ -208,7 +257,7 @@ local Orc = IsSpellKnown(20572)
 local tCD = GetSpellCooldown(26297)
 local oCD = GetSpellCooldown(20572)
 --Buffs
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 
 if Troll == true then
 	if BS == nil then
@@ -226,7 +275,7 @@ if Orc == true then
 		return false
 	else
 		if oCD == 0 then
-			CastSpell(FindSpellBookSlotBySpellID(20572),&amp;quot;Player&amp;quot;)
+			CastSpellByName(tostring(GetSpellInfo(20572)))
 		end
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Potion Counts
@@ -240,7 +289,7 @@ local vCD = GetItemCooldown(58091) --Volcanic Potion Timer
 local gbCD = GetItemCooldown(58146) --Golemblood Potion timer
 local eCD = GetItemCooldown(58090) --Earthen Potion Timer
 --Buffs
-local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 50334)) --Berserk Druid Buff
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 50334)) --Berserk Druid Buff
 
 if tvPot == nil then
 	return false
