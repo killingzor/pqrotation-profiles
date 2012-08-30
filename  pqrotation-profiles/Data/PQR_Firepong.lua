@@ -1,28 +1,17 @@
-local Bleeds = {
-	16511, -- Rogue, Hemorrhage
-	33876, -- Druid, Cat: Mangle
-	33878, -- Druid, Bear: Mangle
-	35290, -- Hunter Pet: Gore
-	46857, -- Warrior, Trauma
-	50271, -- Hunter Pet: Tendon Rip
-	57386 -- Hunter Pet: Stampede
-}
-function PQR_FireBleedDebuff(unit)
-	for i=1,#Bleeds do
-		if UnitDebuffID(unit, Bleeds[i]) then
+--var1 = Player
+--var2 = Focus
+--var3 = FocusTarget
+function PQR_FireMangle(var1,var2,var3,var4)
+	if UnitExists(var2) then
+--		local facing1 = PQR_UnitFacing(var2,var1)
+		local facing2 = PQR_UnitFacing(var2,var3)
+		local facing3 = PQR_UnitFacing(var3,var1)
+		
+		if facing2 == true and facing3 == true then
 			return true
 		end
+		return false
 	end
-	return false
-end
-
-function PQR_FirePlayerBleedDebuff(unit)
-	for i=1,#Bleeds do
-		if UnitDebuffID(unit, Bleeds[i],"Player") then
-			return true 
-		end
-	end
-	return false
 end
 
 local mangle = {
