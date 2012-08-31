@@ -10,11 +10,9 @@ elseif rake == nil then
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local rip, _, _, _, _, _, riptimer = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
 local ripCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
 local riphealth = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;)
+local srTimer = select(7,UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
 
-
-
-
-if rip ~= nil then
+if rip and srTimer then
 	if riphealth &amp;gt; 60 then
 		if ripCP == 5 then
 			if riptimer - GetTime() &amp;lt;4 then
@@ -23,7 +21,7 @@ if rip ~= nil then
 		end
 	end
 else
-	if ripCP == 5 then
+	if ripCP == 5 and srTimer then
 		CastSpellByName(tostring(GetSpellInfo(1079)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
@@ -50,7 +48,7 @@ if not HasGlyph then
 			return false
 		elseif BS and inCD == 0 then
 			return false
-		elseif rake ~= nil and not BS and not Incarnation then
+		elseif rake ~= nil and not BS and not Incarnation and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	elseif not incarnKnown then
@@ -60,7 +58,7 @@ if not HasGlyph then
 			return false
 		elseif CP == 5 then
 			return false
-		elseif rake ~= nil then
+		elseif rake ~= nil and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	end
@@ -162,26 +160,25 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
 local HasGlyph = HasGlyph(127540)
 --Misc
 local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
-local hasRip = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
 
 if not HasGlyph then
 	local srTimer = select(7,UnitBuffID(&amp;quot;Player&amp;quot;, 52610))
 
-	if not srTimer and hasRip then
+	if not srTimer and CP &amp;gt; 0 then
 		CastSpellByName(tostring(GetSpellInfo(52610)))
-	elseif srTimer and (srTimer - GetTime()) &amp;lt; 4 and CP &amp;gt; 3 and hasRip  then
+	elseif srTimer and (srTimer - GetTime()) &amp;lt; 4 and CP &amp;gt; 3 then
 		CastSpellByName(tostring(GetSpellInfo(52610)))
-	elseif srTimer and (srTimer - GetTime()) &amp;lt; 2 and CP &amp;lt; 3 and hasRip  then
+	elseif srTimer and (srTimer - GetTime()) &amp;lt; 2 and CP &amp;lt; 3 then
 		CastSpellByName(tostring(GetSpellInfo(52610)))
 	end
 elseif HasGlyph then
 	local srTimer1 = select(7,UnitBuffID(&amp;quot;Player&amp;quot;, 127538))
 
-	if not srTimer1 and hasRip  then
+	if not srTimer1 then
 		CastSpellByName(tostring(GetSpellInfo(127538)))
-	elseif srTimer1 and (srTimer1 - GetTime()) &amp;lt; 4 and CP &amp;gt; 3 and hasRip  then
+	elseif srTimer1 and (srTimer1 - GetTime()) &amp;lt; 4 and CP &amp;gt; 3 then
 		CastSpellByName(tostring(GetSpellInfo(127538)))
-	elseif srTimer1 and (srTimer1 - GetTime()) &amp;lt; 2 and CP &amp;lt; 3 and hasRip  then
+	elseif srTimer1 and (srTimer1 - GetTime()) &amp;lt; 2 and CP &amp;lt; 3 then
 		CastSpellByName(tostring(GetSpellInfo(127538)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ferocious Bite</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local fbrip, _, _, _, _, _, fbtimer = UnitDebuffID(&amp;quot;Target&amp;quot;, 1079, &amp;quot;PLAYER&amp;quot;)
@@ -362,4 +359,13 @@ if hasTarget and Enemy and not isDead then
 			CastSpellByName(tostring(GetSpellInfo(106731)))
 		end
 	end
-end</Lua><RecastDelay>250</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>250</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Offensive Spells --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() 
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;Player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;Player&amp;quot;,87959)
+or UnitChannelInfo(&amp;quot;Player&amp;quot;) 
+or UnitIsDeadOrGhost(&amp;quot;Player&amp;quot;) 
+or UnitIsDeadOrGhost(&amp;quot;Target&amp;quot;)
+or not UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
