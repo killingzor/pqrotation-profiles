@@ -8,7 +8,7 @@ if rake and HasSR then
 	if raketimer - GetTime() &amp;lt; 4 then
 		CastSpellByName(tostring(GetSpellInfo(1822)))
 	end
-elseif rake == nil and HasSR then
+elseif rake == nil then
 	CastSpellByName(tostring(GetSpellInfo(1822)))
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Rip</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
 local HasSR = HasSR(&amp;quot;Player&amp;quot;)
@@ -129,11 +129,15 @@ if HasGlyph then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
 		elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 and not tfBuff and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
+		elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and not BS and not Incarnation then
+			CastSpellByName(tostring(GetSpellInfo(33876)))
 		end
 	elseif not incarnKnown then
 		if Facing == true and fbCP &amp;lt; 5 and rake ~= nil and not tfBuff and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
 		elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and HasSR then
+			CastSpellByName(tostring(GetSpellInfo(33876)))
+		elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
 		end
 	end
@@ -148,6 +152,8 @@ elseif not HasGlyph then
 		elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not BS and not Incarnation and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
 		elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 and HasSR then
+			CastSpellByName(tostring(GetSpellInfo(33876)))
+		elseif PQR_NotBehindTarget() or Facing == true or Fire and fbCP ~= 5 and rake ~= nil and not BS and not Incarnation then
 			CastSpellByName(tostring(GetSpellInfo(33876)))
 		end
 	elseif not incarnKnown then
