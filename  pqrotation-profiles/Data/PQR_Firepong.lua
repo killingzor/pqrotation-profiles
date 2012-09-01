@@ -14,6 +14,23 @@ function PQR_FireMangle(var1,var2,var3,var4)
 	end
 end
 
+local sr = {
+	127538,
+	52610
+}
+
+--var1 = Player
+function HasSR(var1)
+	for i=1,#sr do
+		local hasSR = select(7,UnitBuffID(var1,sr[i]))
+		
+		if hasSR then
+			return true,hasSR
+		end
+	end
+	return false
+end
+
 local glyph = {
 	1, --Minor Glyph (Top Right)
 	2, --Major Glyph (Top)
@@ -1170,7 +1187,7 @@ function PQR_ItemCD()
 end
 
 --num = Number to round
---idp = HOw much places to round to. Negative number not recommended.
+--idp = How much places to round to. Negative number not recommended.
 function round(num, idp)
   local mult = 10^(idp or 0)
   return math.floor(num * mult + 0.5) / mult
