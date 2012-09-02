@@ -35,7 +35,7 @@ local Facing = PQR_FireMangle(&amp;quot;Player&amp;quot;,&amp;quot;Focus&amp;quo
 local HasGlyph = HasGlyph(114234)
 local HasSR = HasSR(&amp;quot;Player&amp;quot;)
 -- Combo Points
-local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+local CP = GetComboPoints(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
 --local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
 --Buffs/Debuffs/Timers
 local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
@@ -87,7 +87,7 @@ elseif HasGlyph then
 			return false
 		elseif BS and inCD == 0 then
 			return false
-		elseif rake ~= nil and not BS and not Incarnation and HasSR then
+		elseif rake ~= nil and not BS and not Incarnation and HasSR and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	elseif not incarnKnown then
@@ -360,19 +360,19 @@ if herbKnown == true then
 	end
 end
 
-local slot = {10,13,14}
+--local slot = {10,13,14}
 
-if itemCD == true and BS ~= nil then
-	for i=1,#slot do
-		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
-		UseItemByName(item)
-	end
-elseif inCD &amp;gt; 2 and inCD &amp;lt; 100 and itemCD == true then
-	for i=1,#slot do
-		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
-		UseItemByName(item)
-	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Incarnation</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
+--if itemCD == true and BS ~= nil then
+--	for i=1,#slot do
+--		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
+--		UseItemByName(item)
+--	end
+--elseif inCD &amp;gt; 2 and inCD &amp;lt; 100 and itemCD == true then
+--	for i=1,#slot do
+--		local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
+--		UseItemByName(item)
+--	end
+--end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Incarnation</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
 local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
 
@@ -398,4 +398,16 @@ or UnitChannelInfo(&amp;quot;Player&amp;quot;)
 or UnitIsDeadOrGhost(&amp;quot;Player&amp;quot;) 
 or UnitIsDeadOrGhost(&amp;quot;Target&amp;quot;)
 or not UnitAffectingCombat(&amp;quot;Player&amp;quot;)
-then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Maim</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
+local inBG = PQR_Battleground()
+--Misc
+local hasTarget = UnitExists(&amp;quot;target&amp;quot;)
+
+
+if hasTarget and inBG then
+	local CP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+	
+	if CP == 5 then
+		CastSpellByName(tostring(GetSpellInfo(22570)))
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
