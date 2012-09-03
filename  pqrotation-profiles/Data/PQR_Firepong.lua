@@ -1,3 +1,26 @@
+local bgArea = {
+	401, --Alteric Valley
+	443, --Warsong Gulch
+	461, --Arathi Basin
+	482, --Eye of the Storm
+	512, --Strand of the Ancients
+	540, --Isle of Conquest
+	626, --Twin Peaks
+	708, --Tol Barad
+	736 --The Battle for Guilneas
+}
+
+function PQR_Battleground()
+	for i=1,#bgArea do
+		local areaID = GetCurrentMapAreaID()
+		
+		if bgArea[i] == areaID then
+			return true
+		end
+	end
+	return false
+end
+
 --var1 = Player
 --var2 = Focus
 --var3 = FocusTarget

@@ -47,29 +47,29 @@ local tfBuff = UnitBuffID(&amp;quot;Player&amp;quot;,5217)
 
 if not HasGlyph then
 	if incarnKnown then
-		if Facing == true then
+		if CP == 5 then
+			return false
+		elseif Facing == true then
 			return false
 		elseif PQR_NotBehindTarget() or Fire then
-			return false
-		elseif CP == 5 then
 			return false
 		elseif BS and inCD == 0 then
 			return false
-		elseif rake ~= nil and not BS and not Incarnation and CP &amp;lt; 5 and HasSR then
+		elseif CP &amp;lt; 2 and rake then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
-		elseif CP &amp;lt; 2 then
+		elseif rake and not BS and not Incarnation and CP &amp;lt; 5 and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	elseif not incarnKnown then
-		if Facing == true then
+		if CP == 5 then
+			return false
+		elseif Facing == true then
 			return false
 		elseif PQR_NotBehindTarget() or Fire then
 			return false
-		elseif CP == 5 then
-			return false
-		elseif rake ~= nil and CP &amp;lt; 5 and HasSR then
+		elseif CP &amp;lt; 2 and rake then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
-		elseif CP &amp;lt; 2 then
+		elseif rake and CP &amp;lt; 5 and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	end
@@ -77,29 +77,29 @@ elseif HasGlyph then
 	local tfBuff = UnitBuffID(&amp;quot;Player&amp;quot;,5217)
 
 	if incarnKnown then
-		if rake ~= nil and tfBuff and not Incarnation and not BS and HasSR then
+		if CP == 5 then
+			return false
+		elseif rake and tfBuff and not Incarnation and not BS and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(114236)))
 		elseif Facing == true then
 			return false
 		elseif PQR_NotBehindTarget() or Fire then
-			return false
-		elseif CP == 5 then
 			return false
 		elseif BS and inCD == 0 then
 			return false
-		elseif rake ~= nil and not BS and not Incarnation and HasSR and CP &amp;lt; 5 then
+		elseif rake and not BS and not Incarnation and HasSR and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	elseif not incarnKnown then
-		if rake ~= nil and tfBuff or BS and HasSR and CP &amp;lt; 5  then
+		if CP == 5 then
+			return false
+		elseif rake and tfBuff or BS and HasSR and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(114236)))
 		elseif Facing == true then
 			return false
 		elseif PQR_NotBehindTarget() or Fire then
 			return false
-		elseif CP == 5 then
-			return false
-		elseif rake ~= nil and HasSR and CP &amp;lt; 5 then
+		elseif rake and HasSR and CP &amp;lt; 5 then
 			CastSpellByName(tostring(GetSpellInfo(5221)))
 		end
 	end
