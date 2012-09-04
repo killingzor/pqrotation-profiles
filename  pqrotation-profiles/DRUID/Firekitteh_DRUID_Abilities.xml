@@ -459,6 +459,6 @@ local inBG = PQR_Battleground()
 local playerHP = 100 * UnitHealth(&amp;quot;Player&amp;quot;) / UnitHealthMax(&amp;quot;Player&amp;quot;)
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 
-if inBG and playerHP &amp;lt; 50 and psBuff then
-	CastSpellByName(tostring(GetSpellInfo(5185)))
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
+if inBG and psBuff and playerHP &amp;lt;= 75 then
+	CastSpellByName(tostring(GetSpellInfo(5185)),&amp;quot;Player&amp;quot;)
+end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
