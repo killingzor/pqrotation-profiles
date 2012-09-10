@@ -1,3 +1,52 @@
+local slows = {
+	102355, --Faerie Swarm
+	339, --Roots
+	58180, --Infected Wounds
+	12323, --Piercing Howl
+	1715, --Hamstring
+	5116, --Concussive Shot
+	110300, --Judgement talent Debuff
+	118223,  --Curse of Exhaustion
+	120, --Cone of Cold
+	31589, --Mage Slow
+	8056, --Frost Shock
+	116947, --Earthbind totem
+	50435, --Chillbanes
+	45524, --Chains of Ice
+	3409 --Crippling Poison
+}
+
+local snares = {
+	122, --Frost Nova
+	102051, --Frostjaw
+	116, --Frostbolt Slow
+	33395, --Water Elemental Freeze
+	64685, --Earth totem
+	63685 --Frost Shock Freeze
+}
+
+function HasSlow(var1)
+	for i=1,#slows do
+		local slow = UnitDebuffID(var1,slows[i])
+		
+		if slow then
+			return true
+		end
+	end
+	return false
+end
+
+function HasSnare(var1)
+	for i=1,#snares do
+		local snare = UnitDebuffID(var,snares[i])
+		
+		if snare then
+			return true
+		end
+	end
+	return false
+end
+
 local bgArea = {
 	401, --Alteric Valley
 	443, --Warsong Gulch
@@ -1232,13 +1281,42 @@ end
 --Var1 = Target
 --Var2 = Player
 function PQR_UnitDistance(var1, var2)
-	if UnitExists(var1) and not UnitIsDead(var1) then
-		local x1 , y1 = select(1,PQR_UnitInfo(var1)), select(2,PQR_UnitInfo(var1))
-		local x2 , y2 = select(1,PQR_UnitInfo(var2)), select(2,PQR_UnitInfo(var2))
-		local w = 100000
-		local h = 100000
+	if HasTarget() then
+		local a,b,c,d,e,f,g,h,i,j = GetAreaMapInfo(GetCurrentMapAreaID())
+		local x1 , y1 = PQR_UnitInfo(var1)
+		local x2 , y2 = PQR_UnitInfo(var2)
+		local w = (d - e)
+		local h = (f - g)
 		local distance = sqrt(min(x1 - x2, w - (x1 - x2))^2 + min(y1 - y2, h - (y1-y2))^2)
 		
 		return distance
 	end
+end
+
+function HasTarget()
+	if UnitExists("Target") then
+		return true
+	end
+	return false
+end
+
+--var1 = Target
+--var2 = Player
+function HasThrash(var1,var2)
+	local CCasting = UnitBuffID(var2,16870)
+	local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
+	
+	if CCasting and not tTimer then
+		return true
+	elseif CCasting and tTimer then
+--		local tTimer = select(7,UnitDebuffID(var1, 106830,var2)
+		local Timer = (tTimer - GetTime())
+
+		return true,Timer
+	elseif not CCasting and tTimer then
+		local Timer = (tTimer - GetTime())
+		
+		return false,Timer
+	end
+	return false
 end
