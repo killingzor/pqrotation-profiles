@@ -1304,16 +1304,17 @@ end
 --var2 = Player
 function HasThrash(var1,var2)
 	local CCasting = UnitBuffID(var2,16870)
-	local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
+	local tBuff = UnitDebuffID(var1, 106830,var2)
 	
-	if CCasting and not tTimer then
+	if CCasting and not tBuff then
 		return true
-	elseif CCasting and tTimer then
---		local tTimer = select(7,UnitDebuffID(var1, 106830,var2)
+	elseif CCasting and tBuff then
+		local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
 		local Timer = (tTimer - GetTime())
 
 		return true,Timer
-	elseif not CCasting and tTimer then
+	elseif not CCasting and tBuff then
+		local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
 		local Timer = (tTimer - GetTime())
 		
 		return false,Timer

@@ -49,7 +49,7 @@ local CCasting = UnitBuffID(&amp;quot;Player&amp;quot;,16870)
 
 if not HasGlyph then
 	if incarnKnown then
-		if CP == 5 then
+		if CP == 5 or Incarnation then
 			return false
 		elseif Facing == true then
 			return false
@@ -79,7 +79,7 @@ elseif HasGlyph then
 	local tfBuff = UnitBuffID(&amp;quot;Player&amp;quot;,5217)
 
 	if incarnKnown then
-		if CP == 5 then
+		if CP == 5 or Incarnation then
 			return false
 		elseif rake and tfBuff and not Incarnation and not BS and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 			CastSpellByName(tostring(GetSpellInfo(114236)))
@@ -517,30 +517,23 @@ if inBG then
 			CastSpellByName(tostring(GetSpellInfo(5215)))
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Thrash - Single Target</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
-local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
-local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
-local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;) or UnitAffectingCombat(&amp;quot;Target&amp;quot;)
-
-if hasTarget and Enemy and not isDead and inCombat then
-	--Variables
-	local HasGlyph = HasGlyph(127540)
-	local HasSR = select(2,HasSR(&amp;quot;Player&amp;quot;))
-	local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Thrash - Single Target</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
+local HasGlyph = HasGlyph(127540)
+local HasSR = select(2,HasSR(&amp;quot;Player&amp;quot;))
+local HasThrash = HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;)
 	
-	if HasGlyph then
-		if not HasThrash or HasThrash then
---		if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) and HasSR then
-			CastSpellByName(tostring(GetSpellInfo(106830)))
---		elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) and HasSR then
---			CastSpellByName(tostring(GetSpellInfo(106830)))
-		end
-	elseif not HasGlyph then
-		if not HasThrash or HasThrash then
---		if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) then
-			CastSpellByName(tostring(GetSpellInfo(106830)))
---		elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) then
---			CastSpellByName(tostring(GetSpellInfo(106830)))
-		end
+if HasGlyph then
+	if HasThrash then
+--	if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) and HasSR then
+		CastSpellByName(tostring(GetSpellInfo(106830)))
+--	elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) and HasSR then
+--		CastSpellByName(tostring(GetSpellInfo(106830)))
+	end
+elseif not HasGlyph then
+	if HasThrash then
+--	if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) then
+		CastSpellByName(tostring(GetSpellInfo(106830)))
+--	elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) then
+--		CastSpellByName(tostring(GetSpellInfo(106830)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
