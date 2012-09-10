@@ -110,6 +110,7 @@ local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
 local Facing = PQR_FireMangle(&amp;quot;Player&amp;quot;,&amp;quot;Focus&amp;quot;,&amp;quot;FocusTarget&amp;quot;)
 local HasGlyph = HasGlyph(114234)
 local HasSR = HasSR(&amp;quot;Player&amp;quot;)
+local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
 --Misc Buffs/Debuffs
 local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
 local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
@@ -288,11 +289,13 @@ if hasTarget and Enemy and not isDead and inCombat then
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
 local HasSR = HasSR(&amp;quot;Player&amp;quot;)
+local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
 --Misc
 local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
 local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+local CCasting = UnitBuffID(&amp;quot;Player&amp;quot;,16870)
 
-if Incarnation ~= nil and fbCP &amp;lt; 5 and HasSR then
+if Incarnation ~= nil and fbCP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 	CastSpellByName(tostring(GetSpellInfo(6785)))
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>--- special events ---</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>-- Avoid sudden death on Ultraxion
 local fadingtime = select(7,UnitDebuffID(&amp;quot;player&amp;quot;,110070))
@@ -526,13 +529,15 @@ if hasTarget and Enemy and not isDead and inCombat then
 	local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
 	
 	if HasGlyph then
-		if not HasThrash or (not HasThrash and HasThrash &amp;lt; 3) and HasSR then
+		if not HasThrash or HasThrash then
+--		if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) and HasSR then
 			CastSpellByName(tostring(GetSpellInfo(106830)))
 --		elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) and HasSR then
 --			CastSpellByName(tostring(GetSpellInfo(106830)))
 		end
 	elseif not HasGlyph then
-		if not HasThrash or (not HasThrash and HasThrash &amp;lt; 3) then
+		if not HasThrash or HasThrash then
+--		if not HasThrash or (HasThrash and HasThrash &amp;lt; 4) then
 			CastSpellByName(tostring(GetSpellInfo(106830)))
 --		elseif ((HasThrash and HasThrash &amp;lt; 3) or not (HasThrash and HasThrash &amp;lt; 3)) then
 --			CastSpellByName(tostring(GetSpellInfo(106830)))
