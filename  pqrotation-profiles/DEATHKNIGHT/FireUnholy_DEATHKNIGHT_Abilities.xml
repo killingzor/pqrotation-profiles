@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?><DEATHKNIGHT><Ability><Name>-- Load LUA --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
+  PQR_RotationStarted = false
+  if PQR_LoadLua ~= nil then
+    if PQR_LoadLua(&amp;quot;PQR_Firepong.lua&amp;quot;) == false then 
+       PQR_WriteToChat(&amp;quot;Put the file PQR_Firepong.lua in the Data file for this profile to work properly!!!&amp;quot;, &amp;quot;Error&amp;quot;)
+       PQR_RotationStop()
+        return true
+     end
+   end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Offensive Spells --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if IsLeftAltKeyDown() 
+or IsMounted()
+or SpellIsTargeting()
+or UnitBuffID(&amp;quot;Player&amp;quot;,80169)
+or UnitBuffID(&amp;quot;Player&amp;quot;,87959)
+or UnitChannelInfo(&amp;quot;Player&amp;quot;) 
+or UnitIsDeadOrGhost(&amp;quot;Player&amp;quot;) 
+or UnitIsDeadOrGhost(&amp;quot;Target&amp;quot;)
+or not UnitAffectingCombat(&amp;quot;Player&amp;quot;)
+then return true end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Profession Buffs --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>//Profession Cooldown&amp;apos;s/Known Spells
+//local herbKnown = IsSpellKnown(74497)
+//local herbCD = GetSpellCooldown(74497) --Herbalism Spell - Lifebloom
+//local itemCD = PQR_ItemCD()
+//Buffs
+//local inStart,inDuration = GetSpellCooldown(106951)
+//local inCD = inStart + inDuration - GetTime()
+
+//if herbKnown == true then
+//	if herbCD == 0 then
+//		if BS == nil then
+//			return false
+//		else
+//			CastSpell(FindSpellBookSlotBySpellID(74497),&amp;quot;Player&amp;quot;)
+//		end
+//	end
+//end
+
+//local slot = {10,13,14}
+//local inBG = PQR_Battleground()
+
+//if not inBG then
+//	if itemCD == true and BS ~= nil then
+//		for i=1,#slot do
+//			local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
+//			UseItemByName(item)
+//		end
+//	elseif inCD &amp;gt; 2 and inCD &amp;lt; 100 and itemCD == true then
+//		for i=1,#slot do
+//			local item = GetInventoryItemID(&amp;quot;player&amp;quot;, slot[i])
+//			UseItemByName(item)
+//		end
+//	end
+//end
+
+break</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>-- Racials --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>//Race Checks
+//local Troll = IsSpellKnown(26297)
+//local Orc = IsSpellKnown(20572)
+//Cooldowns
+//local tCD = GetSpellCooldown(26297)
+//local oCD = GetSpellCooldown(20572)
+//Buffs
+//local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
+
+//if Troll == true then
+//	if BS == nil then
+//		return false
+//	else
+//		if tCD == 0 then
+//			CastSpellByName(tostring(GetSpellInfo(26297)))
+//			CastSpellByID(74497)
+//		end
+//	end
+//end
+
+//if Orc == true then
+//	if BS == nil then
+//		return false
+//	else
+//		if oCD == 0 then
+//			CastSpellByName(tostring(GetSpellInfo(20572)))
+//		end
+//	end
+//end
+
+break</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Raise Dead</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasPet = HasPetSpells()
+local rdCD = GetSpellCooldown(46584)
+
+if not hasPet and rdCD == 0 then
+	CastSpellByName(GetSpellInfo(46584))
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Potions --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>//Potion Counts
+//local tvPot = GetItemCount(58145) --Potion of the Tol&amp;apos;Vir
+//local vPot = GetItemCount(58091) --Volcanic Potion
+//local gbPot = GetItemCount(58146) --Golemblood Potion
+//local ePot = GetItemCount(58090) --Earthen Potion
+//Potion timers
+//local tvCD = GetItemCooldown(58145) --Potion of the Tol&amp;apos;Vir Timer
+//local vCD = GetItemCooldown(58091) --Volcanic Potion Timer
+//local gbCD = GetItemCooldown(58146) --Golemblood Potion timer
+//local eCD = GetItemCooldown(58090) --Earthen Potion Timer
+//Buffs
+//local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 50334)) --Berserk Druid Buff
+
+//if tvPot == nil then
+//	return false
+//else
+//	if tvPot ~= nil and tvCD == 0 then
+//		if BS == nil then
+//			return false
+//		else
+//			UseItemByName(58145)
+//		end
+//	end
+//end
+
+break</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Presence --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local form = GetShapeshiftForm()
+local unholyKnown = IsSpellKnown(48265)
+local frostKnown = IsSpellKnown(48266)
+
+if unholyKnown and form ~= 3 then
+	CastShapeshiftForm(3)
+elseif frostKnown and not unholyKnown and form ~= 2 then
+	CastShapeshiftForm(2)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Diseases --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Known Spells
+local rbKnown = IsSpellKnown(108170)
+local plKnown = IsSpellKnown(123693)
+local ubKnown = IsSpellKnown(115989)
+local obKnown = IsSpellKnown(77575)
+--	Buffs/Debuffs/Cooldowns
+local ffDebuff = UnitDebuffID(&amp;quot;Target&amp;quot;,55095,&amp;quot;Player&amp;quot;)
+local bpDebuff = UnitDebuffID(&amp;quot;Target&amp;quot;,55078,&amp;quot;Player&amp;quot;)
+local ubBuff = UnitBuffID(&amp;quot;Player&amp;quot;,115989)
+local bossHP = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;)
+local UBstart, UBduration = GetSpellCooldown(115989)
+local UBcooldown = (UBstart + UBduration - GetTime())
+local OBstart, OBduration = GetSpellCooldown(77575)
+local OBcooldown = (OBstart + OBduration - GetTime())
+	
+if ubKnown then
+	if UBcooldown &amp;lt; 1 and not (ffDebuff and bpDebuff) and not ubBuff then
+		CastSpellByName(tostring(GetSpellInfo(115989)))
+	end
+	
+	if (UBcooldown &amp;gt; 3 or not ubKnown) and (OBcooldown &amp;gt; 3 or not obKnown) then
+		if not ffDebuff then
+			CastSpellByName(tostring(GetSpellInfo(45477)))
+		end
+		if not bpDebuff then
+			CastSpellByName(tostring(GetSpellInfo(45462)))
+		end
+	end
+elseif obKnown then
+	if not (ffDebuff and bpDebuff) and UBcooldown &amp;lt; 75 then
+		CastSpellByName(tostring(GetSpellInfo(77575)))
+	end
+	
+	if (UBcooldown &amp;gt; 3 or not ubKnown) and (OBcooldown &amp;gt; 3 or not obKnown) then
+		if not ffDebuff then
+			CastSpellByName(tostring(GetSpellInfo(45477)))
+		end
+		if not bpDebuff then
+			CastSpellByName(tostring(GetSpellInfo(45462)))
+		end
+	end
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Combat Functions --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>CastDiseases()
+CastERW()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Defensive Spells --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>Pet()
+Presences()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DEATHKNIGHT>

@@ -1321,3 +1321,101 @@ function HasThrash(var1,var2)
 	end
 	return false
 end
+
+function RunesAvailable()
+	local blood1 = GetRuneCount(1)
+	local blood2 = GetRuneCount(2)
+	local unholy1 = GetRuneCount(3)
+	local unholy2 = GetRuneCount(4)
+	local frost1 = GetRuneCount(5)
+	local frost2 = GetRuneCount(6)
+	
+	return blood1+blood2+unholy1+unholy2+frost1+frost2,blood1+blood2,frost1+frost2,unholy1+unholy2
+end
+
+function RuneCooldown()
+	local blood1,a = GetRuneCooldown(1)
+	local blood2,a = GetRuneCooldown(2)
+	local unholy1,a = GetRuneCooldown(3)
+	local unholy2,a = GetRuneCooldown(4)
+	local frost1,a = GetRuneCooldown(5)
+	local frost2,a = GetRuneCooldown(6)
+	
+	return blood1+a-GetTime(),blood2+a-GetTime(),frost1+a-GetTime(),frost2+a-GetTime(),unholy1+a-GetTime(),unholy2+a-GetTime()
+end
+
+function CastERW()
+	local RunesAvailable = RunesAvailable()
+	local rPower = UnitPower("Player")
+	local erwKnown = IsSpellKnown(47568)
+	
+	if erwKnown and RunesAvailable == 0 and rPower < 35 then
+		CastSpellByName(tostring(GetSpellInfo(47568)))
+	end
+end
+
+function CastDiseases()
+	--Known Spells
+	local rbKnown = IsSpellKnown(108170)
+	local plKnown = IsSpellKnown(123693)
+	local ubKnown = IsSpellKnown(115989)
+	local obKnown = IsSpellKnown(77575)
+	--	Buffs/Debuffs/Cooldowns
+	local ffDebuff = UnitDebuffID("Target",55095,"Player")
+	local bpDebuff = UnitDebuffID("Target",55078,"Player")
+	local ubBuff = UnitBuffID("Player",115989)
+	local bossHP = 100 * UnitHealth("Target") / UnitHealthMax("Target")
+	local UBstart, UBduration = GetSpellCooldown(115989)
+	local UBcooldown = (UBstart + UBduration - GetTime())
+	local OBstart, OBduration = GetSpellCooldown(77575)
+	local OBcooldown = (OBstart + OBduration - GetTime())
+		
+	if ubKnown then
+		if UBcooldown < 1 and not (ffDebuff and bpDebuff) and not ubBuff then
+			CastSpellByName(tostring(GetSpellInfo(115989)))
+		end
+		
+		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) and not ubBuff then
+			if not ffDebuff then
+				CastSpellByName(tostring(GetSpellInfo(45477)))
+			end
+			if not bpDebuff then
+				CastSpellByName(tostring(GetSpellInfo(45462)))
+			end
+		end
+	elseif obKnown then
+		if not (ffDebuff and bpDebuff) and UBcooldown < 75 then
+			CastSpellByName(tostring(GetSpellInfo(77575)))
+		end
+		
+		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) then
+			if not ffDebuff then
+				CastSpellByName(tostring(GetSpellInfo(45477)))
+			end
+			if not bpDebuff then
+				CastSpellByName(tostring(GetSpellInfo(45462)))
+			end
+		end
+	end
+end
+
+function Presences()
+	local form = GetShapeshiftForm()
+	local unholyKnown = IsSpellKnown(48265)
+	local frostKnown = IsSpellKnown(48266)
+	
+	if unholyKnown and form ~= 3 then
+		CastShapeshiftForm(3)
+	elseif frostKnown and not unholyKnown and form ~= 2 then
+		CastShapeshiftForm(2)
+	end
+end
+
+function Pet()
+	local hasPet = HasPetSpells()
+	local rdCD = GetSpellCooldown(46584)
+	
+	if not hasPet and rdCD == 0 then
+		CastSpellByName(GetSpellInfo(46584))
+	end
+end
