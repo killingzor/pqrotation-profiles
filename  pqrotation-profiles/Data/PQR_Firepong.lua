@@ -1379,6 +1379,45 @@ function RuneCooldown()
 	return blood1+a-GetTime(),blood2+a-GetTime(),frost1+a-GetTime(),frost2+a-GetTime(),unholy1+a-GetTime(),unholy2+a-GetTime()
 end
 
+function RuneType()
+	local numBlood = 0
+	local numFrost = 0
+	local numUnholy = 0
+	local numDeath = 0
+	
+	for i=1,6 do
+		local type = GetRuneType(i)
+		
+		if type == 1 then
+			numBlood = numBlood + 1
+		end
+	end
+	for i=1,6 do
+		local type = GetRuneType(i)
+		
+		if type == 2 then
+			numUnholy = numUnholy + 1
+		end
+	end
+	for i=1,6 do
+		local type = GetRuneType(i)
+		
+		if type == 3 then
+			numFrost = numFrost + 1
+		end
+	emd
+	for i=1,6 do
+		local type = GetRuneType(i)
+		
+		if type == 4 then
+			numDeath = numDeath + 1
+		end
+	end
+		
+	
+	return numBlood,numFrost,numUnholy,numDeath
+end
+
 function CastERW()
 	local RunesAvailable = RunesAvailable()
 	local rPower = UnitPower("Player")
