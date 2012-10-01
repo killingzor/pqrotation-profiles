@@ -1542,9 +1542,9 @@ function CastForS()
 end
 
 function CastFestOrScoourge()
-	if CastForS() == "scourge" then
+	if CastForS() == scourge then
 		CastSpellByName(tostring(GetSpellInfo(55090)))
-	elseif CastForS() == "festering" then
+	elseif CastForS() == festering then
 		CastSpellByName(tostring(GetSpellInfo(85948)))
 	elseif RunesAvailable() == 0 and UnitPower("Player") > 32 then
 		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
