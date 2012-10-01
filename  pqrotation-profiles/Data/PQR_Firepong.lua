@@ -1504,7 +1504,7 @@ function CastDCoil()
 	
 	if (rPower > 32 and RunesAvailable() == 0) or (RunesAvailable() == 0 and coilBuff) then
 		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
-	if rPower > 65 or coilBuff then
+	elseif rPower > 65 or coilBuff then
 		if dtTimer and dtTimer - GetTime() < 5 then
 			return false
 		elseif petHP > 35 then
