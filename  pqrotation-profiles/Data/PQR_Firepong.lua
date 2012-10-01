@@ -1530,12 +1530,12 @@ function CastForS()
 		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) > 0 and select(3,RuneType()) == 2 then
 		return GetSpellInfo(55090)
+	elseif (select(2,RunesAvailable()) and select(3,RunesAvailable())) > 0 and (select(1,RuneType()) and select(2,RuneType())) > 0 and select(4,RuneType()) < 3 then
+		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) == 3 and select(3,RuneType()) == 2 and (select(1,RuneCooldown()) > 0 or select(2,RuneCooldown()) > 0 or select(3,RuneCooldown()) > 0 or select(4,RuneCooldown()) > 0) then
 		return GetSpellInfo(55090)
 	elseif select(4,RunesAvailable()) > 0 then
 		return GetSpellInfo(55090)
-	elseif select(2,RunesAvailable()) > 0 and select(3,RunesAvailable()) and select(4,RuneType()) < 4 then
-		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) < 4 then
 		return GetSpellInfo(85948)
 	else
