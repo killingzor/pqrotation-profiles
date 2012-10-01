@@ -1405,7 +1405,7 @@ function RuneType()
 		if type == 3 then
 			numFrost = numFrost + 1
 		end
-	emd
+	end
 	for i=1,6 do
 		local type = GetRuneType(i)
 		
