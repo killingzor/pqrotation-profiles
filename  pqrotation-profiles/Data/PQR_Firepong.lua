@@ -1464,7 +1464,9 @@ function CastDCoil()
 	local dtTimer = select(7,UnitBuffID("Pet",63560))
 	
 	if rPower > 65 or coilBuff then
-		if petHP > 35 then
+		if dtTimer and dtTimer - GetTime() < 5 then
+			return false
+		elseif petHP > 35 then
 			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
 		elseif petHP < 35 then
 			CastSpellByName(tostring(GetSpellInfo(47541)),"Pet")
