@@ -1503,7 +1503,9 @@ function CastDCoil()
 	local dtTimer = select(7,UnitBuffID("Pet",63560))
 	
 	if rPower > 65 or coilBuff then
-		if dtTimer and dtTimer - GetTime() < 5 then
+		if RunesAvailable() == 0 and UnitPower("Player") > 32 then
+			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
+		elseif dtTimer and dtTimer - GetTime() < 5 then
 			return false
 		elseif petHP > 35 then
 			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
@@ -1528,6 +1530,8 @@ function CastForS()
 	
 	if ((ffDebuff and ffDebuff - GetTime() < 6) or (bpDebuff and bpDebuff - GetTime() < 6)) then
 		return GetSpellInfo(85948)
+	elseif select(4,RunesAvailable()) > 0 then
+		return GetSpellInfo(55090)
 	elseif (select(2,RunesAvailable()) and select(3,RunesAvailable())) > 0 and (select(1,RuneType()) and select(2,RuneType())) > 0 and select(4,RuneType()) < 3 then
 		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) > 0 and select(3,RuneType()) == 2 then
@@ -1548,7 +1552,5 @@ function CastFestOrScoourge()
 		CastSpellByName(tostring(GetSpellInfo(55090)))
 	elseif CastForS() == GetSpellInfo(85948) then
 		CastSpellByName(tostring(GetSpellInfo(85948)))
-	elseif RunesAvailable() == 0 and UnitPower("Player") > 32 then
-		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
 	end
 end
