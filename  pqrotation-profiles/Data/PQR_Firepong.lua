@@ -1383,8 +1383,8 @@ function CastDiseases()
 				CastSpellByName(tostring(GetSpellInfo(45462)))
 			end
 		end
-	elseif obKnown then
-		if not (ffDebuff and bpDebuff) and UBcooldown < 75 then
+	elseif obKnown and not ubBuff then
+		if not (ffDebuff or bpDebuff) then
 			CastSpellByName(tostring(GetSpellInfo(77575)))
 		end
 		
