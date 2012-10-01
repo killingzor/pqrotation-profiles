@@ -155,5 +155,6 @@ elseif obKnown then
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Combat Functions --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>CastDiseases()
 CastERW()
+CastDarkT()
 CastDCoil()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Defensive Spells --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>Pet()
 Presences()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DEATHKNIGHT>

@@ -1461,12 +1461,22 @@ function CastDCoil()
 	local coilBuff = UnitBuffID("Player",81340)
 	local rPower = UnitPower("Player")
 	local petHP = 100 * UnitHealth("Pet") / UnitHealthMax("Pet")
+	local dtTimer = select(7,UnitBuffID("Pet",
 	
 	if rPower > 65 or coilBuff then
 		if petHP > 35 then
-			CastSpellbyName(tostring(GetSpellInfo(47541)),"Target")
+			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
 		elseif petHP < 35 then
-			CastSpellbyName(tostring(GetSpellInfo(47541)),"Pet")
+			CastSpellByName(tostring(GetSpellInfo(47541)),"Pet")
 		end
+	end
+end
+
+function CastDarkT()
+	local siStacks = select(4,UnitBuffID("Player",49572))
+	local dtBuff = UnitBuffID("Pet",63560)
+	
+	if siStacks == 5 and not dtBuff then
+		CastSpellByName(tostring(GetSpellInfo(63560)))
 	end
 end
