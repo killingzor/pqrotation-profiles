@@ -1370,9 +1370,11 @@ function CastDiseases()
 	local OBstart, OBduration = GetSpellCooldown(77575)
 	local OBcooldown = (OBstart + OBduration - GetTime())
 		
-	if ubKnown then
+	if ubKnown or obKnown then
 		if UBcooldown < 1 and not (ffDebuff and bpDebuff) and not ubBuff then
 			CastSpellByName(tostring(GetSpellInfo(115989)))
+		elseif not ubBuff and UBcooldown > 1 and not (ffDebuff and bpDebuff) then
+			CastSpellByName(tostring(GetSpellInfo(77575)))
 		end
 		
 		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) and not ubBuff then
@@ -1383,19 +1385,19 @@ function CastDiseases()
 				CastSpellByName(tostring(GetSpellInfo(45462)))
 			end
 		end
-	elseif obKnown and not ubBuff then
-		if not (ffDebuff or bpDebuff) then
-			CastSpellByName(tostring(GetSpellInfo(77575)))
-		end
+--	elseif obKnown and not ubBuff then
+--		if not (ffDebuff or bpDebuff) then
+--			CastSpellByName(tostring(GetSpellInfo(77575)))
+--		end
 		
-		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) then
-			if not ffDebuff then
-				CastSpellByName(tostring(GetSpellInfo(45477)))
-			end
-			if not bpDebuff then
-				CastSpellByName(tostring(GetSpellInfo(45462)))
-			end
-		end
+--		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) then
+--			if not ffDebuff then
+--				CastSpellByName(tostring(GetSpellInfo(45477)))
+--			end
+--			if not bpDebuff then
+--				CastSpellByName(tostring(GetSpellInfo(45462)))
+--			end
+--		end
 	end
 end
 
