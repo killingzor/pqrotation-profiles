@@ -1521,3 +1521,32 @@ function CastDarkT()
 		CastSpellByName(tostring(GetSpellInfo(63560)))
 	end
 end
+
+function CastForS()
+	local ffDebuff = select(7,UnitDebuffID("Target",55095,"Player")
+	local bpDebuff = select(7,UnitDebuffID("Target",55078,"Player")
+	
+	if ((ffDebuff and ffDebuff - GetTime() < 6) or (bpDebuff and bpDebuff - GetTime() < 6)) then
+		return festering
+	elseif select(4,RuneType()) == 0 and ((ffDebuff and ffDebuff - GetTime() < 20) or (bpDebuff and bpDebuff - GetTime() < 20)) then
+		return festering
+--	elseif select(4,RuneType()) == 2 and (select(2,RunesAvailable()) + select(3,RunesAvailable()) == 2 then
+--		return festering
+	elseif select(4,RuneType()) == 4 and select(3,RuneType()) == 2 then
+		return scourge
+	elseif select(4,RuneType()) == 3 and select(3,RuneType()) == 2 and (select(1,RuneCooldown()) > 0 or select(2,RuneCooldown()) > 0 or select(3,RuneCooldown()) > 0 or select(4,RuneCooldown()) > 0) then
+		return scourge
+	else
+		return scourge
+	end
+end
+
+function CastFestOrScoourge()
+	if CastForS() == scourge then
+		CastSpellByName(tostring(GetSpellInfo(55090)))
+	elseif CastForS() == festering then
+		CastSpellByName(tostring(GetSpellInfo(85948)))
+	elseif RunesAvailable() == 0 and UnitPower("Player") > 32 then
+		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
+	end
+end
