@@ -1461,7 +1461,7 @@ function CastDCoil()
 	local coilBuff = UnitBuffID("Player",81340)
 	local rPower = UnitPower("Player")
 	local petHP = 100 * UnitHealth("Pet") / UnitHealthMax("Pet")
-	local dtTimer = select(7,UnitBuffID("Pet",
+	local dtTimer = select(7,UnitBuffID("Pet",63560))
 	
 	if rPower > 65 or coilBuff then
 		if petHP > 35 then
