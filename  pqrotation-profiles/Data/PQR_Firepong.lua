@@ -1502,10 +1502,10 @@ function CastDCoil()
 	local petHP = 100 * UnitHealth("Pet") / UnitHealthMax("Pet")
 	local dtTimer = select(7,UnitBuffID("Pet",63560))
 	
+	if (rPower > 32 and RunesAvailable() == 0) or (RunesAvailable() == 0 and coilBuff) then
+		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
 	if rPower > 65 or coilBuff then
-		if RunesAvailable() == 0 and UnitPower("Player") > 32 then
-			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
-		elseif dtTimer and dtTimer - GetTime() < 5 then
+		if dtTimer and dtTimer - GetTime() < 5 then
 			return false
 		elseif petHP > 35 then
 			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
