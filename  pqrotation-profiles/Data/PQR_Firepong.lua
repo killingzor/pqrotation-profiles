@@ -1530,6 +1530,8 @@ function CastForS()
 		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) == 0 and ((ffDebuff and ffDebuff - GetTime() < 20) or (bpDebuff and bpDebuff - GetTime() < 20)) then
 		return GetSpellInfo(85948)
+	elseif select(4,RuneType()) ~= 4 and ((ffDebuff and ffDebuff - GetTime() < 30) or (bpDebuff and bpDebuff - GetTime() < 30)) then
+		return GetSpellInfo(85948)
 --	elseif select(4,RuneType()) == 2 and (select(2,RunesAvailable()) + select(3,RunesAvailable()) == 2 then
 --		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) == 4 and select(3,RuneType()) == 2 then
