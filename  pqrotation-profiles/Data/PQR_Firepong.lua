@@ -1538,6 +1538,8 @@ function CastForS()
 		return GetSpellInfo(55090)
 	elseif select(4,RuneType()) == 3 and select(3,RuneType()) == 2 and (select(1,RuneCooldown()) > 0 or select(2,RuneCooldown()) > 0 or select(3,RuneCooldown()) > 0 or select(4,RuneCooldown()) > 0) then
 		return GetSpellInfo(55090)
+	elseif select(4,RunesAvailable()) > 0 then
+		return GetSpellInfo(55090)
 	else
 		return GetSpellInfo(55090)
 	end
