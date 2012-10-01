@@ -1534,6 +1534,8 @@ function CastForS()
 		return GetSpellInfo(55090)
 	elseif select(4,RunesAvailable()) > 0 then
 		return GetSpellInfo(55090)
+	elseif select(2,RunesAvailable()) > 0 and select(3,RunesAvailable()) and select(4,RuneType()) < 3 then
+		return GetSpellInfo(85948)
 	elseif select(4,RuneType()) < 4 then
 		return GetSpellInfo(85948)
 	else
