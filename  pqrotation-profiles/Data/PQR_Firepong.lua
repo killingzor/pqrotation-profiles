@@ -70,39 +70,6 @@ function PQR_Battleground()
 	return false
 end
 
---var1 = Player
---var2 = Focus
---var3 = FocusTarget
-function PQR_FireMangle(var1,var2,var3,var4)
-	if UnitExists(var2) then
---		local facing1 = PQR_UnitFacing(var2,var1)
-		local facing2 = PQR_UnitFacing(var2,var3)
-		local facing3 = PQR_UnitFacing(var3,var1)
-		
-		if facing2 == true and facing3 == true then
-			return true
-		end
-		return false
-	end
-end
-
-local sr = {
-	127538,
-	52610
-}
-
---var1 = Player
-function HasSR(var1)
-	for i=1,#sr do
-		local hasSR = select(7,UnitBuffID(var1,sr[i]))
-		
-		if hasSR then
-			return true,hasSR
-		end
-	end
-	return false
-end
-
 local glyph = {
 	1, --Minor Glyph (Top Right)
 	2, --Major Glyph (Top)
@@ -1335,222 +1302,281 @@ function HasTarget()
 	return false
 end
 
---var1 = Target
---var2 = Player
-function HasThrash(var1,var2)
-	local CCasting = UnitBuffID(var2,16870)
-	local tBuff = UnitDebuffID(var1, 106830,var2)
-	
-	if CCasting and not tBuff then
-		return true
-	elseif CCasting and tBuff then
-		local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
-		local Timer = (tTimer - GetTime())
+function PQR_UnitClass(var1)
+	local Class = select(3,UnitClass(var1))
 
-		return true,Timer
-	elseif not CCasting and tBuff then
-		local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
-		local Timer = (tTimer - GetTime())
-		
-		return false,Timer
-	end
-	return false
-end
-
-function RunesAvailable()
-	local blood1 = GetRuneCount(1)
-	local blood2 = GetRuneCount(2)
-	local unholy1 = GetRuneCount(3)
-	local unholy2 = GetRuneCount(4)
-	local frost1 = GetRuneCount(5)
-	local frost2 = GetRuneCount(6)
-	
-	return blood1+blood2+unholy1+unholy2+frost1+frost2,blood1+blood2,frost1+frost2,unholy1+unholy2
-end
-
-function RuneCooldown()
-	local blood1,a = GetRuneCooldown(1)
-	local blood2,a = GetRuneCooldown(2)
-	local unholy1,a = GetRuneCooldown(3)
-	local unholy2,a = GetRuneCooldown(4)
-	local frost1,a = GetRuneCooldown(5)
-	local frost2,a = GetRuneCooldown(6)
-	
-	return blood1+a-GetTime(),blood2+a-GetTime(),frost1+a-GetTime(),frost2+a-GetTime(),unholy1+a-GetTime(),unholy2+a-GetTime()
-end
-
-function RuneType()
-	local numBlood = 0
-	local numFrost = 0
-	local numUnholy = 0
-	local numDeath = 0
-	
-	for i=1,6 do
-		local type = GetRuneType(i)
-		
-		if type == 1 then
-			numBlood = numBlood + 1
-		end
-	end
-	for i=1,6 do
-		local type = GetRuneType(i)
-		
-		if type == 2 then
-			numUnholy = numUnholy + 1
-		end
-	end
-	for i=1,6 do
-		local type = GetRuneType(i)
-		
-		if type == 3 then
-			numFrost = numFrost + 1
-		end
-	end
-	for i=1,6 do
-		local type = GetRuneType(i)
-		
-		if type == 4 then
-			numDeath = numDeath + 1
-		end
-	end
-		
-	
-	return numBlood,numFrost,numUnholy,numDeath
-end
-
-function CastERW()
-	local RunesAvailable = RunesAvailable()
-	local rPower = UnitPower("Player")
-	local erwKnown = IsSpellKnown(47568)
-	
-	if erwKnown and RunesAvailable == 0 and rPower < 35 then
-		CastSpellByName(tostring(GetSpellInfo(47568)))
-	end
-end
-
-function CastDiseases()
-	--Known Spells
-	local rbKnown = IsSpellKnown(108170)
-	local plKnown = IsSpellKnown(123693)
-	local ubKnown = IsSpellKnown(115989)
-	local obKnown = IsSpellKnown(77575)
-	--	Buffs/Debuffs/Cooldowns
-	local ffDebuff = UnitDebuffID("Target",55095,"Player")
-	local bpDebuff = UnitDebuffID("Target",55078,"Player")
-	local ubBuff = UnitBuffID("Player",115989)
-	local bossHP = 100 * UnitHealth("Target") / UnitHealthMax("Target")
-	local UBstart, UBduration = GetSpellCooldown(115989)
-	local UBcooldown = (UBstart + UBduration - GetTime())
-	local OBstart, OBduration = GetSpellCooldown(77575)
-	local OBcooldown = (OBstart + OBduration - GetTime())
-		
-	if ubKnown or obKnown then
-		if UBcooldown < 1 and not (ffDebuff and bpDebuff) and not ubBuff then
-			CastSpellByName(tostring(GetSpellInfo(115989)))
-		elseif not ubBuff and UBcooldown > 1 and not (ffDebuff and bpDebuff) then
-			CastSpellByName(tostring(GetSpellInfo(77575)))
+	if Class == 6 then
+		function RunesAvailable()
+			local blood1 = GetRuneCount(1)
+			local blood2 = GetRuneCount(2)
+			local unholy1 = GetRuneCount(3)
+			local unholy2 = GetRuneCount(4)
+			local frost1 = GetRuneCount(5)
+			local frost2 = GetRuneCount(6)
+			
+			return blood1+blood2+unholy1+unholy2+frost1+frost2,blood1+blood2,frost1+frost2,unholy1+unholy2
 		end
 		
-		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) and not ubBuff then
-			if not ffDebuff then
-				CastSpellByName(tostring(GetSpellInfo(45477)))
+		function RuneCooldown()
+			local blood1,a = GetRuneCooldown(1)
+			local blood2,a = GetRuneCooldown(2)
+			local unholy1,a = GetRuneCooldown(3)
+			local unholy2,a = GetRuneCooldown(4)
+			local frost1,a = GetRuneCooldown(5)
+			local frost2,a = GetRuneCooldown(6)
+			
+			return blood1+a-GetTime(),blood2+a-GetTime(),frost1+a-GetTime(),frost2+a-GetTime(),unholy1+a-GetTime(),unholy2+a-GetTime()
+		end
+		
+		function RuneType()
+			local numBlood = 0
+			local numFrost = 0
+			local numUnholy = 0
+			local numDeath = 0
+			
+			for i=1,6 do
+				local type = GetRuneType(i)
+				
+				if type == 1 then
+					numBlood = numBlood + 1
+				end
 			end
-			if not bpDebuff then
-				CastSpellByName(tostring(GetSpellInfo(45462)))
+			for i=1,6 do
+				local type = GetRuneType(i)
+				
+				if type == 2 then
+					numUnholy = numUnholy + 1
+				end
+			end
+			for i=1,6 do
+				local type = GetRuneType(i)
+				
+				if type == 3 then
+					numFrost = numFrost + 1
+				end
+			end
+			for i=1,6 do
+				local type = GetRuneType(i)
+				
+				if type == 4 then
+					numDeath = numDeath + 1
+				end
+			end
+				
+			
+			return numBlood,numFrost,numUnholy,numDeath
+		end
+		
+		function CastERW()
+			local RunesAvailable = RunesAvailable()
+			local rPower = UnitPower("Player")
+			local erwKnown = IsSpellKnown(47568)
+			
+			if erwKnown and RunesAvailable == 0 and rPower < 35 then
+				CastSpellByName(tostring(GetSpellInfo(47568)))
 			end
 		end
---	elseif obKnown and not ubBuff then
---		if not (ffDebuff or bpDebuff) then
---			CastSpellByName(tostring(GetSpellInfo(77575)))
---		end
 		
---		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) then
---			if not ffDebuff then
---				CastSpellByName(tostring(GetSpellInfo(45477)))
---			end
---			if not bpDebuff then
---				CastSpellByName(tostring(GetSpellInfo(45462)))
---			end
---		end
-	end
-end
-
-function Presences()
-	local form = GetShapeshiftForm()
-	local unholyKnown = IsSpellKnown(48265)
-	local frostKnown = IsSpellKnown(48266)
-	
-	if unholyKnown and form ~= 3 then
-		CastShapeshiftForm(3)
-	elseif frostKnown and not unholyKnown and form ~= 2 then
-		CastShapeshiftForm(2)
-	end
-end
-
-function Pet()
-	local hasPet = HasPetSpells()
-	local rdCD = GetSpellCooldown(46584)
-	
-	if not hasPet and rdCD == 0 then
-		CastSpellByName(GetSpellInfo(46584))
-	end
-end
-
-function CastDCoil()
-	local coilBuff = UnitBuffID("Player",81340)
-	local rPower = UnitPower("Player")
-	local petHP = 100 * UnitHealth("Pet") / UnitHealthMax("Pet")
-	local dtTimer = select(7,UnitBuffID("Pet",63560))
-	
-	if (rPower > 32 and RunesAvailable() == 0) or (RunesAvailable() == 0 and coilBuff) then
-		CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
-	elseif rPower > 65 or coilBuff then
-		if dtTimer and dtTimer - GetTime() < 5 then
+		function CastDiseases()
+			--Known Spells
+			local rbKnown = IsSpellKnown(108170)
+			local plKnown = IsSpellKnown(123693)
+			local ubKnown = IsSpellKnown(115989)
+			local obKnown = IsSpellKnown(77575)
+			--	Buffs/Debuffs/Cooldowns
+			local ffDebuff = UnitDebuffID("Target",55095,"Player")
+			local bpDebuff = UnitDebuffID("Target",55078,"Player")
+			local ubBuff = UnitBuffID("Player",115989)
+			local bossHP = 100 * UnitHealth("Target") / UnitHealthMax("Target")
+			local UBstart, UBduration = GetSpellCooldown(115989)
+			local UBcooldown = (UBstart + UBduration - GetTime())
+			local OBstart, OBduration = GetSpellCooldown(77575)
+			local OBcooldown = (OBstart + OBduration - GetTime())
+				
+			if ubKnown or obKnown then
+				if UBcooldown < 1 and not (ffDebuff and bpDebuff) and not ubBuff then
+					CastSpellByName(tostring(GetSpellInfo(115989)))
+				elseif not ubBuff and UBcooldown > 1 and not (ffDebuff and bpDebuff) then
+					CastSpellByName(tostring(GetSpellInfo(77575)))
+				end
+				
+				if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) and not ubBuff then
+					if not ffDebuff then
+						CastSpellByName(tostring(GetSpellInfo(45477)))
+					end
+					if not bpDebuff then
+						CastSpellByName(tostring(GetSpellInfo(45462)))
+					end
+				end
+		--	elseif obKnown and not ubBuff then
+		--		if not (ffDebuff or bpDebuff) then
+		--			CastSpellByName(tostring(GetSpellInfo(77575)))
+		--		end
+				
+		--		if (UBcooldown > 3 or not ubKnown) and (OBcooldown > 3 or not obKnown) then
+		--			if not ffDebuff then
+		--				CastSpellByName(tostring(GetSpellInfo(45477)))
+		--			end
+		--			if not bpDebuff then
+		--				CastSpellByName(tostring(GetSpellInfo(45462)))
+		--			end
+		--		end
+			end
+		end
+		
+		function Presences()
+			local form = GetShapeshiftForm()
+			local unholyKnown = IsSpellKnown(48265)
+			local frostKnown = IsSpellKnown(48266)
+			
+			if unholyKnown and form ~= 3 then
+				CastShapeshiftForm(3)
+			elseif frostKnown and not unholyKnown and form ~= 2 then
+				CastShapeshiftForm(2)
+			end
+		end
+		
+		function Pet()
+			local hasPet = HasPetSpells()
+			local rdCD = GetSpellCooldown(46584)
+			
+			if not hasPet and rdCD == 0 then
+				CastSpellByName(GetSpellInfo(46584))
+			end
+		end
+		
+		function CastDCoil()
+			local coilBuff = UnitBuffID("Player",81340)
+			local rPower = UnitPower("Player")
+			local petHP = 100 * UnitHealth("Pet") / UnitHealthMax("Pet")
+			local dtTimer = select(7,UnitBuffID("Pet",63560))
+			
+			if (rPower > 32 and RunesAvailable() == 0) or (RunesAvailable() == 0 and coilBuff) then
+				CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
+			elseif rPower > 65 or coilBuff then
+				if dtTimer and dtTimer - GetTime() < 5 then
+					return false
+				elseif petHP > 35 then
+					CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
+				elseif petHP < 35 then
+					CastSpellByName(tostring(GetSpellInfo(47541)),"Pet")
+				end
+			end
+		end
+		
+		function CastDarkT()
+			local siStacks = select(4,UnitBuffID("Player",49572))
+			local dtBuff = UnitBuffID("Pet",63560)
+			
+			if siStacks == 5 and not dtBuff then
+				CastSpellByName(tostring(GetSpellInfo(63560)))
+			end
+		end
+		
+		function CastForS()
+			local ffDebuff = select(7,UnitDebuffID("Target",55095,"Player"))
+			local bpDebuff = select(7,UnitDebuffID("Target",55078,"Player"))
+			
+			if ((ffDebuff and ffDebuff - GetTime() < 6) or (bpDebuff and bpDebuff - GetTime() < 6)) then
+				return GetSpellInfo(85948)
+			elseif select(4,RunesAvailable()) > 0 then
+				return GetSpellInfo(55090)
+			elseif (select(2,RunesAvailable()) and select(3,RunesAvailable())) > 0 and (select(1,RuneType()) and select(2,RuneType())) > 0 and select(4,RuneType()) < 3 then
+				return GetSpellInfo(85948)
+			elseif select(4,RuneType()) > 0 and select(3,RuneType()) == 2 then
+				return GetSpellInfo(55090)
+			elseif select(4,RuneType()) == 3 and select(3,RuneType()) == 2 and (select(1,RuneCooldown()) > 0 or select(2,RuneCooldown()) > 0 or select(3,RuneCooldown()) > 0 or select(4,RuneCooldown()) > 0) then
+				return GetSpellInfo(55090)
+			elseif select(4,RunesAvailable()) > 0 then
+				return GetSpellInfo(55090)
+			elseif select(4,RuneType()) < 4 then
+				return GetSpellInfo(85948)
+			else
+				return GetSpellInfo(55090)
+			end
+		end
+		
+		function CastFestOrScoourge()
+			if CastForS() == GetSpellInfo(55090) then
+				CastSpellByName(tostring(GetSpellInfo(55090)))
+			elseif CastForS() == GetSpellInfo(85948) then
+				CastSpellByName(tostring(GetSpellInfo(85948)))
+			end
+		end
+	elseif Class == 11 then
+		--var1 = Target
+		--var2 = Player
+		function HasThrash(var1,var2)
+			local CCasting = UnitBuffID(var2,16870)
+			local tBuff = UnitDebuffID(var1, 106830,var2)
+			
+			if CCasting and not tBuff then
+				return true
+			elseif CCasting and tBuff then
+				local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
+				local Timer = (tTimer - GetTime())
+		
+				return true,Timer
+			elseif not CCasting and tBuff then
+				local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
+				local Timer = (tTimer - GetTime())
+				
+				return false,Timer
+			end
 			return false
-		elseif petHP > 35 then
-			CastSpellByName(tostring(GetSpellInfo(47541)),"Target")
-		elseif petHP < 35 then
-			CastSpellByName(tostring(GetSpellInfo(47541)),"Pet")
 		end
-	end
-end
-
-function CastDarkT()
-	local siStacks = select(4,UnitBuffID("Player",49572))
-	local dtBuff = UnitBuffID("Pet",63560)
-	
-	if siStacks == 5 and not dtBuff then
-		CastSpellByName(tostring(GetSpellInfo(63560)))
-	end
-end
-
-function CastForS()
-	local ffDebuff = select(7,UnitDebuffID("Target",55095,"Player"))
-	local bpDebuff = select(7,UnitDebuffID("Target",55078,"Player"))
-	
-	if ((ffDebuff and ffDebuff - GetTime() < 6) or (bpDebuff and bpDebuff - GetTime() < 6)) then
-		return GetSpellInfo(85948)
-	elseif select(4,RunesAvailable()) > 0 then
-		return GetSpellInfo(55090)
-	elseif (select(2,RunesAvailable()) and select(3,RunesAvailable())) > 0 and (select(1,RuneType()) and select(2,RuneType())) > 0 and select(4,RuneType()) < 3 then
-		return GetSpellInfo(85948)
-	elseif select(4,RuneType()) > 0 and select(3,RuneType()) == 2 then
-		return GetSpellInfo(55090)
-	elseif select(4,RuneType()) == 3 and select(3,RuneType()) == 2 and (select(1,RuneCooldown()) > 0 or select(2,RuneCooldown()) > 0 or select(3,RuneCooldown()) > 0 or select(4,RuneCooldown()) > 0) then
-		return GetSpellInfo(55090)
-	elseif select(4,RunesAvailable()) > 0 then
-		return GetSpellInfo(55090)
-	elseif select(4,RuneType()) < 4 then
-		return GetSpellInfo(85948)
+		
+		--var1 = Player
+		--var2 = Focus
+		--var3 = FocusTarget
+		function PQR_FireMangle(var1,var2,var3,var4)
+			if UnitExists(var2) then
+		--		local facing1 = PQR_UnitFacing(var2,var1)
+				local facing2 = PQR_UnitFacing(var2,var3)
+				local facing3 = PQR_UnitFacing(var3,var1)
+				
+				if facing2 == true and facing3 == true then
+					return true
+				end
+				return false
+			end
+		end
+		
+		local sr = {
+			127538,
+			52610
+		}
+		
+		--var1 = Player
+		function HasSR(var1)
+			for i=1,#sr do
+				local hasSR = select(7,UnitBuffID(var1,sr[i]))
+				
+				if hasSR then
+					return true,hasSR
+				end
+			end
+			return false
+		end
+	elseif Class == 3 then
+		return false
+	elseif Class == 8 then
+		return false
+	elseif Class == 2 then
+		return false
+	elseif Class == 5 then
+		return false
+	elseif Class == 4 then
+		return false
+	elseif Class == 7 then
+		return false
+	elseif Class == 9 then
+		return false
+	elseif Class == 1 then
+		return false
+	elseif Class == 12 then
+		return false
 	else
-		return GetSpellInfo(55090)
-	end
-end
-
-function CastFestOrScoourge()
-	if CastForS() == GetSpellInfo(55090) then
-		CastSpellByName(tostring(GetSpellInfo(55090)))
-	elseif CastForS() == GetSpellInfo(85948) then
-		CastSpellByName(tostring(GetSpellInfo(85948)))
+		return false
 	end
 end
