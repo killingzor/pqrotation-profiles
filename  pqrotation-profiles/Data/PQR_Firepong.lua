@@ -1,3 +1,25 @@
+function MultiTarget()
+	if modkeytime == nil then 
+		modkeytime = 0 
+	end
+	if Selector == nil then
+		Selector = 0
+	end
+	
+	if IsLeftShiftKeyDown() and GetTime() - modkeytime > 0.3  then
+		modkeytime = GetTime()
+	  	if Selector == 0 then 
+	    	Selector = 1 
+	    	print("Rotation mode: \124cFFDBFA2ANormal Rotation")
+	    	PQR_SwapRotation("KittyAoE (Firekitteh)")
+	  	elseif Selector == 1 then
+	    	Selector = 0 
+	    	print("Rotation mode: \124cFFFA652ABurn Rotation")
+	    	PQR_SwapRotation("KittyCleave (Firekitteh)")
+	  	end
+	end
+end
+
 local snares = {
 	snares = {
 		122, --Frost Nova
