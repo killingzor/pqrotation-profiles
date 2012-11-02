@@ -338,7 +338,8 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
    end
 end
 
-PQR_UnitClass(&amp;quot;Player&amp;quot;)</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Race Checks
+PQR_UnitClass(&amp;quot;Player&amp;quot;)
+MultiTarget()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Race Checks
 local Troll = IsSpellKnown(26297)
 local Orc = IsSpellKnown(20572)
 --Cooldowns
