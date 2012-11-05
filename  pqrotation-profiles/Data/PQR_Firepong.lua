@@ -1,3 +1,4 @@
+--Thanks to Gabbz, just changed it to what I wanted and made a function for faster use and be able to last through switching profiles.
 function MultiTarget()
 	if modkeytime == nil then 
 		modkeytime = 0 
@@ -10,11 +11,11 @@ function MultiTarget()
 		modkeytime = GetTime()
 	  	if Selector == 0 then 
 	    	Selector = 1 
-	    	print("Rotation mode: \124cFFDBFA2ANormal Rotation")
+	    	print("Rotation mode: \124cFFDBFA2AMulti-Target Rotation")
 	    	PQR_SwapRotation("KittyAoE (Firekitteh)")
 	  	elseif Selector == 1 then
 	    	Selector = 0 
-	    	print("Rotation mode: \124cFFFA652ABurn Rotation")
+	    	print("Rotation mode: \124cFFFA652ASingle Target Rotation")
 	    	PQR_SwapRotation("KittyCleave (Firekitteh)")
 	  	end
 	end
