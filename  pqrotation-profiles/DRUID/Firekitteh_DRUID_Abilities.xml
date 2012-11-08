@@ -5,8 +5,9 @@ local rake, _, _, _, _, _, raketimer = UnitDebuffID(&amp;quot;target&amp;quot;, 
 local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
+local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if not (psBuff or nsBuff) then
+if not (psBuff or nsBuff) and waBuff then
 	if rake and HasSR then
 		if raketimer - GetTime() &amp;lt; 4 then
 			CastSpellByName(tostring(GetSpellInfo(1822)))
@@ -26,8 +27,9 @@ local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local nsStart,nsDuration = GetSpellCooldown(132158)
 local nsCD = nsStart + nsDuration - GetTime()
+local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if not (psBuff or nsBuff) or not (nsCD &amp;gt; 0 and nsCD &amp;lt; 3) then
+if not (psBuff or nsBuff) or not (nsCD &amp;gt; 0 and nsCD &amp;lt; 3) and waBuff then
 	if rip and HasSR then
 		if riphealth &amp;gt; 60 then
 			if ripCP == 5 then
@@ -44,8 +46,9 @@ if not (psBuff or nsBuff) or not (nsCD &amp;gt; 0 and nsCD &amp;lt; 3) then
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
+local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
+if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff then
 --	CastShred()
 	--Variables
 	local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
@@ -127,8 +130,9 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Mangle</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
+local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
+if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff then
 --	CastMangle()
 	-- Variables
 	local Fire = PQR_FireTarget(&amp;quot;Target&amp;quot;)
@@ -245,8 +249,9 @@ local fbhealth = 100 * UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&a
 local fbenergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;Player&amp;quot;) * 100
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
+local waBuff=  select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if not (psBuff or nsBuff) then
+if not (psBuff or nsBuff) and waBuff then
 	if fbhealth &amp;lt;=60 then
 		if fbrip and HasSR then
 			if fbCP == 5 then
@@ -327,9 +332,22 @@ if hasTarget and Enemy and not isDead and inCombat then
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
+local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
-	CastRavage()
+if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff then
+--	CastRavage()
+
+	--Variables
+	local HasSR = HasSR(&amp;quot;Player&amp;quot;)
+	local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
+	--Misc
+	local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
+	local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+	local CCasting = UnitBuffID(&amp;quot;Player&amp;quot;,16870)
+	
+	if Incarnation ~= nil and fbCP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+		CastSpellByName(tostring(GetSpellInfo(6785)))
+	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>-- Load Lua --</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>if PQR_RotationStarted == true then
   PQR_RotationStarted = false
   if PQR_LoadLua ~= nil then
@@ -501,16 +519,12 @@ local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 
 if psBuff or nsBuff then
---	if IsInGroup() or IsInRaid() then
-		if members[1].HP &amp;lt; playerHP1 then
-			PQR_CustomTarget = members[1].Unit
-			CastSpellByName(tostring(GetSpellInfo(5185)),PQR_CustomTarget)
-		else
-			CastSpellByName(tostring(GetSpellInfo(5185)),&amp;quot;Player&amp;quot;)
-		end
---	end
---elseif psBuff or nsBuff then
---	CastSpellByName(tostring(GetSpellInfo(5185)),&amp;quot;Player&amp;quot;)
+	if members[1].HP &amp;lt; playerHP1 then
+		PQR_CustomTarget = members[1].Unit
+		CastSpellByName(tostring(GetSpellInfo(5185)),PQR_CustomTarget)
+	else
+		CastSpellByName(tostring(GetSpellInfo(5185)),&amp;quot;Player&amp;quot;)
+	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Forms</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
 local inBG = PQR_Battleground()
 local Distance = PQR_UnitDistance(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;)
