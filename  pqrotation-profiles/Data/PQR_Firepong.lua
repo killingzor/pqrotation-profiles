@@ -7,7 +7,7 @@ function MultiTarget()
 		Selector = 0
 	end
 	
-	if IsLeftShiftKeyDown() and GetTime() - modkeytime > 0.3  then
+	if IsRightAltKeyDown() and GetTime() - modkeytime > 0.3  then
 		modkeytime = GetTime()
 	  	if Selector == 0 then 
 	    	Selector = 1 
@@ -133,6 +133,7 @@ function PQR_FireTarget(unit)
 	return false
 end
 
+--Pulled from HonorBuddy Boss List. Found the ID's for the newest Raid's and Heroics in DBM if they are the right ID's.
 local boss = {
 		--Ragefire Chasm
 	    11517, --Oggleflint
@@ -1233,7 +1234,7 @@ local boss = {
         56846, -- Arm Tentacle -- Madness of DW
         56167, -- Arm Tentacle -- Madness of DW
         56168, -- Wing Tentacle - Madness of DW
-        57962 -- Deathwing ----- Madness of DW (his head)
+        57962, -- Deathwing ----- Madness of DW (his head)
 
         -- === Pandaria 5-man Dungeons
         -- Gate of the Setting Sun	      
@@ -1248,15 +1249,37 @@ local boss = {
         -- Temple of the Jade Serpent
 
         -- === Pandaria Raids
-        -- Heart of Fear	            
-        -- Mogu'shan Vaults	        
+        -- Heart of Fear
+        63191, --Garalon
+        62397, --Meljarak
+        62837, --Shekzeer
+        62543, --Tayak
+        62511, --Unsok
+        62980, --62980         
+        -- Mogu'shan Vaults	
+        60410, --Elegon
+        60009, --Feng  
+        60051, --Stone Guard #1
+        60043, --Stone Guard #2
+        59915, --Stone Guard #3
+        60047, --Stone Guard #4
+        60701, --Spirit King's #1
+        60708, --Spirit King's #2
+        60709, --Spirit King's #3
+        60710, --Spirit King's #4
+        60143, --Garajal
+        60399, --Will of Emperor #1
+        60400, --Will of Emperor #2
         -- Terrace of Endless Spring
+        62983, --LeiShi
+        60583, --(Protector) Kaolan
+        60585, --(Protector) Elder Regail
+        60586 --(Protector) Elder Asani
 }
 
 function PQR_FireBoss(unit)
 	for i=1,#boss do
-		local hasTarget = UnitExists(unit)
-		if hasTarget == 1 then
+		if HasTarget() then
 			local bossid = tonumber(UnitGUID(unit):sub(-13, -9), 16)
 			if bossid == boss[i] then
 				return true

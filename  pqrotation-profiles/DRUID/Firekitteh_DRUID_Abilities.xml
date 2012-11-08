@@ -39,7 +39,8 @@ if not (psBuff or nsBuff) then
 			CastSpellByName(tostring(GetSpellInfo(1079)))
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Shred</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
+local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 
 if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
@@ -258,8 +259,8 @@ if not (psBuff or nsBuff) then
 		end
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Berserk</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Buffs
-local _,_,_,TF = UnitBuffID(&amp;quot;player&amp;quot;, 5217)
-local _, _, _, BS = UnitBuffID(&amp;quot;player&amp;quot;, 106951)
+local _,_,_,TF = UnitBuffID(&amp;quot;Player&amp;quot;, 5217)
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 local BSstart, BSduration = GetSpellCooldown(106951)
 --Cooldowns
 local BScooldown = (BSstart + BSduration - GetTime())
@@ -267,7 +268,6 @@ local BScooldown = (BSstart + BSduration - GetTime())
 local bsEnergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;Player&amp;quot;) * 100
 local bsHealth = UnitHealth(&amp;quot;Target&amp;quot;) / UnitHealthMax(&amp;quot;Target&amp;quot;) * 100
 local levelcheck = UnitLevel(&amp;quot;Target&amp;quot;)
-local spell = select(2,GetSpellBookItemInfo(tostring(GetSpellInfo(106951))))
 
 if TF == nil then
 	return false
@@ -300,7 +300,7 @@ if hasTarget and Enemy and not isDead and inCombat then
 	--Misc Buffs/Debuff&amp;apos;s/CD&amp;apos;s
 	local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 	local energy = UnitPower(&amp;quot;Player&amp;quot;)
-	local thrashBleed = UnitDebuffID(&amp;quot;Target&amp;quot;,106830)
+	local thrashBleed = UnitDebuffID(&amp;quot;Target&amp;quot;,106830,&amp;quot;Player&amp;quot;)
 	local CP = GetComboPoints(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
 	
 	if HasGlyph then
@@ -324,6 +324,7 @@ if hasTarget and Enemy and not isDead and inCombat then
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Ravage!</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
+local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 
 if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) then
 	CastRavage()
@@ -343,58 +344,50 @@ MultiTarget()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelCha
 local Troll = IsSpellKnown(26297)
 local Orc = IsSpellKnown(20572)
 --Cooldowns
-local tCD = GetSpellCooldown(26297)
-local oCD = GetSpellCooldown(20572)
+local tStart,tDuration = GetSpellCooldown(26297)
+local tCD = tStart + tDuration - GetTime()
+local oStart,oDuration = GetSpellCooldown(20572)
+local oCD = oStart + oDuration - GetTime()
 --Buffs
 local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 
 if Troll == true then
-	if BS == nil then
-		return false
-	else
-		if tCD == 0 then
-			CastSpellByName(tostring(GetSpellInfo(26297)))
---			CastSpellByID(74497)
-		end
+	if BS ~= nil and tCD &amp;lt; 1 then
+		CastSpellByName(tostring(GetSpellInfo(26297)))
+--		CastSpellByID(74497)
 	end
 end
 
 if Orc == true then
-	if BS == nil then
-		return false
-	else
-		if oCD == 0 then
-			CastSpellByName(tostring(GetSpellInfo(20572)))
-		end
+	if BS ~= nil and oCD &amp;lt; 1 then
+		CastSpellByName(tostring(GetSpellInfo(20572)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Potion Counts
---local tvPot = GetItemCount(58145) --Potion of the Tol&amp;apos;Vir
---local vPot = GetItemCount(58091) --Volcanic Potion
---local gbPot = GetItemCount(58146) --Golemblood Potion
---local ePot = GetItemCount(58090) --Earthen Potion
+local vbPot = GetItemCount(76089) --Vermin&amp;apos;s Bite
+local mpPot = GetItemCount(76095) --Potion of Mogu Power
+local jsPot = GetItemCount(76093) --Potion of the Jade Serpent
+local mPot = GetItemCount(76090) --Potion&amp;apos;s of the Mountains
 --Potion timers
---local tvCD = GetItemCooldown(58145) --Potion of the Tol&amp;apos;Vir Timer
---local vCD = GetItemCooldown(58091) --Volcanic Potion Timer
---local gbCD = GetItemCooldown(58146) --Golemblood Potion timer
---local eCD = GetItemCooldown(58090) --Earthen Potion Timer
+local vbStart,vbDuration = GetSpellCooldown(76089) --Vermin&amp;apos;s Bite Timer
+local vbCD = vbStart + vbDuration - GetTime()
+local mpStart,mpDuration = GetSpellCooldown(76095) --Potion of Mugo Power Timer
+local mpCD = mpStart + mpDuration - GetTime()
+local jsStart,jsDuration = GetSpellCooldown(76093) --Potion of the Jade Serpent timer
+local jsCD = jsStart + jsDuration - GetTime()
+local mStart,mDuration = GetSpellCooldown(76090) --Potion of the Mountains Timer
+local mCD = mStart + mDuration - GetTime()
 --Buffs
---local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 50334)) --Berserk Druid Buff
+local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 50334)) --Berserk Druid Buff
 local berryBuff = UnitBuffID(&amp;quot;Player&amp;quot;,117164)
 --Misc
 local mapID = GetCurrentMapAreaID()
 local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 
---if tvPot == nil then
---	return false
---else
---	if tvPot ~= nil and tvCD == 0 then
---		if BS == nil then
---			return false
---		else
---			UseItemByName(58145)
---		end
---	end
---end
+if vbPot == nil then
+	return false
+elseif vbPot ~= nil and vbCD &amp;lt; 1 and BS ~= nil then
+	UseItemByName(76089)
+end
 
 if mapID == 809 and inCombat == 1 and not berryBuff then
 	local berryCount = GetItemCount(81054)
@@ -407,22 +400,17 @@ if mapID == 809 and inCombat == 1 and not berryBuff then
 --print(&amp;quot;WOOT&amp;quot;)
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Profession Buffs</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Profession Cooldown&amp;apos;s/Known Spells
-local herbKnown = IsSpellKnown(74497)
-local herbCD = GetSpellCooldown(74497) --Herbalism Spell - Lifebloom
+local herbKnown = IsSpellKnown(121279)
+local hStart,hDuration = GetSpellCooldown(121279) --Herbalism Spell - Lifebloom
+local hCD = hStart + hDuration - GetTime()
 local itemCD = PQR_ItemCD()
 --Buffs
 local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951)) --Berserk Buff
 local inStart,inDuration = GetSpellCooldown(106951)
 local inCD = inStart + inDuration - GetTime()
 
-if herbKnown == true then
-	if herbCD == 0 then
-		if BS == nil then
-			return false
-		else
-			CastSpell(FindSpellBookSlotBySpellID(74497),&amp;quot;Player&amp;quot;)
-		end
-	end
+if herbKnown == true and hCD &amp;lt; 1 and BS ~= nil then
+	CastSpell(FindSpellBookSlotBySpellID(121279),&amp;quot;Player&amp;quot;)
 end
 
 local slot = {10,13,14}
