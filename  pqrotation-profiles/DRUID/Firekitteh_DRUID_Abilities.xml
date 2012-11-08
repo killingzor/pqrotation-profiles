@@ -250,8 +250,9 @@ local fbenergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local waBuff=  select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
+local hasRake = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
 
-if not (psBuff or nsBuff) and waBuff then
+if not (psBuff or nsBuff) and waBuff and hasRake then
 	if fbhealth &amp;lt;=60 then
 		if fbrip and HasSR then
 			if fbCP == 5 then
@@ -333,8 +334,9 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
+local hasRake = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
 
-if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff then
+if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff and hasRake then
 --	CastRavage()
 
 	--Variables
