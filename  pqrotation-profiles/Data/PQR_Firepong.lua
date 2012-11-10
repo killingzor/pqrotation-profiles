@@ -1935,17 +1935,6 @@ function PQR_UnitClass(var1)
 				CastSpellByName(tostring(GetSpellInfo(6785)))
 			end
 		end
-		
-		function HasRake(var1)
-			local rake = select(7,UnitDebuffID(var1, 1822, "PLAYER"))
-			
-			if rake then
-				if (rake - GetTime()) > 3 then
-					return true
-				end
-			end
-			return false
-		end
 	elseif Class == 3 then
 		return false
 	elseif Class == 8 then
