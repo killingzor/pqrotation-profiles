@@ -9,7 +9,7 @@ local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
 if not (psBuff or nsBuff) and waBuff then
 	if rake and HasSR then
-		if raketimer - GetTime() &amp;lt; 3 then
+		if raketimer - GetTime() &amp;lt; 4 then
 			CastSpellByName(tostring(GetSpellInfo(1822)))
 		elseif hasDoC and hasDoC == 2 then
 			CastSpellByName(tostring(GetSpellInfo(1822)))
@@ -29,7 +29,7 @@ local nsStart,nsDuration = GetSpellCooldown(132158)
 local nsCD = nsStart + nsDuration - GetTime()
 local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
 
-if not ((psBuff or nsBuff) or nsCD &amp;lt; 3) and waBuff and HasRake(&amp;quot;Target&amp;quot;) then
+if not (psBuff or nsBuff) or not (nsCD &amp;gt; 0 and nsCD &amp;lt; 3) and waBuff then
 	if rip and HasSR then
 		if riphealth &amp;gt; 60 then
 			if ripCP == 5 then
@@ -78,9 +78,9 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 				return false
 			elseif BS and inCD == 0 then
 				return false
-			elseif CP &amp;lt; 2 and HasRake(&amp;quot;Target&amp;quot;) and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif CP &amp;lt; 2 and rake and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
-			elseif HasRake(&amp;quot;Target&amp;quot;) and not BS and not Incarnation and CP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and not BS and not Incarnation and CP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
 			end
 		elseif not incarnKnown then
@@ -90,9 +90,9 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 				return false
 			elseif PQR_NotBehindTarget() or Fire then
 				return false
-			elseif CP &amp;lt; 2 and HasRake(&amp;quot;Target&amp;quot;) and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif CP &amp;lt; 2 and rake and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
-			elseif HasRake(&amp;quot;Target&amp;quot;) and CP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and CP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
 			end
 		end
@@ -102,7 +102,7 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 		if incarnKnown then
 			if CP == 5 or Incarnation then
 				return false
-			elseif HasRake(&amp;quot;Target&amp;quot;) and tfBuff and not Incarnation and not BS and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and tfBuff and not Incarnation and not BS and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(114236)))
 			elseif Facing == true then
 				return false
@@ -110,19 +110,19 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 				return false
 			elseif BS and inCD == 0 then
 				return false
-			elseif HasRake(&amp;quot;Target&amp;quot;) and not BS and not Incarnation and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and not BS and not Incarnation and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
 			end
 		elseif not incarnKnown then
 			if CP == 5 then
 				return false
-			elseif HasRake(&amp;quot;Target&amp;quot;) and tfBuff or BS and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and tfBuff or BS and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(114236)))
 			elseif Facing == true then
 				return false
 			elseif PQR_NotBehindTarget() or Fire then
 				return false
-			elseif HasRake(&amp;quot;Target&amp;quot;) and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif rake and HasSR and CP &amp;lt; 5 and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(5221)))
 			end
 		end
@@ -142,6 +142,7 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 	local HasThrash = select(2,HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;))
 	--Misc Buffs/Debuffs
 	local fbCP = GetComboPoints(&amp;quot;Player&amp;quot;, &amp;quot;Target&amp;quot;)
+	local rake = UnitDebuffID(&amp;quot;Target&amp;quot;, 1822, &amp;quot;Player&amp;quot;)
 	local Incarnation = UnitBuffID(&amp;quot;Player&amp;quot;, 102543)
 	local BS = select(4,UnitBuffID(&amp;quot;Player&amp;quot;, 106951))
 	local incarnKnown = IsSpellKnown(106731)
@@ -156,19 +157,19 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 				return false
 			elseif not BS and Incarnation then
 				return false
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and not BS and not Incarnation and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and not BS and not Incarnation and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif Facing == true and HasRake(&amp;quot;Target&amp;quot;) and fbCP &amp;lt; 5 and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and not BS and not Incarnation and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and not BS and not Incarnation and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
 			end
 		elseif not incarnKnown then
-			if Facing == true and fbCP &amp;lt; 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			if Facing == true and fbCP &amp;lt; 5 and rake ~= nil and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not tfBuff and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
 			end
 		end
@@ -180,17 +181,17 @@ if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and w
 				return false
 			elseif not BS and Incarnation then
 				return false
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not BS and not Incarnation and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and not BS and not Incarnation and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif Facing == true and HasRake(&amp;quot;Target&amp;quot;) and fbCP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif Facing == true and rake ~= nil and fbCP &amp;lt; 5 and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif PQR_NotBehindTarget() or Facing == true or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and not BS and not Incarnation and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Facing == true or Fire and fbCP ~= 5 and rake ~= nil and not BS and not Incarnation and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
 			end
 		elseif not incarnKnown then
-			if Facing == true and fbCP &amp;lt; 5 and HasRake(&amp;quot;Target&amp;quot;) and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			if Facing == true and fbCP &amp;lt; 5 and rake ~= nil and not tfBuff and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
-			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and HasRake(&amp;quot;Target&amp;quot;) and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
+			elseif PQR_NotBehindTarget() or Fire and fbCP ~= 5 and rake ~= nil and HasSR and ((CCasting and HasThrash and HasThrash &amp;gt; 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(33876)))
 			end
 		end
@@ -249,9 +250,9 @@ local fbenergy = UnitPower(&amp;quot;Player&amp;quot;) / UnitPowerMax(&amp;quot;
 local psBuff = UnitBuffID(&amp;quot;Player&amp;quot;,69369)
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local waBuff=  select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
---local hasRake = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
+local hasRake = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
 
-if not (psBuff or nsBuff) and waBuff and HasRake(&amp;quot;Target&amp;quot;) then
+if not (psBuff or nsBuff) and waBuff and hasRake then
 	if fbhealth &amp;lt;=60 then
 		if fbrip and HasSR then
 			if fbCP == 5 then
@@ -290,12 +291,10 @@ else
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Tigers Fury</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local tfEnergy = UnitPower(&amp;quot;Player&amp;quot;)
 local BSstart, BSduration = GetSpellCooldown(106951)
 local BScooldown = (BSstart + BSduration - GetTime())
-local tfStart, tfDuration = GetSpellCooldown(5217)
-local tfCD = tfStart + tfDuration - GetTime()
 
-if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 and tfCD &amp;lt; 1 then
+if BScooldown &amp;gt; 25 and tfEnergy &amp;lt;= 45 then
 	CastSpellByName(tostring(GetSpellInfo(5217)))
-elseif BScooldown &amp;lt; 1 and tfEnergy &amp;lt;= 45 and tfCD &amp;lt; 1 then
+elseif BScooldown &amp;lt; 1 and tfEnergy &amp;lt;= 45 then
 	CastSpellByName(tostring(GetSpellInfo(5217)))
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Swipe</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
 local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
@@ -335,8 +334,9 @@ end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False
 local nsBuff = UnitBuffID(&amp;quot;Player&amp;quot;,132158)
 local hasDoC = select(4,UnitBuffID(&amp;quot;Player&amp;quot;,108381))
 local waBuff = select(4,UnitDebuffID(&amp;quot;Target&amp;quot;,113746))
+local hasRake = UnitDebuffID(&amp;quot;target&amp;quot;, 1822, &amp;quot;PLAYER&amp;quot;)
 
-if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff and HasRake(&amp;quot;Target&amp;quot;) then
+if (hasDoC and hasDoC &amp;lt; 2) or not hasDoC and not (psBuff or nsBuff) and waBuff and hasRake then
 --	CastRavage()
 
 	--Variables
@@ -365,8 +365,7 @@ PQR_UnitClass(&amp;quot;Player&amp;quot;)
 MultiTarget()
 --SheuronCode()
 GroupInfo() 
-CastClick()
-HasRake(&amp;quot;Target&amp;quot;)</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Race Checks
+CastClick()</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>True</SkipUnknown></Ability><Ability><Name>Racials</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Race Checks
 local Troll = IsSpellKnown(26297)
 local Orc = IsSpellKnown(20572)
 --Cooldowns
@@ -388,9 +387,7 @@ if Orc == true then
 	if BS ~= nil and oCD &amp;lt; 1 then
 		CastSpellByName(tostring(GetSpellInfo(20572)))
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
-local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
---Potion Counts
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Potion Counts
 local vbPot = GetItemCount(76089) --Vermin&amp;apos;s Bite
 local mpPot = GetItemCount(76095) --Potion of Mogu Power
 local jsPot = GetItemCount(76093) --Potion of the Jade Serpent
@@ -411,12 +408,10 @@ local berryBuff = UnitBuffID(&amp;quot;Player&amp;quot;,117164)
 local mapID = GetCurrentMapAreaID()
 local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 
-if PQR_FireBoss then
-	if vbPot == nil then
-		return false
-	elseif vbPot ~= nil and vbCD &amp;lt; 1 and BS ~= nil then
-		UseItemByName(76089)
-	end
+if vbPot == nil then
+	return false
+elseif vbPot ~= nil and vbCD &amp;lt; 1 and BS ~= nil then
+	UseItemByName(76089)
 end
 
 if mapID == 809 and inCombat == 1 and not berryBuff then
@@ -613,21 +608,4 @@ if hasTarget and Enemy and not isDead then
 			CastSpellByName(tostring(GetSpellInfo(132158)))
 		end
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Nature&amp;apos;s Vigil</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
-local Enemy = UnitCanAttack(&amp;quot;Player&amp;quot;,&amp;quot;Target&amp;quot;)
-local isDead = UnitIsDead(&amp;quot;Target&amp;quot;)
-
-if hasTarget and Enemy and not isDead then
-	local nvKnown = IsSpellKnown(124974)
-	local nvStart,nvDuration = GetSpellCooldown(124974)
-	local nvCD = nvStart + nvDuration - GetTime()
-	
-	if nvKnown and nvCD &amp;lt; 1 then
-		local BS = select(4,UnitBuffID(&amp;quot;player&amp;quot;, 106951))
-		local NaturesVigil = UnitBuffID(&amp;quot;Player&amp;quot;, 124974)
-
-		if BS ~= nil and Incarnation == nil then
-			CastSpellByName(tostring(GetSpellInfo(124974)))
-		end
-	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Custom</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability></DRUID>
