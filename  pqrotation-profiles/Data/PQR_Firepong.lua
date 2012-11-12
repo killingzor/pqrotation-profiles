@@ -1733,8 +1733,10 @@ function PQR_UnitClass(var1)
 			elseif CCasting and tBuff then
 				local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
 				local Timer = (tTimer - GetTime())
-		
-				return true,Timer
+				
+				if tTimer - GetTime() < 3 then
+					return true,Timer
+				end
 			elseif not CCasting and tBuff then
 				local tTimer = select(7,UnitDebuffID(var1, 106830,var2))
 				local Timer = (tTimer - GetTime())
@@ -1934,6 +1936,17 @@ function PQR_UnitClass(var1)
 			if Incarnation ~= nil and fbCP < 5 and HasSR and ((CCasting and HasThrash and HasThrash > 3) or (not CCasting and not HasThash)) then
 				CastSpellByName(tostring(GetSpellInfo(6785)))
 			end
+		end
+		
+		function HasRake(var1)
+			local rake = select(7,UnitDebuffID(var1, 1822, "PLAYER"))
+			
+			if rake then
+				if (rake - GetTime()) > 3 then
+					return true
+				end
+			end
+			return false
 		end
 	elseif Class == 3 then
 		return false
