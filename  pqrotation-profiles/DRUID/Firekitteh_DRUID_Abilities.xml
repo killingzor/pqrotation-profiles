@@ -387,7 +387,9 @@ if Orc == true then
 	if BS ~= nil and oCD &amp;lt; 1 then
 		CastSpellByName(tostring(GetSpellInfo(20572)))
 	end
-end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Potion Counts
+end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Potions</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>--Variables
+local PQR_FireBoss = PQR_FireBoss(&amp;quot;Target&amp;quot;)
+--Potion Counts
 local vbPot = GetItemCount(76089) --Vermin&amp;apos;s Bite
 local mpPot = GetItemCount(76095) --Potion of Mogu Power
 local jsPot = GetItemCount(76093) --Potion of the Jade Serpent
@@ -408,10 +410,12 @@ local berryBuff = UnitBuffID(&amp;quot;Player&amp;quot;,117164)
 local mapID = GetCurrentMapAreaID()
 local inCombat = UnitAffectingCombat(&amp;quot;Player&amp;quot;)
 
-if vbPot == nil then
-	return false
-elseif vbPot ~= nil and vbCD &amp;lt; 1 and BS ~= nil then
-	UseItemByName(76089)
+if PQR_FireBoss then
+	if vbPot == nil then
+		return false
+	elseif vbPot ~= nil and vbCD &amp;lt; 1 and BS ~= nil then
+		UseItemByName(76089)
+	end
 end
 
 if mapID == 809 and inCombat == 1 and not berryBuff then
@@ -581,11 +585,11 @@ local HasSR = select(2,HasSR(&amp;quot;Player&amp;quot;))
 local HasThrash = HasThrash(&amp;quot;Target&amp;quot;,&amp;quot;Player&amp;quot;)
 	
 if HasGlyph then
-	if HasThrash then
+	if HasThrash and HasSR then
 		CastSpellByName(tostring(GetSpellInfo(106830)))
 	end
 elseif not HasGlyph then
-	if HasThrash then
+	if HasThrash and HasSR then
 		CastSpellByName(tostring(GetSpellInfo(106830)))
 	end
 end</Lua><RecastDelay>0</RecastDelay><Target>Target</Target><CancelChannel>False</CancelChannel><SkipUnknown>False</SkipUnknown></Ability><Ability><Name>Natures Swiftness</Name><Default>false</Default><SpellID>0</SpellID><Actions></Actions><Lua>local hasTarget = UnitExists(&amp;quot;Target&amp;quot;)
