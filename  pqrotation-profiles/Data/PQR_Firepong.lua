@@ -1,3 +1,96 @@
+function ChainHeal()
+	if UnitExists(select(2,Fire_Unit())) then
+		local Distance = PQR_UnitDistance(select(2,Fire_Unit()),select(2,Fire_Unit()))
+		local hpPercent = UnitHealth(select(2,Fire_Unit()))/UnitHealthMax(select(2,Fire_Unit()))*100
+		
+		if Distance < 11.5 and (hpPercent and hpPercent) < 95 then
+			return true
+		end
+	end
+	return false
+end
+
+function HealTarget()
+	if UnitExists(select(2,Fire_Unit())) then
+		local health = UnitHealth(select(2,Fire_Unit()))
+		local maxHealth = UnitHealthMax(select(2,Fire_Unit()))
+		local allIncomingHeal = UnitGetIncomingHeals(select(2,Fire_Unit())) or 0
+		
+		if (health + allIncomingHeal) < maxHealth then
+			return true
+		end
+	end
+	return false
+end
+
+--Var1 == true or false
+--Var2 == selected Unit
+--Var3 == HP of selected Unit
+local list = {
+	"Mouseover",
+	"Player",
+	"Party1",
+	"Party2",
+	"Party3",
+	"Party4",
+	"Raid1",
+	"Raid2",
+	"Raid3",
+	"Raid4",
+	"Raid5",
+	"Raid6",
+	"Raid7",
+	"Raid8",
+	"Raid9",
+	"Raid10",
+	"Raid11",
+	"Raid12",
+	"Raid13",
+	"Raid14",
+	"Raid15",
+	"Raid16",
+	"Raid17",
+	"Raid18",
+	"Raid19",
+	"Raid20",
+	"Raid21",
+	"Raid22",
+	"Raid23",
+	"Raid24",
+	"Raid25",
+	"Raid26",
+	"Raid27",
+	"Raid28",
+	"Raid29",
+	"Raid30",
+	"Raid31",
+	"Raid32",
+	"Raid33",
+	"Raid34",
+	"Raid35",
+	"Raid36",
+	"Raid37",
+	"Raid38",
+	"Raid39",
+	"Raid40",
+	"Pet"
+}
+
+function Fire_Unit()
+	for i=1,#list do
+		if UnitExists(list[i])
+			and not UnitIsDeadOrGhost(list[i])
+			and UnitIsVisible(list[i])
+			and not PQR_IsOutOfSight(list[i])
+			and not UnitIsCharmed(list[i])
+		then
+			return true, list[i], UnitHealth(list[i]) / UnitHealthMax(list[i]) * 100
+		end
+	end
+	return false
+end
+		
+
 --Thanks to Gabbz, just changed it to what I wanted and made a function for faster use and be able to last through switching profiles.
 function MultiTarget()
 	if modkeytime == nil then 
@@ -143,7 +236,7 @@ mob = { "Trainingsattrappe", "Trainingsattrappe des Schlachtzuges", "Verzerrter 
         "Schwingententakel", "Armtentakel", "Zwielichtkampfdrache", "Goriona", "Eisgrab", 
         "Zwielichtpionier", "Schwächender Schreckenslord", "Blasiges Tentakel" } 
   elseif GetLocale() == "frFR" then
-mob = { "Mannequin d'entraînement", "Mannequin d'entraînement d'écumeur de raids", "Esprit tordu", "Perce-coque amani'shi", 
+mob = { "Mannequin d'entraînement", "Mannequin d'entraînement d'écumeur de Raids", "Esprit tordu", "Perce-coque amani'shi", 
         "Chaînes d'Hakkar", "Tête exposée de Magmagueule", "Démolisseur de champ de bataille", "Ozumat", 
         "Pied droit", "Pied gauche", "Tombe glaciale", "Goule ressuscitée", "Vide de mana", "Tendons brûlants", 
         "Tentacule d’aile", "Tentacule de patte", "Drake d’assaut du Crépuscule", "Goriona", "Tombeau de glace", 
@@ -248,7 +341,7 @@ table.insert( members,{ Unit = unit, HP = hp } )
 if hp < 90 then group.low = group.low + 1 end 
 if UnitGroupRolesAssigned(unit) == "TANK" then table.insert(group.tanks,unit) end 
   end end 
-  if group.type == "raid" and #members > 1 then table.remove(members,1) end 
+  if group.type == "Raid" and #members > 1 then table.remove(members,1) end 
   table.sort(members, function(x,y) return x.HP < y.HP end)
   local customtarget = CanHeal("target") and "target" -- or CanHeal("mouseover") and GetMouseFocus() ~= WorldFrame and "mouseover" 
   if customtarget then table.sort(members, function(x) return UnitIsUnit(customtarget,x.Unit) end) end 
@@ -1761,6 +1854,23 @@ function PQR_UnitClass(var1)
 				return false
 			end
 		end
+		
+		function CanRip(var1)
+			local tfStart, tfDuration = GetSpellCooldown(5217)
+			local tfCD = tfStart + tfDuration - GetTime()
+			local tfBuff = select(4,UnitBuffID("Player",5217))
+			local rip = select(7,UnitDebuffID(var1,1079,"Player"))
+			
+			if tfCD < 3 and not tfBuff then
+				return false
+			elseif tfCD >= 24 and tfBuff then
+				return true
+			elseif tfCD > 3 and tfCD < 24 then
+				return true
+			end
+			return false
+		end
+			
 		
 		local sr = {
 			127538,
