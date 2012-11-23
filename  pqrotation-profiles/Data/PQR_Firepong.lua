@@ -1858,8 +1858,7 @@ function PQR_UnitClass(var1)
 		function CanRip(var1)
 			local tfStart, tfDuration = GetSpellCooldown(5217)
 			local tfCD = tfStart + tfDuration - GetTime()
-			local tfBuff = select(4,UnitBuffID("Player",5217))
-			local rip = select(7,UnitDebuffID(var1,1079,"Player"))
+			local tfBuff = UnitBuffID("Player",5217)
 			
 			if tfCD < 3 and not tfBuff then
 				return false
