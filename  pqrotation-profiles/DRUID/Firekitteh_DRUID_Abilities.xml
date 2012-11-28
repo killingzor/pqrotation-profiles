@@ -236,11 +236,13 @@ if not (psBuff or nsBuff) and waBuff and hasRake then
 		if fbrip and HasSR then
 			if fbCP == 5 then
 				CastSpellByName(tostring(GetSpellInfo(22568)))
+			elseif fbtimer - GetTime() &amp;lt; 5 and fbCP &amp;lt; 3 then
+				CastSpellByName(tostring(GetSpellInfo(22568)))
 			end
 		end
 	else
 		if fbrip and HasSR then
-			if fbtimer - GetTime() &amp;gt; 8 and fbenergy &amp;gt;= 50 and fbCP == 5 then
+			if fbtimer - GetTime() &amp;lt; 8 and fbenergy &amp;gt;= 50 and fbCP == 5 then
 				CastSpellByName(tostring(GetSpellInfo(22568)))
 			end
 		end
